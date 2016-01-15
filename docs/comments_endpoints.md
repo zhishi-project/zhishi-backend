@@ -1,4 +1,4 @@
-#comments Resources
+#Comments Resources
 
 Endpoints |	Usage |	Public Access
 --------- | ----- | -------------
