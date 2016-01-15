@@ -3,7 +3,7 @@
 Endpoints |	Usage |	Public Access
 --------- | ----- | -------------
 GET /answers/:id/comments |	Returns all the comments for a particular answer |	True
-POST /answers/:id/comments/ | Creates a new answer for the specified answer |	False
+POST /answers/:id/comments/ | Creates a new comment for the specified answer |	False
 GET /answers/:id/comments/recent?limit={:total} | Returns {total} comments ordered by the most recent [ MAXLIMIT = 15 ]  | True
 GET /answers/:id/comments/popular?limit={:total} | Returns {total} comments ordered by the most popular [ MAXLIMIT = 15 ] | True
 POST /answers/:id/comments/:id/upvote | Upvotes a comment | False
