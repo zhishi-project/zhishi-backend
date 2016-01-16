@@ -87,7 +87,7 @@ Request
 
 Response
 ```ruby
-Status: 200
+Status: 201
   {
     question: {
       id: 1,
@@ -381,5 +381,72 @@ Status: 200
 Status: 404
   {
     message: "No questions found"
+  }
+```
+
+## PUT/PATCH /questions/:id
+Request
+```ruby
+  PUT/PATCH  /questions/1
+  params: {
+    title: "Edited Question Title",
+    description: "Edited Question Description",
+    user_id: "current user id",
+    tags: "tag 1", "tag 2", "tag 3"
+  }
+```
+
+Response
+```ruby
+Status: 200
+  {
+    question: {
+      id: 1,
+      title: "Edited Question Title",
+      description: "Edited Question Description",
+      user_id: 1,
+      up_votes: 0
+      down_votes: 0
+      comment:  [{  }],
+      answers: [{
+                 "No answers yet"
+               }],
+      tags:  [{
+                matches: [ "tag 1", "tag 2", "tag 3"]
+             }],
+      created_at: "2015-12-14T16:51:06.437Z",
+      updated_at: "2015-12-14T16:51:06.437Z",
+    }
+  }}
+```
+
+#### OR
+
+```ruby
+Status: 403
+  {
+    message: Error Message
+  }
+```
+## DELETE /questions/:id
+Request
+```ruby
+  DELETE  /questions/1
+```
+
+Response
+```ruby
+Status: 200
+{
+  message: "Question deleted successfully"
+}
+```
+
+#### OR
+
+```ruby
+Status: 403
+  {
+    message: Error Message
   }
 ```
