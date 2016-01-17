@@ -12,6 +12,7 @@ gem 'omniauth-slack'
 gem "omniauth-google-oauth2"
 gem 'figaro'
 gem 'ancestry'
+gem 'pry-rails'
 
 group :development, :test do
   gem 'sqlite3'
