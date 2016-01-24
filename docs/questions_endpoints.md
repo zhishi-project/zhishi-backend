@@ -5,11 +5,8 @@ Endpoints |Params| Usage |
 GET /questions | offset, limit ( both could be optional ), auth_token in header |	Returns all questions with up-vote and down-vote data, or error message if any.
 POST /questions |title, description, user_id, auth_token in header | Returns success message if question creation is successful  or error message if any.
 GET /questions/:id |question's id, auth_token in header| Returns the question with that id and all other information concerning the the question or error message if any.
-GET questions/latest | offset, limit ( both could be optional ), auth_token in header | Returns the latest questions  or error message if any.
 GET questions/top_questions | offset, limit ( both could be optional ), auth_token in header | Returns the questions matching the criteria for top questions or error message if any.
-GET questions/:user_id| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the questions with the user_id and all the information concerning it  or error message if any.
 PUT questions/:id| question's id, update information(title, description), auth_token in header | Returns the updated question and all the information concerning it  or error message if any.
-PATCH questions/:id| question's id, update information(title, description), auth_token in header | Returns the updated question and all the information concerning it  or error message if any.
 DELETE questions/:id| question's id, auth_token in header | Returns a confirmation that the question has been deleted  or error message if any.
 
 ## GET /questions/
@@ -198,66 +195,6 @@ Status: 404
     message: "Question with id 1 was not found"
   }
 ```
-## GET /questions/latest
-Request
-```ruby
- GET  /questions/latest?limit=5,offset=1
-```
-Response
-```ruby
-Status: 200
-  {
-    question:[{
-            id: 5,
-            title: "what is Andela?",
-            user_id: 1,
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-          {
-            id: 4
-            title: "where is Amity?"
-            user_id: 12
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-          {
-            id: 3
-            title: "what is M55?"
-            user_id: 4
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-          {
-            id: 2
-            title: "What is DevOps?"
-            user_id: 12
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-          {
-            id: 1
-            title: "What is month one all about?"
-            user_id: 12
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-    ]
-  }
-```
-
-#### OR
-```ruby
-Status: 404
-  {
-    message: "No questions found"
-  }
-```
 
 ## GET /questions/top_questions
 Request
@@ -320,71 +257,8 @@ Status: 404
   }
 ```
 
-## GET /questions?:user_id
-Request
-```ruby
- GET  /questions
- params:{
-   user_id=3
- }
-```
-Response
-```ruby
-Status: 200
-  {
-    question:[{
-            id: 121,
-            title: "what is Andela?",
-            user_id: 3,
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-          {
-            id: 2
-            title: "where is Amity?"
-            user_id: 3,
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-          {
-            id: 3
-            title: "what is M55?"
-            user_id: 3,
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-          {
-            id: 43
-            title: "What is DevOps?"
-            user_id: 3,
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-          {
-            id: 51
-            title: "What is month one all about?"
-            user_id: 3,
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
-    ]
-  }
-```
 
-#### OR
-```ruby
-Status: 404
-  {
-    message: "No questions found"
-  }
-```
-
-## PUT/PATCH /questions/:id
+## PUT /questions/:id
 Request
 ```ruby
   PUT/PATCH  /questions/1
