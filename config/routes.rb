@@ -1,4 +1,57 @@
 Rails.application.routes.draw do
+  resources :questions, except: [:new, :edit] do
+    get "recent_answers"
+    get "popular_answers"
+    resources :comments, except: [:new, :edit]
+    resources :answers, except: [:new, :edit]
+  end
+  get "questions/top_questions" => "questions#top_questions"
+
+  resources :answers, except: [:index, :show, :create, :destroy, :update, :new, :edit] do
+    resources :comments, except: [:new, :edit]
+  end
+
+  resources :comments, only: [:update, :delete]
+
+  post "users" => "users#authenticate"
+  post "users/logout" => "user#logout"
+  get "users" => "users#index"
+  get "users/:id" => "users#show"
+  get "users/:id/questions" => "users#questions"
+  get "users/:id/tags" => "users#tags"
+
+  get "tags" => "tags#index"
+  get "tags/popular" => "tags#popular"
+  get "tags/recent" => "tags#recent"
+  get "tags/trending" => "tags#trending"
+
+
+  # put "questions/:id" => ""
+  # patch "questions/:id" => ""
+  # delete "questions/:id" => ""
+
+  # get "questions/:id/answers" => ""
+  # post "questions/:id/answers" => ""
+  # get "questions/:id/answers/recent" => ""
+  # get "questions/:id/answers/popular" => ""
+  # post "questions/:id/answers/:id/upvote" => ""
+  # post "questions/:id/answers/:id/downvote" => ""
+  # put "answers/:id" => ""
+  # patch "answers/:id" => ""
+  # delete "answers/:id" => ""
+
+  # get "answers/:id/comments" => ""
+  # post "answers/:id/comments" => ""
+  # get "answers/:id/comments/recent" => ""
+  # get "answers/:id/comments/popular" => ""
+  # post "answers/:id/comments/:id/upvote" => ""
+  # post "answers/:id/comments/:id/downvote" => ""
+  # put "comments/:id" => ""
+  # patch "comments/:id" => ""
+  # delete "comments/:id" => ""
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
