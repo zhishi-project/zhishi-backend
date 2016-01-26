@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'votes/upvote'
+
+  get 'votes/downvote'
+
   resources :questions, except: [:new, :edit] do
     get "recent_answers"
     get "popular_answers"

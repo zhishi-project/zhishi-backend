@@ -1,3 +1,4 @@
 class Comment < ActiveRecord::Base
-  belongs_to :comment_on
+  has_many :votes, as: :voteable
+  belongs_to :comment_on, polymorphic: true
 end
