@@ -196,10 +196,10 @@ Status: 404
   }
 ```
 
-## GET /questions/top_questions
+## GET /top_questions
 Request
 ```ruby
- GET  /questions/top_questions?limit=5,offset=1
+ GET  /top_questions?limit=5,offset=1
 ```
 Response
 ```ruby

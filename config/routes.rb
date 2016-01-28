@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :comments, except: [:new, :edit]
     resources :answers, except: [:new, :edit]
   end
-  get "questions/top_questions" => "questions#top_questions"
+  get "top_questions", to: "questions#top_questions"
 
   resources :answers, except: [:index, :show, :create, :destroy, :update, :new, :edit] do
     resources :comments, except: [:new, :edit]
