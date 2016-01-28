@@ -9,12 +9,12 @@ class Answer < ActiveRecord::Base
 
   class << self
     def add_comment_to_answer(answer_id, user_id, content)
-      find(answer_id).comments.
+      find_by(id: answer_id).comments.
         create(user_id: user_id, content: content)
     end
 
     def find_answer_comment(answer_id, id)
-      find(answer_id).comments.where(id: id)
+      find_by(id: answer_id).comments.where(id: id)
     end
 
     def delete_answer_comment(user_id, answer_id, id)

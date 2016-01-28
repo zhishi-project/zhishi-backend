@@ -6,7 +6,7 @@ module Modify
       end
 
       def affected_record(subject_id, subject_name, user_id)
-        subject_name.find(subject_id).comments.where(user_id: user_id)
+        subject_name.find_by(id: subject_id).comments.where(user_id: user_id)
       end
     end
   end

@@ -5,8 +5,8 @@ class CommentsController < ApplicationController
   include Common
 
   def index
-    comments = Question.find(question_id).comments if comment_of_question
-    comments = Answer.find(answer_id).comments if comment_of_answer
+    comments = Question.find_by(id: question_id).comments if comment_of_question
+    comments = Answer.find_by(id: answer_id).comments if comment_of_answer
     render json: comments , root: false
   rescue
     render json: { error: false }, status: 404

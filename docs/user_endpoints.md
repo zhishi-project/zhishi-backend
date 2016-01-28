@@ -6,7 +6,9 @@ POST /users	| Signs-in a user |	True
 GET /users/renew_token |	Renew a user api_key |	False
 POST /users/logout |	Logs out a user |	False
 GET /users	| Returns all users (possibly paginated)	| False
-GET /users/show/:id	| Returns information of a particular user	| False
+GET /users/:id	| Returns information of a particular user	| False
+GET users/:id/questions| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the questions with the user_id and all the information concerning it  or error message if any.
+GET users/:id/tags| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the tags with the user_id or error message if any.
 
 
 ### POST /users
@@ -70,11 +72,11 @@ Status: 200
   }
 ```
 
-### GET /users/show/
+### GET /users/:id/
 Request
 ```ruby
   {
-	  user_id: 1
+	  id: 1
   }
 ```
 
@@ -94,6 +96,61 @@ Response
 Status: 404
   {
 	  message: "User not found"
+  }
+```
+
+
+## GET /users/1/tags
+Request
+```ruby
+ GET  /users/1/tags
+```
+Response
+```ruby
+Status: 200
+  {
+    tags: ["operations", "andela"]
+  }
+```
+
+#### OR
+```ruby
+Status: 404
+  {
+    message: "No tags found"
+  }
+```
+
+
+## GET /users/:id/questions
+Request
+```ruby
+ GET  /users/1/questions
+```
+Response
+```ruby
+Status: 200
+  {
+    [
+      {
+        id: 1,
+        title: "what is Andela?",
+        tags:  ["operations", "Andela"],
+      }
+      {
+        id: 2
+        title: "where is Amity?"
+        tags:  [ "operations", "Andela"],
+      }
+    ]
+  }
+```
+
+#### OR
+```ruby
+Status: 404
+  {
+    message: "No questions found"
   }
 ```
 
