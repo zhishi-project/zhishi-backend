@@ -6,9 +6,19 @@ module Common
     @comment_id = allowed[:comment_id]
     @id = allowed[:id]
     @content = allowed[:content]
-    @downvote = allowed[:downvote]
-    @upvote = allowed[:upvote]
     @user_id = current_user.id
+  end
+
+  def action_on_question
+    question_id && answer_id.nil?
+  end
+
+  def action_on_answer
+    answer_id && question_id.nil?
+  end
+
+  def action_on_comment
+    comment_id.present?
   end
 
 end
