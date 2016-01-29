@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160124145702) do
+ActiveRecord::Schema.define(version: 20160128135722) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20160124145702) do
     t.integer  "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "active"
   end
 
 end
