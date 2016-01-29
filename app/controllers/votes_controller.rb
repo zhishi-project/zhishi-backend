@@ -29,5 +29,4 @@ class VotesController < ApplicationController
   def custom_initializer
     set_vars(vote_params)
   end
-
 end
