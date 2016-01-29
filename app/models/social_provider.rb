@@ -1,7 +1,7 @@
 class SocialProvider < ActiveRecord::Base
   belongs_to :user
-  # validates :uuid, presence: true
-  # validates :provider, presence: true
+  validates :uuid, presence: true
+  validates :provider, presence: true
 
   def self.from_social(auth, user=nil)
     social_user = where(uuid: auth.uid, provider: auth.provider).first_or_create do |sp|
