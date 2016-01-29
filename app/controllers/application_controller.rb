@@ -1,19 +1,20 @@
 class ApplicationController < ActionController::API
+  include ActionController::HttpAuthentication::Token::ControllerMethods
 
-
+  attr_reader :current_user
+  before_action :authenticate
 
 private
-  def current_user
-    @current_user || authenticate_token
+  def authenticate
+    authenticate_token || unauthorized_token
   end
 
   def authenticate_token
-    payload, _header = TokenManager.authenticate(request)
-    if payload
-      @current_user = User.find_by(id: payload["user"])
-      return @current_user if @current_user && @current_user.active
+    authenticate_with_http_token do |auth_token, options|
+      payload, _header = TokenManager.decode(auth_token)
+      user_id = payload ? payload['user'] : nil
+      @current_user = User.find_by(id: user_id)
     end
-    head 401, content_type: "application/json"
   end
 
   def unauthorized_token

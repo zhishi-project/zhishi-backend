@@ -52,7 +52,6 @@ class UsersController < ApplicationController
     session.clear
     redirect_to redirect_url
 
-    # require 'pry' ; binding.pry
     # , api_key: token
     # redirect_to where user came from
     # {api_key: token}, status: :ok toggle(:active)
