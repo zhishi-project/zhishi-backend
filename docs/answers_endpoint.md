@@ -4,12 +4,10 @@ Endpoints |	Usage |	Public Access
 --------- | ----- | -------------
 GET /questions/:id/answers |	Returns all the answers for a particular question |	True
 POST /questions/:id/answers/ | Creates a new answer for the specified question |	False
-GET /questions/:id/answers/recent?limit={:total} | Returns {total} answers ordered by the most recent [ MAXLIMIT = 50 ]  | True
-GET /questions/:id/answers/popular?limit={:total} | Returns {total} answers ordered by the most popular [ MAXLIMIT = 50 ] | True
-POST /questions/:id/answers/:id/upvote | Upvotes an answer | False
-POST /questions/:id/answers/:id/downvote | Downvotes an answer | False
-PUT /answers/:id | Updates the answer with certain attributes | False
-DELETE /answers/:id | Deletes an answer and its related comments | False
+GET /questions/:id/recent_answers?limit={:total} | Returns {total} answers ordered by the most recent [ MAXLIMIT = 50 ]  | True
+GET /questions/:id/popular_answers?limit={:total} | Returns {total} answers ordered by the most popular [ MAXLIMIT = 50 ] | True
+PUT /questions/:question_id/answers/:id | Updates the answer with certain attributes | False
+DELETE /questions/:question_id/answers/:id | Deletes an answer and its related comments | False
 
 ### GET /questions/:id/answers
 
@@ -80,7 +78,7 @@ Status: 201
 }
 ```
 
-### GET /questions/:id/answers/recent?limit=10
+### GET /questions/:id/recent_answers?limit=10
 
 Request
 ```ruby
@@ -122,7 +120,7 @@ Status: 200
   }
 ```
 
-### GET /questions/:id/answers/popular?limit={:total}
+### GET /questions/:id/popular_answers?limit={:total}
 
 Request
 ```ruby
@@ -167,43 +165,7 @@ Status: 200
   }
 ```
 
-### POST /questions/:id/answers/:id/upvote
-
-Request
-```ruby
-  {
-    auth_token: "90ioji0j0i0i0ik0k0jmj0090jknieu93833r335",
-    answer_id: 5
-  }
-```
-
-Response
-```ruby
-Status: 201
-{
-  message: "Successfully upvoted"
-}
-```
-
-### POST /questions/:id/answers/:id/downvote
-
-Request
-```ruby
-  {
-    auth_token: "90ioji0j0i0i0ik0k0jmj0090jknieu93833r335",
-    answer_id: 5
-  }
-```
-
-Response
-```ruby
-Status: 201
-{
-  message: "Successfully downvoted"
-}
-```
-
-### PUT /answers/:id
+### PUT /questions/:question_id/answers/:id
 
 Request
 ```ruby
@@ -218,7 +180,7 @@ Response
   Status: 204
 ```
 
-### DELETE /answers/:id
+### DELETE /questions/:question_id/answers/:id
 
 Request
 ```ruby

@@ -11,7 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160117215639) do
+ActiveRecord::Schema.define(version: 20160124145702) do
+
+  create_table "answers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.string   "content"
+    t.integer  "votes"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "content"
+    t.integer  "votes"
+    t.integer  "comment_on_id"
+    t.string   "comment_on_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "comments", ["comment_on_type", "comment_on_id"], name: "index_comments_on_comment_on_type_and_comment_on_id"
+
+  create_table "questions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "content"
+    t.integer  "votes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "social_providers", force: :cascade do |t|
     t.string   "provider"
@@ -25,9 +55,22 @@ ActiveRecord::Schema.define(version: 20160117215639) do
 
   add_index "social_providers", ["user_id"], name: "index_social_providers_on_user_id"
 
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "subscriber_id"
+    t.string   "subscriber_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "tags", ["subscriber_type", "subscriber_id"], name: "index_tags_on_subscriber_type_and_subscriber_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
+    t.string   "uuid"
+    t.string   "provider"
+    t.integer  "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
