@@ -11,6 +11,7 @@ gem "omniauth-google-oauth2"
 gem 'figaro'
 gem 'ancestry'
 gem 'will_paginate'
+gem "jwt"
 
 group :development, :test do
   gem 'sqlite3'

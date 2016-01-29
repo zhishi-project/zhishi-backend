@@ -38,26 +38,33 @@ class UsersController < ApplicationController
   def login
     redirect_url = params[:redirect_url] || params[:rdr] || params[:redir]
     provider = get_provider(params[:provider] || params[:p])
-    # store the provider and redirect_url to be matched against when user comes back
+    set_attrs_in_session({redirect_url: redirect_url})
+
     redirect_to provider
   end
 
   def authenticate
     @current_user = User.from_omniauth(env["omniauth.auth"])
-    user.toggle(:active)
+    @current_user.update(active: true)
     token = @current_user.refresh_token
+
+    redirect_url = get_attrs_from_session([:redirect_url]).first
+    redirect_to redirect_url
+
+    # require 'pry' ; binding.pry
+    # , api_key: token
     # redirect_to where user came from
-    # render json: {api_key: token}, status: :ok
+    # {api_key: token}, status: :ok toggle(:active)
   end
 
 
   def renew_token
-    token = @current_user.refresh_token
+    token = current_user.refresh_token
     render json: {api_key: token}, status: :ok
   end
 
   def logout
-    @current_user.update(active: false)
+    current_user.update(active: false)
     head :no_content
   end
 
@@ -70,7 +77,6 @@ class UsersController < ApplicationController
   end
 
   private
-
     def get_provider(provider)
       provider_url = case provider
       when /^google/
