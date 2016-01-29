@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include ProviderHelper
   before_action :set_user, only: [:show, :update, :destroy, :questions, :tags]
 
   def index
@@ -14,7 +15,6 @@ class UsersController < ApplicationController
     # next_page: resource.next_page,
     # out_of_bounds: resource.out_of_bounds?,
     # offset: resource.offset
-
   end
 
   def show
@@ -47,8 +47,9 @@ class UsersController < ApplicationController
     @current_user = User.from_omniauth(env["omniauth.auth"])
     @current_user.update(active: true)
     token = @current_user.refresh_token
-
     redirect_url = get_attrs_from_session([:redirect_url]).first
+
+    session.clear
     redirect_to redirect_url
 
     # require 'pry' ; binding.pry
@@ -77,17 +78,7 @@ class UsersController < ApplicationController
   end
 
   private
-    def get_provider(provider)
-      provider_url = case provider
-      when /^google/
-        '/auth/google_oauth2'
-      when /^slack/
-        '/auth/slack'
-      else
-        raise "Invalid provider"
-      end
-      provider_url
-    end
+
 
     def set_user
       @user = User.find_by(id: params[:id])
