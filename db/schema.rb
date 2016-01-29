@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20160128233820) do
     t.integer  "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "active"
   end
 
   create_table "votes", force: :cascade do |t|

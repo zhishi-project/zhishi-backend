@@ -15,8 +15,7 @@ class Vote < ActiveRecord::Base
     end
 
     def voted?(subject, subject_id, user_id)
-      vote = find_by(user_id: user_id, voteable_type: "#{subject}", voteable_id: subject_id)
-      vote.nil? ? false : true
+      exists?(user_id: user_id, voteable_type: "#{subject}", voteable_id: subject_id)
     end
 
     def remove_vote(subject, subject_id, user_id)

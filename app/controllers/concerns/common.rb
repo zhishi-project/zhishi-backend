@@ -20,5 +20,4 @@ module Common
   def action_on_comment
     comment_id.present?
   end
-
 end
