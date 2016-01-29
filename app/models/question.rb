@@ -10,12 +10,17 @@ class Question < ActiveRecord::Base
 
   class << self
     def add_comment_to_question(question_id, user_id, content)
-      find_by(id: question_id).comments.
-        create(user_id: user_id, content: content)
+      question = find_by(id: question_id)
+      if question
+        question.comments.create(user_id: user_id, content: content)
+      end
     end
 
     def find_question_comment(question_id, id)
-      find_by(id: question_id).comments.where(id: id)
+      question = find_by(id: question_id)
+      if question
+        question.comments.where(id: id)
+      end
     end
 
     def delete_question_comment(id, user_id, question_id)

@@ -5,17 +5,18 @@ class CommentsController < ApplicationController
   include Common
 
   def index
-    comments = Question.find_by(id: question_id).comments if comment_of_question
-    comments = Answer.find_by(id: answer_id).comments if comment_of_answer
-    render json: comments , root: false
-  rescue
-    render json: { error: false }, status: 404
+    question = Question.find_by(id: question_id) if comment_of_question
+    answer = Answer.find_by(id: answer_id) if comment_of_answer
+    comments = question.comments if question
+    comments = answer.comments if answer
+    render json: comments, status: 200 unless comments.nil?
+    render json: { error: false }, status: 404 if comments.nil?
   end
 
   def show
     comments = Question.find_question_comment(question_id, id) if comment_of_question
     comments = Answer.find_answer_comment(answer_id, id) if comment_of_answer
-    render json: comments , root: false
+    render json: comments , status: 200
   rescue
     render json: { error: false }, status: 404
   end
@@ -29,7 +30,7 @@ class CommentsController < ApplicationController
       end
       render json: comments, root: false
     else
-      render json: { error: "Comment body can not be empty!" }
+      render json: { error: "Comment body can not be empty!" }, status: 403
     end
   end
 
@@ -43,12 +44,12 @@ class CommentsController < ApplicationController
 
   def destroy
     if comment_of_question
-      deleted if Question.delete_question_comment(user_id, question_id, id)
+      deleted if Question.delete_question_comment(id, user_id, question_id)
     elsif comment_of_answer
-      deleted if Answer.delete_answer_comment(user_id, answer_id, id)
+      deleted if Answer.delete_answer_comment(id, user_id, answer_id)
     end
   rescue
-    render json: { error: "Comment could not be deleted." }, status: 403
+    render json: { error: false }, status: 403
   end
 
   private

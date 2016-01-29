@@ -9,15 +9,20 @@ class Answer < ActiveRecord::Base
 
   class << self
     def add_comment_to_answer(answer_id, user_id, content)
-      find_by(id: answer_id).comments.
-        create(user_id: user_id, content: content)
+      answer = find_by(id: answer_id)
+      if answer
+        answer.comments.create(user_id: user_id, content: content)
+      end
     end
 
     def find_answer_comment(answer_id, id)
-      find_by(id: answer_id).comments.where(id: id)
+      answer = find_by(id: answer_id)
+      if answer
+        answer.comments.where(id: id)
+      end
     end
 
-    def delete_answer_comment(user_id, answer_id, id)
+    def delete_answer_comment(id, user_id, answer_id)
       Modify::Updater.affected_record(answer_id, self, user_id).destroy(id)
     end
 
