@@ -18,19 +18,14 @@ class UsersController < ApplicationController
   end
 
   def show
-    if @user
-      render json: @user
-    else
-      resource_not_found
-    end
+    render json: @user, status: :ok
   end
 
 
   def update
-
     if @user.update(user_params)
       head :no_content
-    else
+    else @user.errors
       render json: @user.errors, status: :unprocessable_entity
     end
   end
@@ -89,7 +84,8 @@ class UsersController < ApplicationController
     end
 
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find_by(id: params[:id])
+      resource_not_found and return unless @user
     end
 
     def user_params

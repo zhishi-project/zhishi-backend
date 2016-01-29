@@ -32,7 +32,6 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
-
     head :no_content
   end
 
