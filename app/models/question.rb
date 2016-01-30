@@ -7,12 +7,11 @@ class Question < ActiveRecord::Base
 
   include Modify
 
-  def self.with_answers
-    includes(:answers)
-  end
-
-
   class << self
+    def with_answers
+      includes(:answers)
+    end
+
     def add_comment_to_question(question_id, user_id, content)
       question = find_by(id: question_id)
       if question

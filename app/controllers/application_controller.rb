@@ -27,16 +27,16 @@ private
   end
 
   def set_attrs_in_session(hash={})
-    hash.each{ |key, val|
+    hash.each do |key, val|
       session[key] = val
-    }
+    end
   end
 
   def get_attrs_from_session(attrs=[])
     vals = []
-    attrs.each{ |key|
+    attrs.each do |key|
       vals << session[key]
-    }
+    end
     vals
   end
 
