@@ -5,16 +5,6 @@ class UsersController < ApplicationController
   def index
     @users = User.paginate(page: params[:page])
     render json: @users, status: :ok
-
-    # add meta data for pagination
-    # total: resource.total_entries,
-    # total_pages: resource.total_pages,
-    # first_page: resource.current_page == 1,
-    # last_page: resource.next_page.blank?,
-    # previous_page: resource.previous_page,
-    # next_page: resource.next_page,
-    # out_of_bounds: resource.out_of_bounds?,
-    # offset: resource.offset
   end
 
   def show
@@ -41,6 +31,9 @@ class UsersController < ApplicationController
     set_attrs_in_session({redirect_url: redirect_url})
 
     redirect_to provider
+
+    rescue AuthProviderError => e
+      invalid_request(e.message)
   end
 
   def authenticate
@@ -51,7 +44,7 @@ class UsersController < ApplicationController
 
     session.clear
     redirect_to redirect_url
-    
+
   end
 
 
@@ -78,7 +71,7 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.find_by(id: params[:id])
-      resource_not_found and return unless @user
+      resource_not_found && return unless @user
     end
 
     def user_params

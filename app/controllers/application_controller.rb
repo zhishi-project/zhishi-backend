@@ -2,10 +2,18 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
   attr_reader :current_user
-  before_action :authenticate
+  before_action :authenticate_user
+
+  def resource_not_found
+    render json: {errors: "The resource you tried to access was not found"}, status: 404
+  end
+
+  def invalid_request(message)
+    render json: {errors: message}, status: 500
+  end
 
 private
-  def authenticate
+  def authenticate_user
     authenticate_token || unauthorized_token
   end
 
@@ -22,9 +30,6 @@ private
     render json: {errors: "Request was made with invalid token"}, status: 401
   end
 
-  def resource_not_found
-    render json: {errors: "The resource you tried to access was not found"}, status: 404
-  end
 
   def set_attrs_in_session(hash={})
     hash.each do |key, val|

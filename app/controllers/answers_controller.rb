@@ -38,11 +38,13 @@ class AnswersController < ApplicationController
   private
 
     def set_answer
-      @answer = @question.answers.find(params[:id])
+      @answer = @question.answers.find_by(id: params[:id])
+      resource_not_found && return unless @answer
     end
 
     def set_question
-      @question = Question.with_answers.find(params[:question_id])
+      @question = Question.with_answers.find_by(id: params[:question_id])
+      resource_not_found && return unless @question
     end
 
     def answer_params

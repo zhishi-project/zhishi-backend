@@ -6,7 +6,7 @@ module ProviderHelper
     when /^slack/
       '/auth/slack'
     else
-      raise "Invalid provider"
+      raise AuthProviderError.new("The provider is not supported on this platform")
     end
     provider_url
   end

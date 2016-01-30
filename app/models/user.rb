@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   def self.from_token(token)
     user_token = TokenManager.decode(token)
-    user = find_by(id: token[:user])
+    user = find_by(id: user_token['user'])
   end
 
 end
