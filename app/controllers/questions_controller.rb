@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-
+  skip_before_action :authenticate_user
   def index
     questions = Question.all
-    render json: questions
+    render json: questions, status: 200
   end
 
   def show
@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(questions_params)
-      render json: @question, status: :ok
+      render json: @question, status: 200
     end
   end
 
@@ -33,7 +33,7 @@ class QuestionsController < ApplicationController
 
   def top_questions
     questions = Question.top
-    render json: questions
+    render json: questions, status: 200
   end
 
   private

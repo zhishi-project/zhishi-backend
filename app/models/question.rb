@@ -13,7 +13,7 @@ class Question < ActiveRecord::Base
     end
 
     def top
-      where("votes > ?", 0).order("votes DESC")
+      order("votes DESC")
     end
 
     def add_comment_to_question(question_id, user_id, content)
