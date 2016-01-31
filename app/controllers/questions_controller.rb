@@ -1,7 +1,5 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-  skip_before_action :authenticate_user
-
 
   def index
     questions = Question.all
@@ -37,7 +35,7 @@ class QuestionsController < ApplicationController
     questions = Question.top
     render json: questions
   end
-  
+
   private
 
   def set_question
