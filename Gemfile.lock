@@ -101,6 +101,7 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     rack (1.6.4)
+    rack-cors (0.4.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.5)
@@ -187,6 +188,7 @@ DEPENDENCIES
   pg
   pry-nav
   pry-rails
+  rack-cors
   rails (= 4.2.5)
   rails-api
   rspec-rails
@@ -196,4 +198,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

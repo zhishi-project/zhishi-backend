@@ -15,6 +15,7 @@ gem 'will_paginate'
 gem "active_model_serializers", "~> 0.8.0"
 gem "jwt"
 gem 'unicorn-rails'
+gem 'rack-cors'
 
 
 group :development, :test do

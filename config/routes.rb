@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post '/validate_token', to: 'tokens#validate'
+
   resources :questions, except: [:new, :edit] do
     get "recent_answers"
     get "popular_answers"
@@ -24,7 +26,7 @@ Rails.application.routes.draw do
   get "tags/popular" => "tags#popular"
   get "tags/recent" => "tags#recent"
   get "tags/trending" => "tags#trending"
-  
+
   get 'login', to: "users#login"
   get 'login/:provider', to: "users#login"
 
