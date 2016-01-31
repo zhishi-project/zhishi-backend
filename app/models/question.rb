@@ -12,6 +12,10 @@ class Question < ActiveRecord::Base
       includes(:answers)
     end
 
+    def top
+      where("votes > ?", 0).order("votes DESC")
+    end
+
     def add_comment_to_question(question_id, user_id, content)
       question = find_by(id: question_id)
       if question

@@ -20,3 +20,4 @@
 /config/application.yml
 
 codesnip
+/vendor/*

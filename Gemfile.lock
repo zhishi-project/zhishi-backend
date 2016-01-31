@@ -176,7 +176,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (~> 0.8.0)
+  active_model_serializers
   ancestry
   faker
   figaro
@@ -196,4 +196,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
