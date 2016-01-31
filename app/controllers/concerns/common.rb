@@ -8,7 +8,7 @@ module Common
     @content = allowed[:content]
     @downvote = allowed[:downvote]
     @upvote = allowed[:upvote]
-    @user_id = current_user.id
+    @user_id = current_user.try(:id)
   end
 
   def comment_of_question

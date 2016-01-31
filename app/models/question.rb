@@ -3,12 +3,15 @@ class Question < ActiveRecord::Base
   has_many :tags, as: :subscriber
   has_many :answers
   belongs_to :user
-
   validates :content, presence: true
 
   include Modify
 
   class << self
+    def with_answers
+      includes(:answers)
+    end
+
     def add_comment_to_question(question_id, user_id, content)
       question = find_by(id: question_id)
       if question
