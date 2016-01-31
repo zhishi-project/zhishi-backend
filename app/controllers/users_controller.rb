@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   include ProviderHelper
   before_action :set_user, only: [:show, :update, :destroy, :questions, :tags]
+  skip_before_action :authenticate_user, only: [:login]
 
   def index
     @users = User.paginate(page: params[:page])
