@@ -12,7 +12,7 @@ DELETE questions/:id| question's id, auth_token in header | Returns a confirmati
 ## GET /questions/
 Request
 ```ruby
- GET  /questions?limit=5,offset=1
+ GET  /questions?limit=5&offset=1
 ```
 Response
 ```ruby
@@ -196,10 +196,10 @@ Status: 404
   }
 ```
 
-## GET /questions/top_questions
+## GET /top_questions
 Request
 ```ruby
- GET  /questions/top_questions?limit=5,offset=1
+ GET  /top_questions?limit=5,offset=1
 ```
 Response
 ```ruby
@@ -256,7 +256,6 @@ Status: 404
     message: "No questions found"
   }
 ```
-
 
 ## PUT /questions/:id
 Request

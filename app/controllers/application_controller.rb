@@ -1,14 +1,52 @@
 class ApplicationController < ActionController::API
-  def current_user
-    @current_user || authenticate_token
+  include ActionController::HttpAuthentication::Token::ControllerMethods
+  include ActionController::Serialization
+
+
+  attr_reader :current_user
+  before_action :authenticate_user
+
+  def resource_not_found
+    not_found = "The resource you tried to access was not found"
+    render json: {errors: not_found}, status: 404
+  end
+
+  def invalid_request(message)
+    render json: {errors: message}, status: 400
+  end
+
+
+private
+  def authenticate_user
+    authenticate_token || unauthorized_token
   end
 
   def authenticate_token
-    payload, _header = TokenManager.authenticate(request)
-    if payload
-      @current_user = User.find_by(id: payload["user"])
-      return @current_user if @current_user && @current_user.active
+    authenticate_with_http_token do |auth_token, options|
+      payload, _header = TokenManager.decode(auth_token)
+      user_id = payload ? payload['user'] : nil
+      @current_user = User.find_by(id: user_id)
     end
-    head 401, content_type: "application/json"
   end
+
+  def unauthorized_token
+    self.headers['WWW-Authenticate'] = 'Token realm="Application"'
+    render json: {errors: "Request was made with invalid token"}, status: 401
+  end
+
+
+  def set_attrs_in_session(hash={})
+    hash.each do |key, val|
+      session[key] = val
+    end
+  end
+
+  def get_attrs_from_session(attrs=[])
+    vals = []
+    attrs.each do |key|
+      vals << session[key]
+    end
+    vals
+  end
+
 end

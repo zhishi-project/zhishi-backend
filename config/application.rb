@@ -22,5 +22,8 @@ module Zhishi
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.middleware.insert_after(ActiveRecord::QueryCache, ActionDispatch::Cookies)
+    config.middleware.insert_after(ActionDispatch::Cookies, ActionDispatch::Session::CookieStore)
   end
 end

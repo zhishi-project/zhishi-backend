@@ -1,5 +1,4 @@
 module Common
-
   def set_vars(allowed = {})
     @question_id = allowed[:question_id]
     @answer_id = allowed[:answer_id]
@@ -21,3 +20,5 @@ module Common
     comment_id.present?
   end
 end
+
+

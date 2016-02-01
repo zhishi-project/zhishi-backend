@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :current_user, :custom_initializer
+  before_action :custom_initializer
   attr_reader :user_id, :question_id, :answer_id, :id, :content
 
   include Common
