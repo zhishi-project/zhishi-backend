@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include ProviderHelper
   before_action :set_user, only: [:show, :update, :destroy, :questions, :tags]
-  skip_before_action :authenticate_user, only: [:login]
+  skip_before_action :authenticate_user, only: [:login, :authenticate]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -40,12 +40,14 @@ class UsersController < ApplicationController
   def authenticate
     @current_user = User.from_omniauth(env["omniauth.auth"])
     @current_user.update(active: true)
-    token = @current_user.refresh_token
+    token = @current_user.tokens.create
+    temp_token = {temp_token: token.temp}
     redirect_url = get_attrs_from_session([:redirect_url]).first
+    redirect_url = append_to_redirect_url(redirect_url, temp_token)
 
     session.clear
-    redirect_to redirect_url
 
+    redirect_to redirect_url
   end
 
 
@@ -68,7 +70,11 @@ class UsersController < ApplicationController
   end
 
   private
-
+    def append_to_redirect_url(url, additional_params={})
+      url += url.include?('?') ? '&' : '?'
+      url += additional_params.to_query
+      url
+    end
 
     def set_user
       @user = User.find_by(id: params[:id])
