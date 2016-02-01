@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-  skip_before_action :authenticate_user
+  before_action :authenticate_user
   def index
     questions = Question.all
     render json: questions, status: 200
