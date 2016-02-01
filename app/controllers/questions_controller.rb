@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-
+  skip_before_action :authenticate_user
   def index
     questions = Question.all
     render json: questions, status: 200
@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
     if question.save
       render json: question, status: :created
     else
-      invalid_request("field can't be blank")
+      invalid_request(error_msg)
     end
   end
 
@@ -23,7 +23,7 @@ class QuestionsController < ApplicationController
     if @question.try(:update, questions_params)
       render json: @question, status: 200
     else
-       invalid_request("field can't be blank")
+       invalid_request(error_msg)
     end
 
   end
@@ -46,7 +46,12 @@ class QuestionsController < ApplicationController
     resource_not_found && return unless @question
   end
 
+  def error_msg
+    "The operation could not be performed."\
+    " Please check your request or try again later"
+  end
+
   def questions_params
-    params.permit(:id, :title, :content, :votes, :user_id)
+    params.permit(:id, :title, :content, :votes)
   end
 end
