@@ -5,19 +5,19 @@ class VotesController < ApplicationController
   include Common
 
   def upvote
-    vote = Vote.add_vote(Question, question_id, user_id) if action_on_question
-    vote = Vote.add_vote(Answer, answer_id, user_id) if action_on_answer
-    vote = Vote.add_vote(Comment, comment_id, user_id) if action_on_comment
+    vote = Vote.act_on_vote("plus", Question, question_id, user_id) if action_on_question
+    vote = Vote.act_on_vote("plus", Answer, answer_id, user_id) if action_on_answer
+    vote = Vote.act_on_vote("plus", Comment, comment_id, user_id) if action_on_comment
     render json: { response: vote }, status: 200 unless vote.nil?
     render json: { error: "Invalid vote!" }, status: 403 if vote.nil?
   end
 
   def downvote
-    deleted = Vote.remove_vote(Question, question_id, user_id) if action_on_question
-    deleted = Vote.remove_vote(Answer, answer_id, user_id) if action_on_answer
-    deleted = Vote.remove_vote(Comment, comment_id, user_id) if action_on_comment
-    render json: { response: "Deleted" }, status: 200 if deleted > 0
-    render json: { error: "Not allowed!" }, status: 403 if deleted == 0
+    vote = Vote.act_on_vote("minus", Question, question_id, user_id) if action_on_question
+    vote = Vote.act_on_vote("minus", Answer, answer_id, user_id) if action_on_answer
+    vote = Vote.act_on_vote("minus", Comment, comment_id, user_id) if action_on_comment
+    render json: { response: vote }, status: 200 unless vote.nil?
+    render json: { error: "Invalid vote!" }, status: 403 if vote.nil?
   end
 
   private

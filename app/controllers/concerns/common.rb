@@ -6,7 +6,7 @@ module Common
     @comment_id = allowed[:comment_id]
     @id = allowed[:id]
     @content = allowed[:content]
-    @user_id = current_user.id
+    @user_id = current_user.id if current_user
   end
 
   def action_on_question
