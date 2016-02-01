@@ -31,6 +31,8 @@ class QuestionsController < ApplicationController
   def destroy
     if @question.try(:destroy)
       render json: :head, status: 204
+    else
+       invalid_request(error_msg)
     end
   end
 
