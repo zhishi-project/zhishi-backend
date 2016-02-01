@@ -1,13 +1,13 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-  skip_before_action :authenticate_user
+
   def index
     questions = Question.all
     render json: questions, status: 200
   end
 
   def show
-      render json: @question, status: 200
+    render json: @question, status: 200
   end
 
   def create
@@ -15,19 +15,22 @@ class QuestionsController < ApplicationController
     if question.save
       render json: question, status: :created
     else
-      render json:  question.errors, status: 400
+      invalid_request("field can't be blank")
     end
   end
 
   def update
-    if @question.update(questions_params)
+    if @question.try(:update, questions_params)
       render json: @question, status: 200
+    else
+       invalid_request("field can't be blank")
     end
+
   end
 
   def destroy
     if @question.try(:destroy)
-      render json: :no_content, status: 204
+      render json: :head, status: 204
     end
   end
 
@@ -39,7 +42,7 @@ class QuestionsController < ApplicationController
   private
 
   def set_question
-    @question = Question.find_by(id: params[:id])
+    @question = Question.find_by(id: questions_params[:id])
     resource_not_found && return unless @question
   end
 

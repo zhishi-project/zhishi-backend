@@ -7,12 +7,14 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user
 
   def resource_not_found
-    render json: {errors: "The resource you tried to access was not found"}, status: 404
+    not_found = "The resource you tried to access was not found"
+    render json: {errors: not_found}, status: 404
   end
 
   def invalid_request(message)
-    render json: {errors: message}, status: 500
+    render json: {errors: message}, status: 400
   end
+
 
 private
   def authenticate_user

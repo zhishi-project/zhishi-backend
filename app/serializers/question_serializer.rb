@@ -1,5 +1,5 @@
 class QuestionSerializer < ActiveModel::Serializer
-  attributes :title, :content, :votes, :comments, :tags, :answers,
+  attributes :id, :title, :content, :votes, :comments, :tags, :answers,
              :created_at, :updated_at
 
    has_many :comments, as: :comment_on
