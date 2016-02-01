@@ -12,7 +12,7 @@ gem "omniauth-google-oauth2"
 gem 'figaro'
 gem 'ancestry'
 gem 'will_paginate'
-gem "active_model_serializers", "~> 0.8.0"
+gem "active_model_serializers"
 gem "jwt"
 gem 'unicorn-rails'
 

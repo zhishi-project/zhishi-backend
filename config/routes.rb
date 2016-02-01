@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :comments, except: [:new, :edit]
     resources :answers, except: [:new, :edit]
   end
-  get "questions/top_questions" => "questions#top_questions"
+  get "top_questions" => "questions#top_questions"
 
   resources :answers, except: [:index, :show, :create, :destroy, :update, :new, :edit] do
     resources :comments, except: [:new, :edit]
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get "tags/popular" => "tags#popular"
   get "tags/recent" => "tags#recent"
   get "tags/trending" => "tags#trending"
-  
+
   get 'login', to: "users#login"
   get 'login/:provider', to: "users#login"
 
