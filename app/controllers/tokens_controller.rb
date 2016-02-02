@@ -9,7 +9,7 @@ class TokensController < ApplicationController
 
   private
     def set_token
-      @token = Token.active.find_by(temp: params[:temp_token]).destroy
+      @token = Token.active.find_by(temp: params[:temp_token]).try(:destroy)
       resource_not_found unless @token
     end
 end
