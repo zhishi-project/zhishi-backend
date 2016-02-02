@@ -5,8 +5,8 @@ class CommentsController < ApplicationController
   include Common
 
   def index
-    question = Question.find_by(id: question_id) if comment_of_question
-    answer = Answer.find_by(id: answer_id) if comment_of_answer
+    question = Question.find_by(id: question_id) if action_on_question
+    answer = Answer.find_by(id: answer_id) if action_on_answer
     comments = question.comments if question
     comments = answer.comments if answer
     render json: comments, status: 200 unless comments.nil?
@@ -14,8 +14,8 @@ class CommentsController < ApplicationController
   end
 
   def show
-    comments = Question.find_question_comment(question_id, id) if comment_of_question
-    comments = Answer.find_answer_comment(answer_id, id) if comment_of_answer
+    comments = Question.find_question_comment(question_id, id) if action_on_question
+    comments = Answer.find_answer_comment(answer_id, id) if action_on_answer
     render json: comments , status: 200
   rescue
     render json: { error: false }, status: 404
@@ -23,9 +23,9 @@ class CommentsController < ApplicationController
 
   def create
     unless content.nil? || content == ""
-      if comment_of_question
+      if action_on_question
         comments = Question.add_comment_to_question(question_id, user_id, content)
-      elsif comment_of_answer
+      elsif action_on_answer
         comments = Answer.add_comment_to_answer(answer_id, user_id, content)
       end
       render json: comments, root: false
@@ -43,9 +43,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    if comment_of_question
+    if action_on_question
       deleted if Question.delete_question_comment(id, user_id, question_id)
-    elsif comment_of_answer
+    elsif action_on_answer
       deleted if Answer.delete_answer_comment(id, user_id, answer_id)
     end
   rescue
@@ -67,9 +67,9 @@ class CommentsController < ApplicationController
   end
 
   def update_subject(id, user_id, attribute, value = nil)
-    if comment_of_question
+    if action_on_question
       comments = Question.update_question_comment(id, user_id, question_id, attribute, value)
-    elsif comment_of_answer
+    elsif action_on_answer
       comments = Answer.update_answer_comment(id, user_id, answer_id, attribute, value)
     end
   end
