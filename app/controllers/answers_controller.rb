@@ -1,6 +1,8 @@
 class AnswersController < ApplicationController
+  include OwnershipConcern
   before_action :set_question
   before_action :set_answer, only: [:show, :update, :destroy]
+  before_action :check_user_owns_answer, only: [:update, :destroy]
 
   def index
     @answers = @question.answers.all
@@ -9,16 +11,18 @@ class AnswersController < ApplicationController
   end
 
   def show
+    require 'pry' ; binding.pry
     render json: @answer
   end
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
 
     if @answer.save
       render json: @answer, status: :created, location: question_answer_path(@question, @answer)
     else
-      render json: @answer.errors, status: :unprocessable_entity
+      invalid_request(error_msg)
     end
   end
 
@@ -26,13 +30,16 @@ class AnswersController < ApplicationController
     if @answer.update(answer_params)
       head :no_content
     else
-      render json: @answer.errors, status: :unprocessable_entity
+      invalid_request(error_msg)
     end
   end
 
   def destroy
-    @answer.destroy
-    head :no_content
+    if @answer.try(:destroy)
+      head :no_content
+    else
+      invalid_request(error_msg)
+    end
   end
 
   private
