@@ -11,14 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20160201170223) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "question_id"
     t.string   "content"
-    t.integer  "votes"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -26,7 +24,6 @@ ActiveRecord::Schema.define(version: 20160201170223) do
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "content"
-    t.integer  "votes"
     t.integer  "comment_on_id"
     t.string   "comment_on_type"
     t.datetime "created_at",      null: false
@@ -39,7 +36,6 @@ ActiveRecord::Schema.define(version: 20160201170223) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "content"
-    t.integer  "votes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -103,4 +99,5 @@ ActiveRecord::Schema.define(version: 20160201170223) do
 
   add_index "votes", ["user_id"], name: "index_votes_on_user_id"
   add_index "votes", ["voteable_type", "voteable_id"], name: "index_votes_on_voteable_type_and_voteable_id"
+
 end
