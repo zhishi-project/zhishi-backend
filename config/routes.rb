@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  post "questions/:question_id/upvote" => "votes#upvote"
+  post "answers/:answer_id/upvote" => "votes#upvote"
+  post "comments/:comment_id/upvote" => "votes#upvote"
+  post "questions/:question_id/downvote" => "votes#downvote"
+  post "answers/:answer_id/downvote" => "votes#downvote"
+  post "comments/:comment_id/downvote" => "votes#downvote"
   post '/validate_token', to: 'tokens#validate'
 
   resources :questions, except: [:new, :edit] do
@@ -8,6 +14,7 @@ Rails.application.routes.draw do
     resources :comments, except: [:new, :edit]
     resources :answers, except: [:new, :edit]
   end
+
   get "top_questions" => "questions#top_questions"
 
   resources :answers, except: [:index, :show, :create, :destroy, :update, :new, :edit] do
@@ -32,5 +39,4 @@ Rails.application.routes.draw do
 
   get 'auth/:provider/callback', to: 'users#authenticate', as: :authenticate
   match "*path", to: 'application#resource_not_found', via: :all
-
 end
