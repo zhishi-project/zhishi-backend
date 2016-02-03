@@ -4,6 +4,7 @@ class Question < ActiveRecord::Base
   has_many :tags, as: :subscriber
   has_many :answers
   belongs_to :user
+  validates :title, presence: true
   validates :content, presence: true
 
   include Modify
