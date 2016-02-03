@@ -12,7 +12,7 @@ DELETE questions/:id| question's id, auth_token in header | Returns a confirmati
 ## GET /questions/
 Request
 ```ruby
- GET  /questions?limit=5,offset=1
+ GET  /questions?limit=5&offset=1
 ```
 Response
 ```ruby

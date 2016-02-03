@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :questions
   has_many :answers
   has_many :social_providers
+  has_many :tokens
 
   def self.from_omniauth(auth, user=nil)
     user = where(email: auth.info.email).first_or_create do |u|
