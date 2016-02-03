@@ -1,4 +1,5 @@
 class SocialProvider < ActiveRecord::Base
+  include AndelaValidator
   belongs_to :user
   validates :uuid, presence: true
   validates :provider, presence: true
