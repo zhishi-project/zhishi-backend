@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20160201170223) do
     t.string   "token"
     t.string   "profile_picture"
     t.string   "profile_url"
-    t.string   "profile_email"
+    t.string   "email"
   end
 
   add_index "social_providers", ["user_id"], name: "index_social_providers_on_user_id"

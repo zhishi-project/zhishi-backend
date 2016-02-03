@@ -1,8 +1,7 @@
 class AnswersController < ApplicationController
-  include OwnershipConcern
   before_action :set_question
   before_action :set_answer, only: [:show, :update, :destroy]
-  before_action :check_user_owns_answer, only: [:update, :destroy]
+  include OwnershipConcern
 
   def index
     @answers = @question.answers.all
@@ -11,7 +10,6 @@ class AnswersController < ApplicationController
   end
 
   def show
-    require 'pry' ; binding.pry
     render json: @answer
   end
 
