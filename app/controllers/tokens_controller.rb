@@ -9,9 +9,9 @@ class TokensController < ApplicationController
 
   private
     def set_token
-      @token = Token.active.find_by(temp: params[:temp_token]).try(:destroy)
       puts "The error occurs here=====+<><><><><++========="
       puts @token.user_id
+      @token = Token.active.find_by(temp: params[:temp_token]).try(:destroy)
       resource_not_found unless @token
     end
 end
