@@ -34,6 +34,11 @@ private
     render json: {errors: "Request was made with invalid token"}, status: 401
   end
 
+  def error_msg
+    "The operation could not be performed."\
+    " Please check your request or try again later"
+  end
+
 
   def set_attrs_in_session(hash={})
     hash.each do |key, val|

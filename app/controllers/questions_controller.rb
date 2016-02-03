@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
   before_action :authenticate_user
+
   def index
     questions = Question.all
     render json: questions, status: 200
@@ -46,11 +47,6 @@ class QuestionsController < ApplicationController
   def set_question
     @question = Question.find_by(id: questions_params[:id])
     resource_not_found && return unless @question
-  end
-
-  def error_msg
-    "The operation could not be performed."\
-    " Please check your request or try again later"
   end
 
   def questions_params
