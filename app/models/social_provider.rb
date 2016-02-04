@@ -12,7 +12,7 @@ class SocialProvider < ActiveRecord::Base
       sp.profile_picture = auth.info.image
       url_for_profile = auth.info.urls
       sp.profile_url = url_for_profile[:Google] || url_for_profile[:Slack] || url_for_profile[:public_profile]
-      sp.profile_email = auth.info.email
+      sp.email = auth.info.email
     end
     social_user.update(user: user) if user && social_user.user.blank?
     social_user
