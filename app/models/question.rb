@@ -8,6 +8,22 @@ class Question < ActiveRecord::Base
   validates :content, presence: true
 
   include Modify
+  include ActionView::Helpers::DateHelper
+
+  def time_updated
+    created = DateTime.parse(created_at.to_s).in_time_zone
+    updated = DateTime.parse(updated_at.to_s).in_time_zone
+
+    if (updated - created).to_i > 2
+      return distance_of_time_in_words(updated, Time.zone.now) + " ago"
+    end
+
+    nil
+  end
+
+  def increment_views
+    update(views: views + 1)
+  end
 
   class << self
     def with_answers
