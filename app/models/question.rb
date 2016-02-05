@@ -15,7 +15,7 @@ class Question < ActiveRecord::Base
     end
 
     def top
-      order("votes DESC")
+      joins(:votes).select("questions.*, SUM(votes.value) as total_votes").group(:id).order('total_votes DESC')
     end
 
     def add_comment_to_question(question_id, user_id, content)
