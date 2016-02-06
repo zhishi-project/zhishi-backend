@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
 
 
   attr_reader :current_user
-  # before_action :authenticate_user
+  before_action :authenticate_user
 
   def resource_not_found
     not_found = "The resource you tried to access was not found"
