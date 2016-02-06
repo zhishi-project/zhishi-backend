@@ -2,8 +2,7 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
 
   def index
-    questions = Question.with_votes.page(params[:page])
-    # .paginate(page: params[:page])
+    questions = Question.with_votes.paginate(page: params[:page])
     render json: questions, status: 200
   end
 
