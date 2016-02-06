@@ -66,7 +66,7 @@ Request
 ```ruby
   {
     auth_token: "90ioji0j0i0i0ik0k0jmj0090jknieu93833r335",
-    text: "Why in the world do I have to do this?"
+    content: "Why in the world do I have to do this?"
   }
 ```
 
@@ -171,7 +171,7 @@ Request
 ```ruby
   {
     auth_token: "90ioji0j0i0i0ik0k0jmj0090jknieu93833r335",
-    text: "What in the world does this mean?"
+    content: "What in the world does this mean?"
   }
 ```
 

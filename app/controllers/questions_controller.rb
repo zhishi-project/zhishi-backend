@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-  before_action :authenticate_user
 
   def index
-    questions = Question.all
+    questions = Question.with_votes.page(params[:page])
+    # .paginate(page: params[:page])
     render json: questions, status: 200
   end
 

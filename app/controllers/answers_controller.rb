@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   include OwnershipConcern
 
   def index
-    @answers = @question.answers.all
+    @answers = @question.answers.with_votes
 
     render json: @answers
   end
