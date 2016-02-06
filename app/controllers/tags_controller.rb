@@ -1,5 +1,4 @@
 class TagsController < ApplicationController
-  before_action :authenticate_token
 
   def index
     render json: Tag.search(params[:q]), status: 200
