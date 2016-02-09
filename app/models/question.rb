@@ -1,4 +1,5 @@
 class Question < ActiveRecord::Base
+  include VotesCounter
   has_many :comments, as: :comment_on
   has_many :votes, as: :voteable
   has_many :tags, as: :subscriber
@@ -30,9 +31,6 @@ class Question < ActiveRecord::Base
       includes(:answers)
     end
 
-    def top
-      order("votes DESC")
-    end
 
     def add_comment_to_question(question_id, user_id, content)
       question = find_by(id: question_id)

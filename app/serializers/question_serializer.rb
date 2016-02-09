@@ -1,28 +1,12 @@
 class QuestionSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :title, :content, :votes, :comments, :tags, :answers,
-             :created_at, :updated_at, :votes_count, :answers_count, :views_count,
-             :time_updated, :user
+  attributes :id, :user, :title, :content, :votes_count, :tags, :created_at, :updated_at, :answers_count, :comments_count, :views
 
-  has_many :comments, as: :comment_on
-  has_many :tags, as: :subscriber
-  has_many :answers
-
-  def votes_count
-    object.votes.count
-  end
-
-  def answers_count
-    object.answers.count
-  end
-
-  def views_count
-    object.views
-  end
 
   def user
     {
+      id: object.user.id,
       name: object.user.name,
-      image: object.user.social_providers.first.profile_picture
+      image: object.user.social_providers.first.try(:profile_picture)
     }
   end
 end

@@ -21,4 +21,5 @@
 
 codesnip
 /vendor/*
+association_count.rb
 /.idea/

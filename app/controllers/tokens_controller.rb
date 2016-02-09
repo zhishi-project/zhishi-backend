@@ -4,7 +4,7 @@ class TokensController < ApplicationController
 
   def validate
     user_token = @token.user.refresh_token
-    render json: {api_key: user_token}, status: :ok
+    render json: {api_key: user_token }, status: :ok
   end
 
   private
