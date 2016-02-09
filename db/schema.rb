@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20160206104129) do
     t.datetime "updated_at",                 null: false
     t.integer  "comments_count", default: 0
     t.integer  "answers_count",  default: 0
+    t.integer  "views",          default: 0
   end
 
   create_table "social_providers", force: :cascade do |t|

@@ -2,11 +2,12 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
 
   def index
-    questions = Question.with_votes.paginate(page: params[:page])
+    questions = Question.by_date.paginate(page: params[:page])
     render json: questions, status: 200
   end
 
   def show
+    @question.increment_views
     render json: @question, status: 200
   end
 
@@ -49,6 +50,6 @@ class QuestionsController < ApplicationController
   end
 
   def questions_params
-    params.permit(:id, :title, :content, :votes)
+    params.permit(:id, :title, :content)
   end
 end

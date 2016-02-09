@@ -7,7 +7,11 @@ module VotesCounter
       }
 
       scope :top, ->(needed=10) {
-        with_votes.order('total_votes DESC').limit(needed)
+        with_votes.order('total_votes DESC, created_at DESC').limit(needed)
+      }
+
+      scope :by_date, -> {
+        with_votes.order('created_at DESC')
       }
   end
 
