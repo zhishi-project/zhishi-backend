@@ -24,11 +24,11 @@ Rails.application.routes.draw do
   resources :comments, only: [:update, :delete]
 
   post "users/logout" => "user#logout"
+  get 'users/renew_token' => 'users#renew_token'
   get "users" => "users#index"
   get "users/:id" => "users#show"
   get "users/:id/questions" => "users#questions"
   get "users/:id/tags" => "users#tags"
-  get 'users/renew_token' => 'users#renew_token'
   get "tags" => "tags#index"
   get "tags/popular" => "tags#popular"
   get "tags/recent" => "tags#recent"
