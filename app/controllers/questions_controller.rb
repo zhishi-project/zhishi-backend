@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @question.increment_views
     render json: @question, status: 200
   end
 
