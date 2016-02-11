@@ -13,6 +13,7 @@ class QuestionsController < ApplicationController
 
   def create
     question = Question.new(questions_params)
+    question.user = current_user
     if question.save
       render json: question, status: :created
     else

@@ -76,7 +76,7 @@ Request
   POST  /questions
   params: {
     title: "Question Title",
-    description: "Question Description",
+    content: "Question Description",
     user_id: "current user id",
     tags: "tag 1", "tag 2",
   }
