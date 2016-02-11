@@ -1,6 +1,5 @@
 class QuestionSerializer < ActiveModel::Serializer
-  attributes :id, :user, :title, :content, :votes_count, :tags, :created_at, :updated_at, :answers_count, :comments_count, :views
-
+  attributes :id, :title, :content, :votes_count, :tags, :created_at, :updated_at, :answers_count, :comments_count, :views
 
   def user
     {
