@@ -21,8 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def refresh_token
-    token = TokenManager.generate_token(self.id)
-    token
+    TokenManager.generate_token(self.id)
   end
 
   def self.from_token(token)
