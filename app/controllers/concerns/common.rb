@@ -20,5 +20,3 @@ module Common
     comment_id.present?
   end
 end
-
-

@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :social_providers
   has_many :tokens
+  has_many :votes
   EMAIL_FORMAT= /(?<email>[.\w]+@andela).co[m]?\z/
 
   def self.from_omniauth(auth, user=nil)
