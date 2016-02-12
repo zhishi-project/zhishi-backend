@@ -46,11 +46,11 @@ class QuestionsController < ApplicationController
   private
 
   def set_question
-    @question = Question.find_by(id: questions_params[:id])
+    @question = Question.find_by(id: params[:id])
     resource_not_found && return unless @question
   end
 
   def question_params
-    params.permit(:id, :title, :content)
+    params.permit(:title, :content)
   end
 end
