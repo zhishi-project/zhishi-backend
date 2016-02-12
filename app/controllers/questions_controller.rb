@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     @question.increment_views
-    render json: @question, status: 200
+    render json: @question, include_answers: true, status: 200
   end
 
   def create
