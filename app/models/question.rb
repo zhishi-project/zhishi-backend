@@ -7,6 +7,7 @@ class Question < ActiveRecord::Base
   belongs_to :user
   validates :title, presence: true
   validates :content, presence: true
+  validates :user, presence: true
 
   include Modify
   include ActionView::Helpers::DateHelper
