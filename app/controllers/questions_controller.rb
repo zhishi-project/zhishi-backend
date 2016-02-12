@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    question = Question.new(questions_params)
+    question = Question.new(question_params)
     question.user = current_user
     if question.save
       render json: question, status: :created
@@ -22,7 +22,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.try(:update, questions_params)
+    if @question.try(:update, question_params)
       render json: @question, status: 200
     else
        invalid_request(error_msg)
@@ -46,11 +46,11 @@ class QuestionsController < ApplicationController
   private
 
   def set_question
-    @question = Question.find_by(id: questions_params[:id])
+    @question = Question.find_by(id: params[:id])
     resource_not_found && return unless @question
   end
 
-  def questions_params
-    params.permit(:id, :title, :content)
+  def question_params
+    params.permit(:title, :content)
   end
 end
