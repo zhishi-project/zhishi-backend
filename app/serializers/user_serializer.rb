@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :image
+  attributes :id, :name, :email, :image, :points
 
   def attributes(*args)
     data = super
