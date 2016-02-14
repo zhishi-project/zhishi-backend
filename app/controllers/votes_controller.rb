@@ -1,5 +1,5 @@
 class VotesController < ApplicationController
-  before_action :current_user, :custom_initializer
+  before_action :custom_initializer
   attr_reader :user_id, :question_id, :answer_id, :comment_id, :id
 
   include Common
