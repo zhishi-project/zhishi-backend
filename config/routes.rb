@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  post "questions/:question_id/upvote" => "votes#upvote"
-  post "answers/:answer_id/upvote" => "votes#upvote"
-  post "comments/:comment_id/upvote" => "votes#upvote"
-  post "questions/:question_id/downvote" => "votes#downvote"
-  post "answers/:answer_id/downvote" => "votes#downvote"
-  post "comments/:comment_id/downvote" => "votes#downvote"
+  scope '/:resource_name/:id', constraints: { resource_name: /(questions|answers|comments)/ } do
+    post '/upvote', to: 'votes#upvote'
+    post '/downvote', to: 'votes#downvote'
+  end
+
   post '/validate_token', to: 'tokens#validate'
 
   resources :questions, except: [:new, :edit] do
