@@ -26,7 +26,7 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      head :no_content
+      render json: @answer, status: 200
     else
       invalid_request(error_msg)
     end
