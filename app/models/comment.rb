@@ -3,5 +3,6 @@ class Comment < ActiveRecord::Base
   has_many :votes, as: :voteable
   belongs_to :comment_on, polymorphic: true, counter_cache: true
   belongs_to :user
+  validates :user, presence: true
   validates :content, presence: true
 end

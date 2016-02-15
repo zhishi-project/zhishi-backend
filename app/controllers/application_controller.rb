@@ -2,7 +2,6 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
   include ActionController::Serialization
 
-
   attr_reader :current_user
   before_action :authenticate_user
 
