@@ -5,7 +5,6 @@ class MainSerializer < ActiveModel::Serializer
     object.votes.voted?(object.class.to_s, object.id, object.user)
   end
 
-
   def user
     {
       id: object.user.id,
