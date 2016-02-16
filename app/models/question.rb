@@ -9,7 +9,6 @@ class Question < ActiveRecord::Base
   validates :content, presence: true
   validates :user, presence: true
 
-  include Modify
   include ActionView::Helpers::DateHelper
 
   def time_updated
@@ -27,32 +26,7 @@ class Question < ActiveRecord::Base
     update(views: views + 1)
   end
 
-  class << self
-    def with_answers
-      includes(:answers)
-    end
-
-
-    def add_comment_to_question(question_id, user_id, content)
-      question = find_by(id: question_id)
-      if question
-        question.comments.create(user_id: user_id, content: content)
-      end
-    end
-
-    def find_question_comment(question_id, id)
-      question = find_by(id: question_id)
-      if question
-        question.comments.where(id: id)
-      end
-    end
-
-    def delete_question_comment(id, user_id, question_id)
-      Modify::Updater.affected_record(question_id, self, user_id).destroy(id)
-    end
-
-    def update_question_comment(id, user_id, question_id, attribute, value)
-      Modify::Updater.update_subject_comment(id, user_id, question_id, self, attribute, value)
-    end
+  def self.with_answers
+    includes(:answers)
   end
 end

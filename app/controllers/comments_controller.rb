@@ -1,76 +1,59 @@
 class CommentsController < ApplicationController
-  before_action :custom_initializer
-  attr_reader :user_id, :question_id, :answer_id, :id, :content
-
-  include Common
+  before_action :set_resource
+  before_action :set_comment, only: [:show, :update, :destroy]
 
   def index
-    question = Question.find_by(id: question_id) if action_on_question
-    answer = Answer.find_by(id: answer_id) if action_on_answer
-    comments = question.comments if question
-    comments = answer.comments if answer
-    render json: comments, status: 200 unless comments.nil?
-    render json: { error: false }, status: 404 if comments.nil?
+    render json: @resource_comments, status: 200
   end
 
   def show
-    comments = Question.find_question_comment(question_id, id) if action_on_question
-    comments = Answer.find_answer_comment(answer_id, id) if action_on_answer
-    render json: comments , status: 200
-  rescue
-    render json: { error: false }, status: 404
+      render json: @comment, status: 200
   end
 
   def create
-    unless content.nil? || content == ""
-      if action_on_question
-        comments = Question.add_comment_to_question(question_id, user_id, content)
-      elsif action_on_answer
-        comments = Answer.add_comment_to_answer(answer_id, user_id, content)
-      end
-      render json: comments, root: false
+    comment = @resource_comments.new(content: comment_params[:content])
+    comment.user = current_user
+    if comment.save
+      render json: comment, root: false
     else
-      render json: { error: "Comment body can not be empty!" }, status: 403
+      invalid_request("Comment body can not be empty!")
     end
   end
 
   def update
-    status = update_subject(id, user_id, "content", content) if content && content != ""
-    message = { response: status ? true : false }
-    render json: message
-  rescue
-    render json: { error: false }, status: 403
+    if @comment.update(content: comment_params[:content])
+      render json: @comment
+    else
+      invalid_request("Comment body can not be empty!")
+    end
   end
 
   def destroy
-    if action_on_question
-      deleted if Question.delete_question_comment(id, user_id, question_id)
-    elsif action_on_answer
-      deleted if Answer.delete_answer_comment(id, user_id, answer_id)
+    if @comment.try(:destroy)
+      render json: { response: "Comment deleted." }, status: 410
+    else
+      invalid_request
     end
-  rescue
-    render json: { error: false }, status: 403
   end
 
   private
 
   def comment_params
-    params.permit(:question_id, :answer_id, :id, :content, :downvote, :upvote)
+    params.permit(:resource_name, :resource_id, :content, :id)
   end
 
-  def custom_initializer
-    set_vars(comment_params)
+  def set_resource
+    resource = comment_params[:resource_name].singularize.camelize.constantize.find_by(id: comment_params[:resource_id])
+    resource_not_found && return unless resource
+    @resource_comments = resource.comments
   end
 
-  def deleted
-    render json: { response: "Comment deleted." }, status: 410
-  end
+  def set_comment
+    @comment = @resource_comments.find_by(id: comment_params[:id])
+    resource_not_found && return unless @comment
 
-  def update_subject(id, user_id, attribute, value = nil)
-    if action_on_question
-      comments = Question.update_question_comment(id, user_id, question_id, attribute, value)
-    elsif action_on_answer
-      comments = Answer.update_answer_comment(id, user_id, answer_id, attribute, value)
+    unless (params[:action] == 'show') || (@comment.user.eql? current_user)
+      render json: { error: "It is your comment?" }, status: 401
     end
   end
 end
