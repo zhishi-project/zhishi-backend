@@ -19,8 +19,6 @@ Rails.application.routes.draw do
 
   get "top_questions" => "questions#top_questions"
 
-  resources :answers, except: [:index, :show, :create, :destroy, :update, :new, :edit]
-
   post "users/logout" => "user#logout"
   get 'users/renew_token' => 'users#renew_token'
   get "users" => "users#index"

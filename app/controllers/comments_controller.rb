@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_resource
   before_action :set_comment, only: [:show, :update, :destroy]
+  include OwnershipConcern
 
   def index
     render json: @resource_comments, status: 200
@@ -14,7 +15,7 @@ class CommentsController < ApplicationController
     comment = @resource_comments.new(content: comment_params[:content])
     comment.user = current_user
     if comment.save
-      render json: comment, root: false
+      render json: comment, status: 201
     else
       invalid_request("Comment body can not be empty!")
     end
@@ -22,7 +23,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(content: comment_params[:content])
-      render json: @comment
+      render json: @comment, status: 200
     else
       invalid_request("Comment body can not be empty!")
     end
@@ -30,7 +31,7 @@ class CommentsController < ApplicationController
 
   def destroy
     if @comment.try(:destroy)
-      render json: { response: "Comment deleted." }, status: 410
+      render json: :head, status: 204
     else
       invalid_request
     end
@@ -51,9 +52,5 @@ class CommentsController < ApplicationController
   def set_comment
     @comment = @resource_comments.find_by(id: comment_params[:id])
     resource_not_found && return unless @comment
-
-    unless (params[:action] == 'show') || (@comment.user.eql? current_user)
-      render json: { error: "It is your comment?" }, status: 401
-    end
   end
 end
