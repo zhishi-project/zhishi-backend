@@ -5,12 +5,9 @@ class AnswersController < ApplicationController
 
   def index
     @answers = @question.answers.with_votes
-
-    render json: @answers
   end
 
   def show
-    render json: @answer
   end
 
   def create
@@ -18,7 +15,7 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      render json: @answer, status: :created, location: question_answer_path(@question, @answer)
+      render :show
     else
       invalid_request(error_msg)
     end
@@ -26,7 +23,7 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      render json: @answer, status: 200
+      render :show
     else
       invalid_request(error_msg)
     end

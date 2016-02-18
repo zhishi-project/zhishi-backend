@@ -13,7 +13,7 @@ gem 'figaro'
 gem 'ancestry'
 gem 'will_paginate'
 # gem 'kaminari'
-gem "active_model_serializers", github: "rails-api/active_model_serializers"
+gem 'jbuilder'
 gem "jwt"
 gem 'unicorn-rails'
 gem 'rack-cors'
