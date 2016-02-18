@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
-  scope '/:resource_name/:id', constraints: { resource_name: /(questions|answers|comments)/ } do
+  scope '/:resource_name/:resource_id', constraints: { resource_name: /(questions|answers|comments)/ } do
     post '/upvote', to: 'votes#upvote'
     post '/downvote', to: 'votes#downvote'
-  end
-
-  scope '/:resource_name/:resource_id', constraints: { resource_name: /(questions|answers)/} do
-    resources :comments, except: [:new, :edit]
+    resources :comments, except: [:new, :edit], resource_name: /(?!comments).*/
   end
 
   post '/validate_token', to: 'tokens#validate'
