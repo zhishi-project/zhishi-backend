@@ -3,9 +3,7 @@ class TokensController < ApplicationController
   skip_before_action :authenticate_user, only: [:validate]
 
   def validate
-    user = @token.user
-    user_token = user.refresh_token
-    render json: user, api_key: user_token, status: :ok
+    @user = @token.user
   end
 
   private

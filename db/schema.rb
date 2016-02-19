@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20160223082642) do
     t.string   "content"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "views",          default: 0
     t.integer  "comments_count", default: 0
     t.integer  "answers_count",  default: 0
-    t.integer  "views",          default: 0
   end
 
   create_table "resource_tags", force: :cascade do |t|
@@ -103,12 +103,12 @@ ActiveRecord::Schema.define(version: 20160223082642) do
   end
 
   create_table "votes", force: :cascade do |t|
+    t.integer  "user_id"
     t.integer  "voteable_id"
     t.string   "voteable_type"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "value"
-    t.integer  "user_id"
   end
 
   add_index "votes", ["user_id"], name: "index_votes_on_user_id"

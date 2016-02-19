@@ -13,8 +13,7 @@ gem 'figaro'
 gem 'ancestry'
 gem 'will_paginate'
 gem "puma"
-# gem 'kaminari'
-gem 'jbuilder'
+gem "jbuilder"
 gem "jwt"
 # gem 'unicorn-rails'
 gem 'rack-cors'

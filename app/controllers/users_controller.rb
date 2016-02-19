@@ -8,13 +8,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: @user, status: :ok
   end
 
 
   def update
     if @user.update(user_params)
-      head :no_content
+      render :show
     else @user.errors
       render json: @user.errors, status: :unprocessable_entity
     end
