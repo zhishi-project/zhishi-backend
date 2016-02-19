@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :vote do
-    value { rand(-1..1) }
+    value { [1, -1].sample }
     user
 
     factory :vote_on_question do
