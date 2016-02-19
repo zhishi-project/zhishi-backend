@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  scope '/:resource_name/:id', constraints: { resource_name: /(questions|answers|comments)/ } do
+  scope '/:resource_name/:resource_id', constraints: { resource_name: /(questions|answers|comments)/ } do
     post '/upvote', to: 'votes#upvote'
     post '/downvote', to: 'votes#downvote'
+    resources :comments, except: [:new, :edit], resource_name: /(?!comments).*/
   end
 
   post '/validate_token', to: 'tokens#validate'
@@ -10,17 +11,10 @@ Rails.application.routes.draw do
     get "recent_answers"
     get "popular_answers"
 
-    resources :comments, except: [:new, :edit]
     resources :answers, except: [:new, :edit]
   end
 
   get "top_questions" => "questions#top_questions"
-
-  resources :answers, except: [:index, :show, :create, :destroy, :update, :new, :edit] do
-    resources :comments, except: [:new, :edit]
-  end
-
-  resources :comments, only: [:update, :delete]
 
   post "users/logout" => "user#logout"
   get 'users/renew_token' => 'users#renew_token'
