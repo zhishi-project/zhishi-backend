@@ -10,9 +10,9 @@ class CommentsController < ApplicationController
   end
 
   def create
-    comment = @resource_comments.new(content: comment_params[:content])
-    comment.user = current_user
-    if comment.save
+    @comment = @resource_comments.new(content: comment_params[:content])
+    @comment.user = current_user
+    if @comment.save
       render :show
     else
       invalid_request("Comment body can not be empty!")
