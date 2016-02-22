@@ -8,24 +8,35 @@ Rails.application.routes.draw do
   post '/validate_token', to: 'tokens#validate'
 
   resources :questions, except: [:new, :edit] do
-    get "recent_answers"
-    get "popular_answers"
+    member do
+      get "recent_answers"
+      get "popular_answers"
+    end
 
     resources :answers, except: [:new, :edit]
   end
 
   get "top_questions" => "questions#top_questions"
 
-  post "users/logout" => "user#logout"
-  get 'users/renew_token' => 'users#renew_token'
-  get "users" => "users#index"
-  get "users/:id" => "users#show"
-  get "users/:id/questions" => "users#questions"
-  get "users/:id/tags" => "users#tags"
-  get "tags" => "tags#index"
-  get "tags/popular" => "tags#popular"
-  get "tags/recent" => "tags#recent"
-  get "tags/trending" => "tags#trending"
+  resources :users, only: [:show, :index] do
+    member do
+      get :questions
+      get :tags
+    end
+
+    collection do
+      post :logout
+      get :renew_token
+    end
+  end
+
+  resources :tags, only: [:index] do
+    collection do
+      get :popular
+      get :recent
+      get :trending
+    end
+  end
 
   get 'login', to: "users#login"
   get 'login/:provider', to: "users#login"
