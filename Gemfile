@@ -12,10 +12,11 @@ gem "omniauth-google-oauth2"
 gem 'figaro'
 gem 'ancestry'
 gem 'will_paginate'
+gem "puma"
 # gem 'kaminari'
 gem "active_model_serializers", github: "rails-api/active_model_serializers"
 gem "jwt"
-gem 'unicorn-rails'
+# gem 'unicorn-rails'
 gem 'rack-cors'
 
 
