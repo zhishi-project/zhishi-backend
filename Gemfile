@@ -28,6 +28,8 @@ group :development, :test do
   gem "pry-rails"
   gem "pry-nav"
   gem "faker"
+  gem "factory_girl_rails"
+  gem "database_cleaner"
 end
 
 group :production do
