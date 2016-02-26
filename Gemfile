@@ -18,6 +18,10 @@ gem "active_model_serializers", github: "rails-api/active_model_serializers"
 gem "jwt"
 # gem 'unicorn-rails'
 gem 'rack-cors'
+# for perfomance and monitoring timeout ensures that when a request is taking too long, it is automatically terminated
+# new relic provides a dashboard to view the perfomance of our application
+gem "rack-timeout"
+gem 'newrelic_rpm'
 
 
 group :development, :test do
