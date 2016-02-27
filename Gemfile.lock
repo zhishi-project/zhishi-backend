@@ -1,12 +1,3 @@
-GIT
-  remote: git://github.com/rails-api/active_model_serializers.git
-  revision: b45f7b4ffea36b44fdf7be075295ad9db6bea1b0
-  specs:
-    active_model_serializers (0.10.0.rc4)
-      actionpack (>= 4.0)
-      activemodel (>= 4.0)
-      railties (>= 4.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -63,6 +54,9 @@ GEM
       activesupport (>= 4.1.0)
     hashie (3.4.3)
     i18n (0.7.0)
+    jbuilder (2.4.1)
+      activesupport (>= 3.0.0, < 5.1)
+      multi_json (~> 1.2)
     json (1.8.3)
     jwt (1.5.1)
     loofah (2.0.3)
@@ -176,10 +170,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers!
   ancestry
   faker
   figaro
+  jbuilder
   jwt
   omniauth-google-oauth2
   omniauth-oauth2 (~> 1.3.1)
