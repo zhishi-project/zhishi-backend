@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
-    name Faker::Name.name
-    email "#{Faker::Lorem.word}#{Faker::Number.hexadecimal(3)}@andela.com"
+    name { Faker::Name.name }
+    sequence(:email) { |n| "#{Faker::Lorem.word}#{n}@andela.com" }
 
     factory :user_with_comments_on_question do
       transient do

@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :question do
-    title Faker::StarWars.quote
-    content Faker::Hipster.paragraph
-    views 10
+    title { Faker::StarWars.quote }
+    content { Faker::Hipster.paragraph }
+    views { rand(5) }
     user
 
     factory :question_with_tag do

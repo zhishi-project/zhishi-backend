@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :vote do
-    value Faker::Number.between(-1, 1)
+    value { rand(-1..1) }
     user
 
     factory :vote_on_question do

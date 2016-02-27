@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :comment do
-    content Faker::Hacker.say_something_smart
+    content { Faker::Hacker.say_something_smart }
     user
 
     factory :comment_on_question do
