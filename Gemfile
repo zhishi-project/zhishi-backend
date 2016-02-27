@@ -2,7 +2,6 @@ source "https://rubygems.org"
 
 ruby "2.2.3"
 
-
 gem 'rails', '4.2.5'
 gem 'rails-api'
 gem 'spring', :group => :development
@@ -13,8 +12,7 @@ gem 'figaro'
 gem 'ancestry'
 gem 'will_paginate'
 gem "puma"
-# gem 'kaminari'
-gem 'jbuilder'
+gem "jbuilder"
 gem "jwt"
 # gem 'unicorn-rails'
 gem 'rack-cors'

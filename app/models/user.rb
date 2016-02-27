@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
     TokenManager.generate_token(self.id)
   end
 
+  def get_picture
+    social_providers.first.try(:profile_picture)
+  end
+
   def self.from_token(token)
     user_token = TokenManager.decode(token)
     user = find_by(id: user_token['user'])
