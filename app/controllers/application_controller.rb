@@ -16,7 +16,6 @@ class ApplicationController < ActionController::API
 
 private
   def authenticate_user
-    # @current_user = User.first
     authenticate_token || unauthorized_token
   end
 
