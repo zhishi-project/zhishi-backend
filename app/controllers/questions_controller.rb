@@ -2,20 +2,19 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
 
   def index
-    questions = Question.by_date.paginate(page: params[:page])
-    render json: questions, status: 200
+    @questions = Question.with_basic_association.paginate(page: params[:page])
   end
 
   def show
+    @answers = @question.answers.with_associations
     @question.increment_views
-    render json: @question, include_answers: true, status: 200
   end
 
   def create
-    question = Question.new(question_params)
-    question.user = current_user
-    if question.save
-      render json: question, status: :created
+    @question = Question.new(question_params)
+    @question.user = current_user
+    if @question.save
+      render :show
     else
       invalid_request(error_msg)
     end
@@ -23,11 +22,10 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.try(:update, question_params)
-      render json: @question, status: 200
+      render :show
     else
-       invalid_request(error_msg)
+      invalid_request(error_msg)
     end
-
   end
 
   def destroy
@@ -39,14 +37,14 @@ class QuestionsController < ApplicationController
   end
 
   def top_questions
-    questions = Question.top
-    render json: questions, status: 200
+    @questions = Question.includes(:user).top
+    render :index
   end
 
   private
 
   def set_question
-    @question = Question.find_by(id: params[:id])
+    @question = Question.with_associations.find_by(id: params[:id])
     resource_not_found && return unless @question
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212200122) do
+ActiveRecord::Schema.define(version: 20160223082642) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -44,6 +44,17 @@ ActiveRecord::Schema.define(version: 20160212200122) do
     t.integer  "views",          default: 0
   end
 
+  create_table "resource_tags", force: :cascade do |t|
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tag_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "resource_tags", ["tag_id"], name: "index_resource_tags_on_tag_id"
+  add_index "resource_tags", ["taggable_type", "taggable_id"], name: "index_resource_tags_on_taggable_type_and_taggable_id"
+
   create_table "social_providers", force: :cascade do |t|
     t.string   "provider"
     t.string   "uuid"
@@ -68,6 +79,7 @@ ActiveRecord::Schema.define(version: 20160212200122) do
     t.datetime "updated_at",      null: false
   end
 
+  add_index "tags", ["name"], name: "index_tags_on_name"
   add_index "tags", ["subscriber_type", "subscriber_id"], name: "index_tags_on_subscriber_type_and_subscriber_id"
 
   create_table "tokens", force: :cascade do |t|
@@ -84,8 +96,6 @@ ActiveRecord::Schema.define(version: 20160212200122) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "uuid"
-    t.string   "provider"
     t.integer  "points",     default: 0
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false

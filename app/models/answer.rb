@@ -7,4 +7,8 @@ class Answer < ActiveRecord::Base
   belongs_to :question, counter_cache: true
 
   validates :content, presence: true
+
+  def self.with_associations
+    includes(:user).includes(:comments).with_votes
+  end
 end

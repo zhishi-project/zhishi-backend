@@ -5,7 +5,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.paginate(page: params[:page])
-    render json: @users, status: :ok
   end
 
   def show
@@ -77,7 +76,7 @@ class UsersController < ApplicationController
     end
 
     def set_user
-      @user = User.find_by(id: params[:id])
+      @user = User.find_by(id: (params[:user_id] || params[:id]))
       resource_not_found && return unless @user
     end
 

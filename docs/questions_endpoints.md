@@ -18,7 +18,7 @@ Response
 ```ruby
 Status: 200
   {
-    question:[{
+    questions:[{
             id: 1,
             title: "what is Andela?",
             user_id: 1,
@@ -276,17 +276,10 @@ Status: 200
     question: {
       id: 1,
       title: "Edited Question Title",
-      description: "Edited Question Description",
-      user_id: 1,
-      up_votes: 0
-      down_votes: 0
-      comment:  [{  }],
-      answers: [{
-                 "No answers yet"
-               }],
-      tags:  [{
-                matches: [ "tag 1", "tag 2", "tag 3"]
-             }],
+      content: "Edited Question Description",
+      votes_count: 1,
+      answers_count: 0
+      comments_count: 0
       created_at: "2015-12-14T16:51:06.437Z",
       updated_at: "2015-12-14T16:51:06.437Z",
     }

@@ -1,8 +1,8 @@
 class Tag < ActiveRecord::Base
-  belongs_to :subscriber, polymorphic: true
 
   validates :name, presence: true
-  validates :subscriber_id, presence: true
+  has_many :tags_questions
+  has_many :questions, through: :tags_questions
 
   def self.get_tags_that_are(arg)
     case arg
