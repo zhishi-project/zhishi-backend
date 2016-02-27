@@ -18,6 +18,10 @@ gem 'jbuilder'
 gem "jwt"
 # gem 'unicorn-rails'
 gem 'rack-cors'
+# for perfomance and monitoring timeout ensures that when a request is taking too long, it is automatically terminated
+# new relic provides a dashboard to view the perfomance of our application
+gem "rack-timeout"
+gem 'newrelic_rpm'
 
 
 group :development, :test do
@@ -30,4 +34,5 @@ end
 
 group :production do
   gem "pg"
+  gem "rails_12factor"
 end
