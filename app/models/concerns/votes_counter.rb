@@ -16,7 +16,14 @@ module VotesCounter
   end
 
   def votes_count
-    try(:total_votes) || votes.sum(:value)
+    try(:total_votes) || votes_alternative
+  end
+
+  def votes_alternative
+    votes.reduce(0) do |_ , v|
+      t = _.to_i + v.value
+      t
+    end
   end
 
 end

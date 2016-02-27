@@ -24,7 +24,9 @@ class Question < ActiveRecord::Base
   end
 
   def self.with_associations
-    includes(:answers).includes(:user).includes(:comments)
+    eager_load(:votes).eager_load(answers: [{comments: [:user, :votes]}, :user, :votes]).
+    eager_load(:user).eager_load(comments: [:user, :votes]).eager_load(:tags)
+
   end
 
   def self.with_basic_association
@@ -32,7 +34,7 @@ class Question < ActiveRecord::Base
   end
 
   def tags_to_a
-    tags.pluck(:name)
+    tags.map(&:name)
   end
 
   def increment_views
