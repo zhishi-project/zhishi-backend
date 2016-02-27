@@ -21,7 +21,7 @@ module VotesCounter
 
   def votes_alternative
     votes.reduce(0) do |_ , v|
-      _.to_i + v.value
+      _ + v.value
     end
   end
 
