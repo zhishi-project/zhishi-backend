@@ -4,18 +4,16 @@ class CommentsController < ApplicationController
   include OwnershipConcern
 
   def index
-    render json: @resource_comments, status: 200
   end
 
   def show
-      render json: @comment, status: 200
   end
 
   def create
-    comment = @resource_comments.new(content: comment_params[:content])
-    comment.user = current_user
-    if comment.save
-      render json: comment, status: 201
+    @comment = @resource_comments.new(content: comment_params[:content])
+    @comment.user = current_user
+    if @comment.save
+      render :show
     else
       invalid_request("Comment body can not be empty!")
     end
@@ -23,7 +21,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(content: comment_params[:content])
-      render json: @comment, status: 200
+      render :show
     else
       invalid_request("Comment body can not be empty!")
     end
