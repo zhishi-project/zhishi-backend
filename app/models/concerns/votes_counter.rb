@@ -24,4 +24,5 @@ module VotesCounter
       _ + v.value
     end
   end
+
 end

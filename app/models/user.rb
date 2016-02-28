@@ -7,9 +7,6 @@ class User < ActiveRecord::Base
   has_many :social_providers
   has_many :tokens
   has_many :votes
-  has_many :resource_tags, as: :taggable
-  has_many :tags, through: :resource_tags
-
   EMAIL_FORMAT= /(?<email>[.\w]+@andela).co[m]?\z/
 
   def self.from_omniauth(auth, user=nil)
