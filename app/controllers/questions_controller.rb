@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    # @answers = @question.answers.with_associations
+    binding.pry
     @question.increment_views
   end
 
