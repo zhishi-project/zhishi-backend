@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223082642) do
+ActiveRecord::Schema.define(version: 20160228211317) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -73,14 +73,11 @@ ActiveRecord::Schema.define(version: 20160223082642) do
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
-    t.integer  "subscriber_id"
-    t.string   "subscriber_type"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name"
-  add_index "tags", ["subscriber_type", "subscriber_id"], name: "index_tags_on_subscriber_type_and_subscriber_id"
 
   create_table "tokens", force: :cascade do |t|
     t.integer  "user_id"
