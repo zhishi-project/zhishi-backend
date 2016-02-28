@@ -4,13 +4,13 @@ class Question < ActiveRecord::Base
 
   has_many :comments, as: :comment_on
   has_many :votes, as: :voteable
+  has_many :resource_tags, as: :taggable
+  has_many :tags, through: :resource_tags
   has_many :answers
   belongs_to :user
   validates :title, presence: true
   validates :content, presence: true
   validates :user, presence: true
-  has_many :resource_tags, as: :taggable
-  has_many :tags, through: :resource_tags
 
   def time_updated
     created = DateTime.parse(created_at.to_s).in_time_zone

@@ -1,9 +1,8 @@
 class Tag < ActiveRecord::Base
 
   validates :name, presence: true
-  has_many :resource_tags
-  has_many :questions, through: :resource_tags, source: :taggable, source_type: 'Question'
-  has_many :users, through: :resource_tags, source: :taggable, source_type: 'User'
+  has_many :tags_questions
+  has_many :questions, through: :tags_questions
 
   def self.get_tags_that_are(arg)
     case arg
