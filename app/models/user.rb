@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   include AndelaValidator
   has_many :comments, as: :comment_on
-  has_many :tags, as: :subscriber
   has_many :questions
   has_many :answers
   has_many :social_providers
