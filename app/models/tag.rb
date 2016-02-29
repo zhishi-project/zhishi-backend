@@ -1,5 +1,4 @@
 class Tag < ActiveRecord::Base
-
   validates :name, presence: true
   has_many :resource_tags
   has_many :questions, through: :resource_tags, source: :taggable, source_type: 'Question'

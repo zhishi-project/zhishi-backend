@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    binding.pry
     @question.increment_views
   end
 

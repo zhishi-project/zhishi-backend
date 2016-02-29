@@ -37,7 +37,7 @@ RSpec.describe Answer, type: :model do
       expect(answer.user).to be_instance_of User
     end
 
-    it "returns of the user it belongs to" do
+    it "returns the user it belongs to" do
       name = 'John Doe'
       user = create(:user, name: name)
       answer = create(:answer, user: user)
