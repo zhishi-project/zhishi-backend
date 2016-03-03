@@ -1,0 +1,31 @@
+def set_valid_omniauth(email = nil)
+  OmniAuth.config.add_mock(:google_oauth2, build_google_oauth2_response(email))
+end
+
+def set_invalid_omniauth
+  OmniAuth.config.mock_auth[:google_oauth2] = :invalid_credentials
+  false
+end
+
+def build_google_oauth2_response(email)
+  OmniAuth::AuthHash.new(
+    provider: "google_auth2", uid: "123456789",
+    info: { name: "John Dummy", email: email || "johndummy@andela.com",
+            image: "https://lh3.googleusercontent.com/url/photo.jpg"
+          },
+    credentials: { token: "token", refresh_token: "another_token",
+                   expires_at: 1_354_920_555, expires: true
+                 },
+    extra: { raw_info: { sub: "123456789", email: "dummy@domain.andela.com",
+                         email_verified: true,
+                         name: "John Dummy",
+                         profile: "https://plus.google.com/123456789",
+                         picture: "https://plus.google.com/123456789",
+                         gender: "male",
+                         birthday: "1968-06-25",
+                         locale: "en",
+                         hd: "example.com"
+                       }
+            }
+  )
+end
