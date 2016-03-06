@@ -8,7 +8,7 @@ FactoryGirl.define do
     end
 
     factory :comment_on_answer do
-      association :comment_on, factory: :question
+      association :comment_on, factory: :answer
     end
 
     factory :comment_with_votes do

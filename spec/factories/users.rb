@@ -72,5 +72,15 @@ FactoryGirl.define do
         create_list(:vote_on_answer, evaluator.votes_count, user: user)
       end
     end
+
+    factory :user_with_votes_on_comment do
+      transient do
+        votes_count 5
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:vote_on_comment, evaluator.votes_count, user: user)
+      end
+    end
   end
 end

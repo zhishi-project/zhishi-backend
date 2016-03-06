@@ -10,7 +10,7 @@ RSpec.describe Answer, type: :model do
 
     it "returns a collection of all comments on answer" do
       comment = "This is a comment"
-      create(:comment, comment_on: answer, content: comment)
+      create(:comment_on_answer, comment_on: answer, content: comment)
       expect(answer.comments).not_to be_empty
       expect(answer.comments.count).to be 1
       expect(answer.comments.first).to be_instance_of Comment
@@ -132,4 +132,6 @@ RSpec.describe Answer, type: :model do
       expect(not_eager_loaded_answer.association(:votes).loaded?).to be false
     end
   end
+
+  it_behaves_like "a votable", :answer_with_votes
 end
