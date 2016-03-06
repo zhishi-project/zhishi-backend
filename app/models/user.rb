@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     TokenManager.generate_token(self.id)
   end
 
-  def get_picture
+  def image
     social_providers.first.try(:profile_picture)
   end
 end

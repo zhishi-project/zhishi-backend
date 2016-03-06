@@ -1,2 +1,1 @@
-json.extract! user, :id, :name, :email, :points
-json.image user.get_picture
+json.user user, :id, :name, :email, :points, :image

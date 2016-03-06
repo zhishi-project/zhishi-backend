@@ -1,3 +1,6 @@
+require 'sidekiq/web'
+require 'sidekiq-status/web'
+
 Rails.application.routes.draw do
   scope '/:resource_name/:resource_id', constraints: { resource_name: /(questions|answers|comments)/ } do
     post '/upvote', to: 'votes#upvote'
@@ -42,5 +45,7 @@ Rails.application.routes.draw do
   get 'login/:provider', to: "users#login"
 
   get 'auth/:provider/callback', to: 'users#authenticate', as: :authenticate
+  mount Sidekiq::Web => '/sidekiq'
+
   match "*path", to: 'application#resource_not_found', via: :all
 end
