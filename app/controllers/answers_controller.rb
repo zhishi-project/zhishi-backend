@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_question
-  before_action :set_answer, only: [:show, :update, :destroy]
+  before_action :set_answer, only: [:show, :update, :destroy, :accept]
   include OwnershipConcern
 
   def index
@@ -37,10 +37,16 @@ class AnswersController < ApplicationController
     end
   end
 
+  def accept
+    @answer.accept
+    render json: { message: "Answer Accepted" }, status: 201
+  end
+
   private
 
     def set_answer
-      @answer = @question.answers.find_by(id: params[:id])
+      id = params[:id] || params[:answer_id]
+      @answer = @question.answers.find_by(id: id)
       resource_not_found && return unless @answer
     end
 

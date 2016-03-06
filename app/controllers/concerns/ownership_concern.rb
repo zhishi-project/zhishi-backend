@@ -1,5 +1,5 @@
-
 require 'forwardable'
+
 module OwnershipConcern
   extend ActiveSupport::Concern
 
@@ -10,7 +10,7 @@ module OwnershipConcern
       controller_name.singularize
     end
 
-    before_action "check_user_owns_#{resource_name}", only: [:update, :destroy]
+    before_action "check_user_owns_#{resource_name}", only: [:update, :destroy, :accept]
 
     define_method "check_user_owns_#{resource_name}" do
       resource = instance_variable_get("@#{resource_name}")
