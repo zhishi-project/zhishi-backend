@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/andela-iamadi/zhishi-backend/badge.svg?branch=ft-question-and-socialprov-tests)](https://coveralls.io/github/andela-iamadi/zhishi-backend?branch=ft-question-and-socialprov-tests)
+
 # Zhishi
 You've definitely being in this situation before:
   > Someone asks you a question;
