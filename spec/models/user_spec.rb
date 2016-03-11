@@ -195,4 +195,32 @@ RSpec.describe User, type: :model do
       expect(user.social_providers.first.provider).to eql provider
     end
   end
+
+  describe "#can_vote?" do
+    context "when the user has 15 points or more" do
+      before(:each) do
+        user.update_attribute(:points, 15)
+      end
+
+      it { expect(user.can_vote?).to be_truthy }
+    end
+
+    context "when the user has less than 15 points" do
+      before(:each) do
+        user.update_attribute(:points, 14)
+      end
+
+      it { expect(user.can_vote?).to be_falsey }
+    end
+  end
+
+  describe "#update_user_reputation" do
+    context "when 5 is passed to the method" do
+      let(:rewarding) do
+        user.update_user_reputation(5)
+      end
+
+      it { expect { rewarding }.to change(user, :points).by 5 }
+    end
+  end
 end

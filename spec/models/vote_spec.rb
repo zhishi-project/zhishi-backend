@@ -26,16 +26,12 @@ RSpec.describe Vote, type: :model do
       expect(Vote.process_vote(subject_class, subject_id, user, value)).to be_an Integer
       expect((Vote.process_vote(subject_class, subject_id, user, value).abs)).to eq(1)
     end
-  end
 
-  describe ".process_vote" do
     it "returns nil" do
       allow(Vote).to receive(:subject_exists?).and_return (nil)
       expect(Vote.process_vote(subject_class, subject_id, user, value)).to be nil
     end
-  end
 
-  describe ".process_vote" do
     it "throws an error on invalid params" do
       expect(Vote.process_vote(subject_class, invalid_subject_id, invalid_user, value)).to be nil
     end
@@ -70,9 +66,7 @@ RSpec.describe Vote, type: :model do
       expect(Vote.voted?(subject_class, subject_id, user, invalid_value)).to eq(false)
       expect(Vote.voted?(subject_class, invalid_subject_id, user, value)).to eq(false)
     end
-  end
 
-  describe ".voted?" do
     it "returns true if the user has voted" do
       vote
       expect(Vote.voted?(subject_class, subject_id, user)).to eq(true)
@@ -124,6 +118,67 @@ RSpec.describe Vote, type: :model do
 
         it { expect(reward).to eq -2 }
         it { expect { reward }.to change(Vote, :count).by 1 }
+      end
+    end
+  end
+
+  describe ".evaluate_reward" do
+    context "when user has NOT voted before" do
+      let(:new_vote) { true }
+      
+      context "when voting an Answer" do
+        let(:resource) { Answer }
+        context "when making an upvote" do
+          let(:vote) { 1 }
+          it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq 5 }
+        end
+
+        context "when making a downvote" do
+          let(:vote) { -1 }
+          it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq -2 }
+        end
+      end
+
+      context "when voting an Question" do
+        let(:resource) { Question }
+        context "when making an upvote" do
+          let(:vote) { 1 }
+          it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq 5 }
+        end
+
+        context "when making a downvote" do
+          let(:vote) { -1 }
+          it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq -2 }
+        end
+      end
+
+      context "when voting a Comment" do
+        let(:resource) { Comment }
+        context "when making an upvote" do
+          let(:vote) { 1 }
+          it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq 2 }
+        end
+      end
+    end
+
+    context "when a user is changing his vote" do
+      let(:new_vote) { false }
+      context "when voting an Answer" do
+        let(:resource) { Answer }
+        context "when making an opposite vote (upvote or downvote)" do
+          let(:vote) { [1, -1].sample }
+          let(:reward) { 7 * vote }
+          it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq reward }
+        end
+      end
+
+      context "when voting a Question" do
+        let(:resource) { Question }
+        context "when making an opposite vote (upvote or downvote)" do
+          let(:vote) { [1, -1].sample }
+          let(:reward) { 7 * vote }
+          it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq reward }
+        end
       end
     end
   end

@@ -20,7 +20,9 @@ Rails.application.routes.draw do
     end
 
     resources :answers, except: [:new, :edit] do
-      get "/accept", to: "answers#accept"
+      member do
+        get "accept"
+      end
     end
   end
 

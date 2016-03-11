@@ -33,12 +33,12 @@ class User < ActiveRecord::Base
   end
 
   def can_vote?
-    return true # if points >= 15
-    false
+    points >= 15
   end
 
   def update_user_reputation(new_reward)
-    self.points += new_reward
-    save
+    new_point = points + new_reward
+    new_point = 0 if new_point < 0
+    update(points: new_point)
   end
 end
