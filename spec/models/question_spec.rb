@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
-  subject { build(:question, user: user) }
   let(:user) { build(:user) }
   let(:question){create(:question, user: user)}
 
@@ -32,23 +31,28 @@ end
 
     describe "#increment_views" do
       it "increments views" do
-        question.increment_views
-        expect(0..10).to cover(question.views)
+        expect{question.increment_views}.to change{question.views}.by(1)
       end
     end
 
     describe "#with_associations" do
+      before(:each){ question }
+      
       it "has associations" do
-        subject.save
         expect(Question.all.first.association(:user).loaded?).to be false
+        expect(Question.with_associations.first.association(:votes).loaded?).to be true
+        expect(Question.with_associations.first.association(:answers).loaded?).to be true
         expect(Question.with_associations.first.association(:user).loaded?).to be true
       end
     end
 
     describe "#with_basic_association" do
+      before(:each){ question }
+
       it "has basic associations" do
-        subject.save
         expect(Question.all.first.association(:user).loaded?).to be false
+        expect(Question.with_basic_association.first.association(:votes).loaded?).to be false
+        expect(Question.with_basic_association.first.association(:answers).loaded?).to be false
         expect(Question.with_basic_association.first.association(:user).loaded?).to be true
       end
     end

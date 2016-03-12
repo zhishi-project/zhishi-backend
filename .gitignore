@@ -24,3 +24,4 @@ codesnip
 association_count.rb
 /.idea/
 /coverage/*
+/.coveralls.yml
