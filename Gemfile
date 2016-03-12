@@ -32,6 +32,8 @@ group :development, :test do
   gem "database_cleaner"
   gem "shoulda-matchers", require: false
   gem "codeclimate-test-reporter"
+  gem 'simplecov', :require => false, :group => :test
+  gem 'coveralls', require: false
 end
 
 group :production do

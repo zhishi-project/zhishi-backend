@@ -26,7 +26,6 @@ class Question < ActiveRecord::Base
   def self.with_associations
     eager_load(:votes).eager_load(answers: [{comments: [:user, :votes]}, :user, :votes]).
     eager_load(:user).eager_load(comments: [:user, :votes]).eager_load(:tags)
-
   end
 
   def self.with_basic_association

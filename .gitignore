@@ -23,3 +23,5 @@ codesnip
 /vendor/*
 association_count.rb
 /.idea/
+/coverage/*
+/.coveralls.yml

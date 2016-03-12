@@ -28,6 +28,14 @@ RSpec.describe Comment, type: :model do
     it { is_expected.to belong_to(:comment_on) }
   end
 
+  describe "#with_associations" do
+    it "has associations" do
+      subject.save
+      expect(Comment.all.first.association(:user).loaded?).to be false
+      expect(Comment.with_associations.first.association(:user).loaded?).to be true
+    end
+  end
+
   context "when I create a new comment" do
     it { expect(Comment.all).to be_empty }
 

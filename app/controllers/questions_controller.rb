@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
+  include OwnershipConcern
 
   def index
     @questions = Question.with_basic_association.paginate(page: params[:page])

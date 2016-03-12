@@ -10,7 +10,7 @@ FactoryGirl.define do
         tags_count 5
       end
       after(:create) do |question, evaluator|
-        create_list(:tag, evaluator.tags_count, subscriber: question)
+        create_list(:tag, evaluator.tags_count, taggable: question)
       end
     end
 

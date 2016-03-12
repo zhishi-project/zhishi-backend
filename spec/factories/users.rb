@@ -29,7 +29,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        create_list(:tag, evaluator.tags_count, subscriber: user)
+        create_list(:user_resource_tag, evaluator.tags_count, taggable: user)
       end
     end
 
