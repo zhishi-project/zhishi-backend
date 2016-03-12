@@ -63,7 +63,7 @@ class UsersController < ApplicationController
   end
 
   def tags
-    @user.subscribed_tags
+    @user.tags
   end
 
   private
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
     end
 
     def set_user
-      @user = User.find_by(id: (params[:user_id] || params[:id]))
+      @user = User.includes(:tags).find_by(id: params[:id])
       resource_not_found && return unless @user
     end
 

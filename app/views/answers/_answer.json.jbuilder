@@ -1,9 +1,5 @@
-json.answers(answers) do |answer|
-  json.partial! 'comments/default', data: answer
-  json.extract! answer, :question_id
-  json.extract! answer, :comments_count
-  json.user do
-    json.partial! 'users/user', user: answer.user
-  end
-  json.partial! 'comments/comment', comments: answer.comments
+json.extract! answer, :question_id, :comments_count, :id, :content, :votes_count, :created_at, :updated_at
+json.user { json.partial! 'users/user', user: answer.user }
+json.comments(answer.comments) do |comment|
+  json.partial! 'comments/comment', comment: comment
 end

@@ -34,10 +34,6 @@ class Question < ActiveRecord::Base
     by_date.includes(user: [:social_providers])
   end
 
-  def tags_to_a
-    tags.map(&:name)
-  end
-
   def increment_views
     update(views: views + 1)
   end

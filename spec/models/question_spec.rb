@@ -17,49 +17,42 @@ RSpec.describe Question, type: :model do
     end
   end
 
-  it 'returns empty array if question has no tag' do
-    expect(question.tags.count).to eq 0
-    expect(question.tags_to_a).to eq []
+  describe "#increment_views" do
+    it "increments views" do
+      expect{question.increment_views}.to change{question.views}.by(1)
+    end
   end
 
-it "returns array contain tag names" do
-   tag = create(:tag, name: "Zhishi")
-   create(:question_resource_tag, tag: tag, taggable: question)
-   expect(question.tags.count).to eq 1
-   expect(question.tags_to_a).to eq ['Zhishi']
-end
+  describe ".with_associations" do
+    before(:each){ question }
 
-    describe "#increment_views" do
-      it "increments views" do
-        expect{question.increment_views}.to change{question.views}.by(1)
-      end
+    it "has associations" do
+      expect(Question.all.first.association(:user).loaded?).to be false
+      expect(Question.with_associations.first.association(:votes).loaded?).to be true
+      expect(Question.with_associations.first.association(:answers).loaded?).to be true
+      expect(Question.with_associations.first.association(:user).loaded?).to be true
     end
+  end
 
-    describe "#with_associations" do
-      before(:each){ question }
-      
-      it "has associations" do
-        expect(Question.all.first.association(:user).loaded?).to be false
-        expect(Question.with_associations.first.association(:votes).loaded?).to be true
-        expect(Question.with_associations.first.association(:answers).loaded?).to be true
-        expect(Question.with_associations.first.association(:user).loaded?).to be true
-      end
+  describe ".with_basic_association" do
+    before(:each){ question }
+
+    it "has basic associations" do
+      expect(Question.all.first.association(:user).loaded?).to be false
+      expect(Question.with_basic_association.first.association(:votes).loaded?).to be false
+      expect(Question.with_basic_association.first.association(:answers).loaded?).to be false
+      expect(Question.with_basic_association.first.association(:user).loaded?).to be true
     end
+  end
 
-    describe "#with_basic_association" do
-      before(:each){ question }
-
-      it "has basic associations" do
-        expect(Question.all.first.association(:user).loaded?).to be false
-        expect(Question.with_basic_association.first.association(:votes).loaded?).to be false
-        expect(Question.with_basic_association.first.association(:answers).loaded?).to be false
-        expect(Question.with_basic_association.first.association(:user).loaded?).to be true
-      end
+  describe "#with_answers" do
+    it "eager_loads answers" do
+      create(:question_with_answers)
+      with_answer_loaded = Question.with_answers.all
+      without_answer_loaded = Question.all
+      expect(with_answer_loaded == without_answer_loaded).to be true
+      expect(with_answer_loaded.first.association(:answers).loaded?).to be true
+      expect(without_answer_loaded.first.association(:answers).loaded?).to be false
     end
-
-    describe "#with_answers" do
-      it "has answers" do
-        expect(Question.with_answers).not_to be nil
-      end
-    end
+  end
 end

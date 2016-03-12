@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
 
   def index
-    render json: Tag.search(params[:q]), status: 200
+    @tags =  Tag.search(params[:q])
   end
 
   def popular

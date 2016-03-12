@@ -1,5 +1,8 @@
 json.partial! 'questions/question', question: @question
-json.partial! 'tags/tag', tags: @question.tags_to_a
-json.partial! 'answers/answer', answers: @question.answers
-# require 'pry' ; binding.pry
-json.partial! 'comments/comment', comments: @question.comments
+json.partial! 'tags/tag', tags: @question.tags
+json.answers(@question.answers) do |answer|
+  json.partial! 'answers/answer', answer: answer
+end
+json.comments(@question.comments) do |comment|
+  json.partial! 'comments/comment', comment: comment
+end

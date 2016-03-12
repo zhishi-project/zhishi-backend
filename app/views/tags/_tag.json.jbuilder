@@ -1,1 +1,1 @@
-json.tags tags
+json.tags tags.map(&:name)

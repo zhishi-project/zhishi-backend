@@ -1,1 +1,1 @@
-json.extract! @tag, :id, :created_at, :updated_at
+json.partial! 'tag', tag: @tag

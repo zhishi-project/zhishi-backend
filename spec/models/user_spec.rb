@@ -107,14 +107,14 @@ RSpec.describe User, type: :model do
 
   describe ":get_picture" do
     it "returns nil if user has no picture" do
-      expect(user.get_picture).to be_nil
+      expect(user.image).to be_nil
     end
 
     it "returns the url to user picture if user has picture" do
       image = Faker::Avatar.image
       user.social_providers.create(profile_picture: image)
-      expect(user.get_picture).not_to be_nil
-      expect(user.get_picture).to eql image
+      expect(user.image).not_to be_nil
+      expect(user.image).to eql image
     end
   end
 

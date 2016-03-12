@@ -1,1 +1,3 @@
-json.partial! 'questions/all_questions'
+json.array!(@questions) do |question|
+  json.partial! 'questions/question', question: question
+end
