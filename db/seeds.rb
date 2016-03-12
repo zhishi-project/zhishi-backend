@@ -6,6 +6,40 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+FakeOmniAuth = Struct.new(:uid, :provider) do
+  Info = Struct.new(:name, :email, :image, :urls)
+  Credential = Struct.new(:token, :refresh_token)
+
+  def info
+    user_credentials = {
+      name: name,
+      email: Faker::Internet.email.gsub(/@.+/, '@andela.com'),
+      image: Faker::Avatar.image(name),
+      url: {
+        Google: Faker::Internet.url,
+      }
+    }
+    Info.new(*user_credentials.values)
+  end
+
+  def name
+    @name ||= Faker::Name.first_name
+  end
+
+  def credentials
+    token = SecureRandom.uuid.gsub('-', '')
+    Credential.new(token, nil)
+  end
+end
+
+24.times{
+  email = Faker::Internet.email.gsub(/@.+/, '@andela.com')
+  name = Faker::Name.first_name
+  id_number = Faker::IDNumber.valid
+
+  User.from_omniauth(FakeOmniAuth.new(id_number, 'google-oauth2'))
+}
+
 questions_list =[
   ["Requirements for Amity", "What are the requirements for geting accommodation at Amity" ],
   ["Renewing Amity Contract", "What happens at the expiration of the 6 months Amity resident agreement? Is it automatically renewed or are there processes to follow to get it renew. In same vein what steps are required if someone wants to leave before the expiration of the agreement."],
@@ -22,6 +56,6 @@ questions_list =[
   ["What is the whole purpose of simulations project?", "What is the whole purpose of simulations project when the checkpoints do a better job of enabling fellows to learn things faster?"]
 ]
 
-questions_list.each do |title, content, user_id|
+questions_list.each do |title, content|
   Question.create(title: title, content: content, user: User.order('RANDOM()').limit(1).first)
 end

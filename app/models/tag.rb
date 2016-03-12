@@ -1,4 +1,6 @@
 class Tag < ActiveRecord::Base
+  include Searchable
+
   validates :name, presence: true
   has_many :resource_tags
   has_many :questions, through: :resource_tags, source: :taggable, source_type: 'Question'
@@ -15,8 +17,9 @@ class Tag < ActiveRecord::Base
     end
   end
 
-  scope :search, -> (arg) do
-    val = arg ? where(arel_table[:name].matches("%#{arg}%")) : all
-    val.limit(5)
+  def as_indexed_json(options={})
+    self.as_json(
+      only: [:name]
+    )
   end
 end
