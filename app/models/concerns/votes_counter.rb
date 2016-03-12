@@ -16,7 +16,11 @@ module VotesCounter
   end
 
   def votes_count
-    try(:total_votes) || votes_alternative
+    if respond_to? :total_votes
+      total_votes.to_i
+    else
+      votes_alternative
+    end
   end
 
   def votes_alternative
