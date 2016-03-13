@@ -75,4 +75,16 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
+
+  class RequestObj
+    def self.headers
+    { "Authorization" => TokenManager.generate_token(1) }
+    end
+  end
+
+  class BadObj
+    def self.headers
+    { "Authorization" => nil }
+    end
+  end
 end
