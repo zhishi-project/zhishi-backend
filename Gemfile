@@ -20,7 +20,13 @@ gem 'rack-cors'
 # new relic provides a dashboard to view the perfomance of our application
 gem "rack-timeout"
 gem 'newrelic_rpm'
-
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+gem 'sidekiq'
+gem 'sidekiq-failures'
+gem 'sidekiq-status'
+gem 'redis-namespace'
+gem 'sinatra', '>= 1.3.0', require: false
 
 group :development, :test do
   gem "sqlite3"
