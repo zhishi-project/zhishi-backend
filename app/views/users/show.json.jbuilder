@@ -1,3 +1,3 @@
 json.partial! "user", user: @user
-json.extract! @user, :active, :created_at, :updated_at
-json.subscriptions @user.tags.pluck(:name)
+json.partial! 'tags/tag', tags: @user.tags
+json.extract! @user, :email, :active, :created_at, :updated_at

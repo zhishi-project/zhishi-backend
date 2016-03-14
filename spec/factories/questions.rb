@@ -5,12 +5,12 @@ FactoryGirl.define do
     views { rand(5) }
     user
 
-    factory :question_with_tag do
+    factory :question_with_tags do
       transient do
         tags_count 5
       end
       after(:create) do |question, evaluator|
-        create_list(:tag, evaluator.tags_count, taggable: question)
+        create_list(:question_resource_tag, evaluator.tags_count, taggable: question)
       end
     end
 
