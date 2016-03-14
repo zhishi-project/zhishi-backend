@@ -41,6 +41,10 @@ class QuestionsController < ApplicationController
     render :index
   end
 
+  def search
+    @questions = Question.search(params[:q])
+  end
+
   private
 
   def set_question

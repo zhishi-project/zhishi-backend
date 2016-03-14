@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   post '/validate_token', to: 'tokens#validate'
 
   resources :questions, except: [:new, :edit] do
+    collection do
+      get :search
+    end
     member do
       get "recent_answers"
       get "popular_answers"

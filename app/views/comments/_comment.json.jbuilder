@@ -1,1 +1,1 @@
- json.comments @comment, partial: 'comments/default', as: :data
+ json.comments comments, partial: 'comments/default', as: :data

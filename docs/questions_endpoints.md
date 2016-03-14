@@ -8,6 +8,7 @@ GET /questions/:id |question's id, auth_token in header| Returns the question wi
 GET questions/top_questions | offset, limit ( both could be optional ), auth_token in header | Returns the questions matching the criteria for top questions or error message if any.
 PUT questions/:id| question's id, update information(title, description), auth_token in header | Returns the updated question and all the information concerning it  or error message if any.
 DELETE questions/:id| question's id, auth_token in header | Returns a confirmation that the question has been deleted  or error message if any.
+GET questions/search | `q` which has the value of the params to search | Returns an array of questions, with a few things stripped off, such as association counts etc
 
 ## GET /questions/
 Request
@@ -22,10 +23,8 @@ Status: 200
             id: 1,
             title: "what is Andela?",
             user_id: 1,
-            tags:  [{
-                      matches: [ "operations", "Andela"],
-                   }],
-          }
+            tags:  [ "operations", "Andela"],
+          },
           {
             id: 2
             title: "where is Amity?"
@@ -314,5 +313,62 @@ Status: 200
 Status: 403
   {
     message: Error Message
+  }
+```
+
+
+## GET /questions/search
+Request
+```ruby
+ GET  /questions/search?q=search+params
+```
+Response
+```ruby
+Status: 200
+  {
+    questions:[{
+            id: 1,
+            title: "what is Andela?",
+            content: "Andela has been said to be everything"
+            user: {
+              name: 'User Name',
+              email: 'username@email.com',
+            },
+            tags:  [ "operations", "Andela"],
+            url: 'http://zhishi.com/questions/1',
+          }
+          {
+            id: 2
+            title: "where is Amity?"
+            user_id: 12
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+          {
+            id: 3
+            title: "what is M55?"
+            user_id: 4
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+          {
+            id: 4
+            title: "What is DevOps?"
+            user_id: 12
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+          {
+            id: 5
+            title: "What is month one all about?"
+            user_id: 12
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+    ]
   }
 ```
