@@ -4,6 +4,7 @@ class TokensController < ApplicationController
 
   def validate
     @user = @token.user
+    @user.update(active: true)
   end
 
   private

@@ -21,9 +21,8 @@ private
 
   def authenticate_token
     authenticate_with_http_token do |auth_token, options|
-      payload, _header = TokenManager.decode(auth_token)
-      user_id = payload ? payload['user'] : nil
-      @current_user = User.find_by(id: user_id)
+      user_id = TokenManager.authenticate(auth_token)['user']
+      @current_user = User.where(active: true).find_by(id: user_id)
     end
   end
 
