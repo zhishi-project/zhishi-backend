@@ -37,7 +37,7 @@ class QuestionsController < ApplicationController
   end
 
   def top_questions
-    @questions = Question.includes(:user).top
+    @questions = Question.includes(user: [:social_providers]).top
     render :index
   end
 
