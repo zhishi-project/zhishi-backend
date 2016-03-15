@@ -5,6 +5,8 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
+$: << File.join(Rails.root, "spec/support")
+
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 require "shoulda/matchers"
@@ -74,17 +76,5 @@ Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
     with.library :rails
-  end
-
-  class RequestObj
-    def self.headers
-    { "Authorization" => TokenManager.generate_token(1) }
-    end
-  end
-
-  class BadObj
-    def self.headers
-    { "Authorization" => nil }
-    end
   end
 end

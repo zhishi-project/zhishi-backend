@@ -19,14 +19,10 @@ class TokenManager
       JWT.decode(token, secret, true, algorithm: "HS512")
     end
 
-    def authenticate(request_obj)
-      decode(token(request_obj))
+    def authenticate(token)
+      decode(token).first
     rescue
-      [nil, 401]
-    end
-
-    def token(request_obj)
-      request_obj.headers["Authorization"]
+      {}
     end
   end
 end

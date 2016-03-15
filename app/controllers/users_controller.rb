@@ -36,7 +36,6 @@ class UsersController < ApplicationController
 
   def authenticate
     @current_user = User.from_omniauth(env["omniauth.auth"])
-    @current_user.update(active: true)
     token = @current_user.tokens.create
     temp_token = {temp_token: token.temp}
     redirect_url = get_attrs_from_session([:redirect_url]).first

@@ -1,5 +1,4 @@
 require 'rails_helper'
-$: << File.join(Rails.root, "spec/support")
 require "omniauth_helper"
 
 RSpec.describe User, type: :model do
