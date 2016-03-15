@@ -222,4 +222,11 @@ RSpec.describe User, type: :model do
       it { expect { rewarding }.to change(user, :points).by 5 }
     end
   end
+
+  describe "#member_since" do
+    let(:user) { create(:user, created_at: 1.day.ago ) }
+    it "returns the time in words since the user was created" do
+      expect( user.member_since ).to eq("1 day ago")
+    end
+  end
 end

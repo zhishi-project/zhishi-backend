@@ -73,7 +73,7 @@ class UsersController < ApplicationController
     end
 
     def set_user
-      @user = User.includes(:tags).find_by(id: params[:id])
+      @user = User.includes(:tags, :social_providers).find_by(id: params[:id])
       resource_not_found && return unless @user
     end
 

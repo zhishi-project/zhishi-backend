@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   include AndelaValidator
-
+  include ActionView::Helpers::DateHelper
   has_many :comments
   has_many :questions
   has_many :answers
@@ -40,5 +40,9 @@ class User < ActiveRecord::Base
     new_point = points + new_reward
     new_point = 0 if new_point < 0
     update(points: new_point)
+  end
+
+  def member_since
+    distance_of_time_in_words(created_at, Time.zone.now) + " ago"
   end
 end
