@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :user do
     name { Faker::Name.name }
+    points { Faker::Number.number(2) }
     sequence(:email) { |n| "#{Faker::Lorem.word}#{n}@andela.com" }
 
     factory :user_with_comments_on_question do

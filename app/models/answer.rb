@@ -1,4 +1,6 @@
 class Answer < ActiveRecord::Base
+  ACCEPTED_ANSWER_REWARD = 20
+
   include VotesCounter
 
   has_many :comments, as: :comment_on, dependent: :destroy
@@ -25,5 +27,11 @@ class Answer < ActiveRecord::Base
                  },
                }
     )
+  end
+
+  def accept
+    self.accepted = true
+    user.update_user_reputation(ACCEPTED_ANSWER_REWARD) if changed?
+    save
   end
 end

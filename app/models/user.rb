@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include AndelaValidator
+
   has_many :comments
   has_many :questions
   has_many :answers
@@ -29,5 +30,15 @@ class User < ActiveRecord::Base
 
   def image
     social_providers.first.try(:profile_picture)
+  end
+
+  def can_vote?
+    points >= 15
+  end
+
+  def update_user_reputation(new_reward)
+    new_point = points + new_reward
+    new_point = 0 if new_point < 0
+    update(points: new_point)
   end
 end

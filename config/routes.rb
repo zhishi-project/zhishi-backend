@@ -19,7 +19,11 @@ Rails.application.routes.draw do
       get "popular_answers"
     end
 
-    resources :answers, except: [:new, :edit]
+    resources :answers, except: [:new, :edit] do
+      member do
+        get "accept"
+      end
+    end
   end
 
   get "top_questions" => "questions#top_questions"
