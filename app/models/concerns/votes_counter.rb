@@ -3,11 +3,17 @@ module VotesCounter
 
   included do
     scope :with_votes, -> {
-      joins("LEFT JOIN votes ON votes.voteable_id = #{table_name}.id AND votes.voteable_type = '#{to_s}'").select("#{table_name}.*, SUM(votes.value) AS total_votes").group("#{table_name}.id")
+      joins("LEFT JOIN votes ON votes.voteable_id = #{table_name}.id AND " \
+      "votes.voteable_type = '#{to_s}'").select("#{table_name}.*, " \
+      "SUM(votes.value) AS total_votes").group("#{table_name}.id")
     }
 
-    scope :top, -> {
+    scope :ordered_by_top, -> {
       with_votes.order('total_votes DESC, created_at DESC')
+    }
+
+    scope :top, ->(needed=10) {
+      ordered_by_top.paginate(per_page: needed, page: 1)
     }
 
     scope :by_date, -> {

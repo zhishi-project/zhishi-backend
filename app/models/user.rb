@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   include AndelaValidator
-  include ActionView::Helpers::DateHelper
+  include ActionView::Helpers::DateHelper  
   has_many :comments
   has_many :questions
   has_many :answers

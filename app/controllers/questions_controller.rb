@@ -38,7 +38,7 @@ class QuestionsController < ApplicationController
   end
 
   def top_questions
-    questions = Question.includes(user: [:social_providers]).top.paginate(page: params[:page], per_page: 10)
+    questions = Question.includes(user: [:social_providers]).top
     @questions = PaginationPresenter.new(questions)
     render :index
   end
