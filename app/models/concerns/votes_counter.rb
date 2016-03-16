@@ -6,8 +6,8 @@ module VotesCounter
       joins("LEFT JOIN votes ON votes.voteable_id = #{table_name}.id AND votes.voteable_type = '#{to_s}'").select("#{table_name}.*, SUM(votes.value) AS total_votes").group("#{table_name}.id")
     }
 
-    scope :top, ->(needed=10) {
-      with_votes.order('total_votes DESC, created_at DESC').limit(needed)
+    scope :top, -> {
+      with_votes.order('total_votes DESC, created_at DESC')
     }
 
     scope :by_date, -> {

@@ -9,6 +9,12 @@ class User < ActiveRecord::Base
   has_many :votes
   has_many :resource_tags, as: :taggable
   has_many :tags, through: :resource_tags
+  scope :with_statistics, ->{
+    joins("LEFT JOIN questions ON questions.user_id = users.id LEFT JOIN " \
+    "answers ON answers.user_id = users.id").select("users.*, " \
+    "COUNT(questions.id) AS questions_asked, COUNT(answers.id) " \
+    "AS answers_given").group("users.id")
+  }
   EMAIL_FORMAT= /(?<email>[.\w]+@andela).co[m]?\z/
 
   def self.from_omniauth(auth)
@@ -44,5 +50,9 @@ class User < ActiveRecord::Base
 
   def member_since
     distance_of_time_in_words(created_at, Time.zone.now) + " ago"
+  end
+
+  def self.with_associations
+    includes(:tags, :social_providers)
   end
 end

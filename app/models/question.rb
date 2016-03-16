@@ -35,7 +35,7 @@ class Question < ActiveRecord::Base
   end
 
   def increment_views
-    update(views: views + 1)
+    increment!(:views)
   end
 
   def self.with_answers

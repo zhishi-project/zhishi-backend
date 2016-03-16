@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
   include ProviderHelper
-  before_action :set_user, only: [:show, :update, :destroy, :questions, :tags]
+  before_action :set_user, only: [:update, :destroy, :questions, :tags]
+  before_action :set_user_with_associations_and_statistics, only: [:show]
   skip_before_action :authenticate_user, only: [:login, :authenticate]
 
   def index
-    @users = User.paginate(page: params[:page])
+    users = User.paginate(page: params[:page])
+    @users = PaginationPresenter.new(users)
   end
 
   def show
@@ -74,6 +76,11 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.includes(:tags, :social_providers).find_by(id: params[:id])
+      resource_not_found && return unless @user
+    end
+
+    def set_user_with_associations_and_statistics
+      @user = User.with_associations.with_statistics.find_by(id: params[:id])
       resource_not_found && return unless @user
     end
 
