@@ -1,4 +1,6 @@
-RSpec.describe Users::StatisticsQuery do
+require 'rails_helper'
+
+RSpec.describe Queries::StatisticsQuery do
   describe "#call" do
     it "calls the defined association" do
       association_query = described_class.new

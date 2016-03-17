@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :tags, through: :resource_tags
   EMAIL_FORMAT= /(?<email>[.\w]+@andela).co[m]?\z/
 
-  scope :with_statistics, Users::StatisticsQuery
+  scope :with_statistics, Queries::StatisticsQuery
 
   def self.from_omniauth(auth)
     email_address = auth.info.email

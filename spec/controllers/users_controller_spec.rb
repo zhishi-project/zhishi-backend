@@ -44,6 +44,7 @@ RSpec.describe UsersController, type: :controller do
       expect(user_json['name']).to eq(user.name)
       expect(user_json['email']).to eq(user.email)
       expect(user_json['questions_asked']).to eq(user.questions.size)
+      expect(user_json['member_since']).to eq(user.member_since)
       expect(user_json['answers_given']).to eq(user.answers.size)
     end
   end
