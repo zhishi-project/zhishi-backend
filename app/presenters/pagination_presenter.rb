@@ -3,61 +3,40 @@ class PaginationPresenter
 
   attr_reader :resource
 
+  # This presenter can only work with paginated resources
   def initialize(resource)
+    raise NonPaginatedResourceError.new("Resource is not a Paginated Resource") unless resource.respond_to? :total_entries
     @resource= resource
   end
 
   def meta
     {
-      total: total_resources,
+      total_records: total_entries,
       total_pages: total_pages,
       current_page: current_page,
-      is_first_page: is_first_page?,
-      is_last_page: is_last_page?,
-      previous_page: previous_page,
-      next_page: next_page,
+      is_first_page: first_page?,
+      is_last_page: last_page?,
+      previous_page: previous_url,
+      next_page: next_url,
       out_of_bounds: out_of_bounds?,
-      # next_offset: offset,
     }
   end
 
   private
-    def total_resources
-      resource.total_entries
-    end
-
-    def current_page
-      resource.current_page
-    end
-
-    def total_pages
-      resource.total_pages
-    end
-
-    def is_first_page?
+    def first_page?
       resource.current_page == 1
     end
 
-    def is_last_page?
+    def last_page?
       resource.next_page.blank?
     end
 
-    def previous_page
-      page_number = resource.previous_page
-      page_url(page_number)
+    def previous_url
+      page_url(previous_page)
     end
 
-    def next_page
-      page_number = resource.next_page
-      page_url(page_number)
-    end
-
-    def out_of_bounds?
-      resource.out_of_bounds?
-    end
-
-    def offset
-      resource.offset
+    def next_url
+      page_url(next_page)
     end
 
     def page_url(page_number)
@@ -75,4 +54,6 @@ class PaginationPresenter
     def respond_to_missing?(method_name, *)
       resource.respond_to?(method_name) || super
     end
+
+    class NonPaginatedResourceError < StandardError; end;
 end
