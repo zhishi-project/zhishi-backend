@@ -1,20 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Queries::VotesQuery do
-  let(:votes_count) { 10}
-  before do
-    10.times{ create(:question) }
-    votes_count.times{ create(:vote, user: create(:user), voteable: Question.first, value: 1)}
-  end
+  let(:subject) { described_class.new(Question) }
 
   describe "#call" do
     it "calls the defined association" do
-      association_query = described_class.new(Question).call
+      allow(subject).to receive(:total_votes)
+      allow(subject).to receive(:resource_data)
+      allow(subject).to receive(:join_associations)
 
-      resource_voted = association_query.first
+      subject.call
 
-      expect(resource_voted).to respond_to(:total_votes)
-      expect(resource_voted.total_votes).to eq(votes_count)
+      expect(subject).to have_received(:total_votes)
+      expect(subject).to have_received(:resource_data)
+      expect(subject).to have_received(:join_associations)
     end
   end
 end
