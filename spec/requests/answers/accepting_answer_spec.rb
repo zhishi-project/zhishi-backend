@@ -8,14 +8,38 @@ def path_helper(question=nil, answer=nil)
 end
 
 RSpec.describe "Accepting an answer", type: :request do
-  let(:question) { create(question_with_answers) }
-  let(:answer) { create(answer, question: question) }
+  let(:user) { create(:active_user) }
+  let(:user2) { create(:active_user) }
+  let(:question) { create(:question_with_answers, user: user) }
+  let(:answer) { create(:answer, question: question, user: user2) }
+  let(:header) { generate_valid_token(user) }
 
 
-  it_behaves_like "authenticated endpoint", path_helper, 'post'
+  it_behaves_like "authenticated endpoint", path_helper, 'get'
 
-  #validates token
-  # describe "validates"
-  #validates question belongs to user
-  #validates message is marked as accepted
+  describe "validates that question belongs to user" do
+    it "returns unauthorized_access if question doesn't belong to user" do
+      get path_helper(question, answer), {}, generate_valid_token(user2)
+      expect(response.status).to be 403
+      expect(response.body).to include "Unauthorized/Forbidden Access:"
+    end
+
+    it "allows user access if question belongs to user" do
+      get path_helper(question, answer), {}, header
+      expect(response.status).not_to be 403
+      expect(response.body).not_to include "Unauthorized/Forbidden Access:"
+    end
+  end
+
+  describe "sets answer as accepted" do
+    it "sets answer as accepted" do
+      expect(answer.accepted).to eql false
+      get path_helper(question, answer), {}, header
+      expect(answer.reload.accepted).to eql true
+    end
+
+    it "increase user reputation by 20 points" do
+      expect{ get(path_helper(question, answer), {}, header) }.to change{ user2.reload.points }.by 20
+    end
+  end
 end
