@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   has_many :tags, through: :resource_tags
   EMAIL_FORMAT= /(?<email>[.\w]+@andela).co[m]?\z/
 
+  scope :with_statistics, Queries::StatisticsQuery
+
   def self.from_omniauth(auth)
     email_address = auth.info.email
     grabbed = EMAIL_FORMAT.match(email_address).try(:[], :email)
@@ -44,5 +46,9 @@ class User < ActiveRecord::Base
 
   def member_since
     distance_of_time_in_words(created_at, Time.zone.now) + " ago"
+  end
+
+  def self.with_associations
+    includes(:tags, :social_providers)
   end
 end

@@ -22,7 +22,7 @@ private
   def authenticate_token
     authenticate_with_http_token do |auth_token, options|
       user_id = TokenManager.authenticate(auth_token)['user']
-      @current_user = User.where(active: true).find_by(id: user_id)
+      @current_user = User.find_by(id: user_id)
     end
   end
 

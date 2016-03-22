@@ -229,4 +229,24 @@ RSpec.describe User, type: :model do
       expect( user.member_since ).to eq("1 day ago")
     end
   end
+
+
+  describe ".with_statistics" do
+    let(:user) { create(:user)}
+
+    before do
+      4.times do
+        create(:question, user: user)
+        create(:answer, user: user)
+      end
+    end
+
+    it "fetches all the related assocations" do
+      user_with_association = described_class.with_statistics.find_by(id: user.id)
+      expect(user_with_association).to respond_to(:answers_given)
+      expect(user_with_association).to respond_to(:questions_asked)
+      expect(user_with_association.answers_given).to eq(4)
+      expect(user_with_association.questions_asked).to eq(4)
+    end
+  end
 end

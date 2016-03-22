@@ -3,7 +3,8 @@ class QuestionsController < ApplicationController
   include OwnershipConcern
 
   def index
-    @questions = Question.with_basic_association.paginate(page: params[:page])
+    questions = Question.with_basic_association.paginate(page: params[:page])
+    @questions = PaginationPresenter.new(questions)
   end
 
   def show
@@ -37,7 +38,8 @@ class QuestionsController < ApplicationController
   end
 
   def top_questions
-    @questions = Question.includes(user: [:social_providers]).top
+    questions = Question.includes(user: [:social_providers]).top
+    @questions = PaginationPresenter.new(questions)
     render :index
   end
 
