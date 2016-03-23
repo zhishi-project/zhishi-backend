@@ -42,7 +42,7 @@ group :development, :test do
   gem 'coveralls', require: false
 end
 
-group :production do
+group :production, :staging do
   gem "pg"
   gem "rails_12factor"
 end
