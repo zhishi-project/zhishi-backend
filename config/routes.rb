@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
     resources :answers, except: [:new, :edit] do
       member do
-        get "accept"
+        post "accept"
       end
     end
   end
