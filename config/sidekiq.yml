@@ -7,3 +7,4 @@ production:
 :queues:
   - default
   - [elasticsearch, 2]
+  - [tags, 2]

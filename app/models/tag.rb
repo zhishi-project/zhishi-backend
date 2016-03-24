@@ -6,35 +6,73 @@ class Tag < ActiveRecord::Base
   has_many :questions, through: :resource_tags, source: :taggable, source_type: 'Question'
   has_many :users, through: :resource_tags, source: :taggable, source_type: 'User'
 
-  has_many :similar_tags, class_name: 'Tag', foreign_key: "representative_id"
+  has_many :similar_tags, class_name: 'Tag', foreign_key: 'representative_id'
   belongs_to :representative, class_name: 'Tag'
 
-  before_create :assign_representative
+  before_save :downcase
+  after_create :push_representative_assignment_to_sidekiq
+  after_update :push_subscription_update_to_sidekiq, if: :representative_id_changed?
 
-  def self.get_tags_that_are(arg)
-    case arg
+  class << self
+    def get_tags_that_are(arg)
+      case arg
       when :recent
-        all.order("id DESC")
+        all.order('id DESC')
       when :popular
-        group(:name).order("count_id DESC").count("id")
+        group(:name).order('count_id DESC').count('id')
       when :trending
-        group("name").order("count_id DESC, DATE(created_at) DESC").count("id")
+        group('name').order('count_id DESC, DATE(created_at) DESC').count('id')
+      end
+    end
+
+    def process_tags(new_tags)
+      new_tags = new_tags.split(',')
+      new_tags.map { |tg| where(name: tg.downcase).find_or_initialize_by(name: tg) }
+    end
+
+    def resolution_for(tag_name)
+      {
+        query: {
+          filtered: {
+            query: { match: { name: tag_name } },
+            filter: {
+              missing: { field: :representative_id }
+            }
+          }
+        }
+      }
     end
   end
 
-  def self.process_tags(new_tags)
-    new_tags = new_tags.split(",")
-    new_tags.map{ |tg| where("name LIKE ? ", tg.downcase).find_or_initialize_by(name: tg) }
+  def downcase
+    name.downcase!
   end
 
-  def as_indexed_json(options={})
-    self.as_json(
-      only: [:name]
+  def as_indexed_json(_options = {})
+    as_json(
+      only: [:name, :representative_id]
     )
   end
 
-  def assign_representative
-    rep  = Tag.search(self.name).first
-    self.representative = rep.representative_id || rep.id
+  def push_representative_assignment_to_sidekiq
+    TagRepresentativeAssignementWorker.perform_async(id, name)
   end
+
+  def push_subscription_update_to_sidekiq
+    TagSubscriptionReassignmentWorker.perform_async(id)
+  end
+
+  def update_tag_subscriptions
+    resource_tags.remap_to_tag_parent(representative || id)
+  end
+
+  private
+
+    def search_resolution
+      Tag.resolution_for(name)
+    end
+
+    def content_that_should_not_be_indexed
+      [:created_at, :updated_at].map(&:to_s)
+    end
 end
