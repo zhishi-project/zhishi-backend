@@ -27,7 +27,10 @@ class Tag < ActiveRecord::Base
 
     def process_tags(new_tags)
       new_tags = new_tags.split(',')
-      new_tags.map { |tg| where(name: tg.downcase).find_or_initialize_by(name: tg) }
+      new_tags.map do |tag_name|
+        tag_name = tag_name.strip.downcase
+        where(name: tag_name).first_or_initialize
+      end
     end
 
     def resolution_for(tag_name)
