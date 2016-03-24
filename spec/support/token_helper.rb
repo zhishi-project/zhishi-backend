@@ -1,5 +1,5 @@
 def token_header(token)
-  {"Authorization" => "Token token=#{token}"}
+  {"Authorization" => "Token token=#{token}", "ACCEPT" => "application/json"}
 end
 
 def generate_valid_token(user = nil)
