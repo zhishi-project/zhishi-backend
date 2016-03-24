@@ -20,9 +20,9 @@ RSpec.describe Tag, type: :model do
     let(:arg) { :popular }
     it "sorts the tags in popular order" do
       expect(Tag.get_tags_that_are(arg)).to be_a Hash
-      expect(Tag.get_tags_that_are(arg).first.first).to eq("Contract")
+      expect(Tag.get_tags_that_are(arg).first.first).to eq("contract")
       expect(Tag.get_tags_that_are(arg).first.last).to eq(5)
-      expect(Tag.get_tags_that_are(arg).keys.last).to eq("Kaizen")
+      expect(Tag.get_tags_that_are(arg).keys.last).to eq("kaizen")
       expect(Tag.get_tags_that_are(arg).values.last).to eq(2)
      end
   end
@@ -32,9 +32,9 @@ RSpec.describe Tag, type: :model do
     it "sorts the tags in trending order" do
       7.times { create(:tag, name: "Kaizen") }
       expect(Tag.get_tags_that_are(arg)).to be_a Hash
-      expect(Tag.get_tags_that_are(arg).first.first).to eq("Kaizen")
+      expect(Tag.get_tags_that_are(arg).first.first).to eq("kaizen")
       expect(Tag.get_tags_that_are(arg).first.last).to eq(9)
-      expect(Tag.get_tags_that_are(arg).keys.last).to eq("Amity")
+      expect(Tag.get_tags_that_are(arg).keys.last).to eq("amity")
       expect(Tag.get_tags_that_are(arg).values.last).to eq(3)
      end
   end
