@@ -39,6 +39,36 @@ RSpec.describe Tag, type: :model do
      end
   end
 
+  describe ".process_tags" do
+    it "returns an array of new instances of tags if they don't exist" do
+      tags = "tag1,tag2,tag3"
+      result = Tag.process_tags(tags)
+      expect(result.length).to be 3
+      expect(result.map(&:name)).to eql ['tag1', 'tag2', 'tag3']
+      expect(result.map(&:new_record?)).to eql [true, true, true]
+      expect(result.first).to be_a Tag
+    end
+
+    it "returns an array of the objects if they already exist" do
+      tags = []
+      3.times { tags << create(:tag).name }
+      result = Tag.process_tags(tags.join(","))
+      expect(result.length).to be 3
+      expect(result.map(&:name)).to eql tags
+      expect(result.map(&:new_record?)).to eql [false, false, false]
+      expect(result.first).to be_a Tag
+    end
+
+    it "returns old records if found and creates new record otherwise" do
+      tags = "tag1,#{create(:tag).name},tag3"
+      result = Tag.process_tags(tags)
+      expect(result.length).to be 3
+      expect(result.map(&:name)).to eql tags.split(",")
+      expect(result.map(&:new_record?)).to eql [true, false, true]
+      expect(result.first).to be_a Tag
+    end
+  end
+
   # describe ".search" do
   #   it "fetches all occurrences of specified tag" do
   #     expect(Tag.search(tag_name)).to be_an ActiveRecord::Relation

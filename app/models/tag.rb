@@ -9,7 +9,7 @@ class Tag < ActiveRecord::Base
   has_many :similar_tags, class_name: 'Tag', foreign_key: "representative_id"
   belongs_to :representative, class_name: 'Tag'
 
-  before_create :assign_representative
+  # before_create :assign_representative
 
   def self.get_tags_that_are(arg)
     case arg
