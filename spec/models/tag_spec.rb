@@ -60,10 +60,10 @@ RSpec.describe Tag, type: :model do
     end
 
     it "returns old records if found and creates new record otherwise" do
-      tags = "tag1,#{create(:tag).name},tag3"
-      result = Tag.process_tags(tags)
+      tags = ["tag1", create(:tag).name, "tag3"]
+      result = Tag.process_tags(tags.join(","))
       expect(result.length).to be 3
-      expect(result.map(&:name)).to eql tags.split(",")
+      expect(result.map(&:name)).to eql tags
       expect(result.map(&:new_record?)).to eql [true, false, true]
       expect(result.first).to be_a Tag
     end
