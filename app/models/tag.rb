@@ -58,7 +58,7 @@ class Tag < ActiveRecord::Base
   end
 
   def push_representative_assignment_to_sidekiq
-    TagRepresentativeAssignementWorker.perform_async(id, name)
+    TagRepresentativeAssignmentWorker.perform_async(id, name)
   end
 
   def push_subscription_update_to_sidekiq
@@ -67,6 +67,10 @@ class Tag < ActiveRecord::Base
 
   def update_tag_subscriptions
     resource_tags.remap_to_tag_parent(representative || id)
+  end
+
+  def update_parent(representative)
+    update(representative: representative)
   end
 
   private

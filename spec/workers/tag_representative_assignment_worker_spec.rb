@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TagRepresentativeAssignementWorker, type: :worker do
+RSpec.describe TagRepresentativeAssignmentWorker, type: :worker do
   before do
     allow(described_class).to receive(:perform_async)
   end

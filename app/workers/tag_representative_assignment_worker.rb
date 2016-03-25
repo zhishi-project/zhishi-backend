@@ -1,4 +1,4 @@
-class TagRepresentativeAssignementWorker
+class TagRepresentativeAssignmentWorker
   include Sidekiq::Worker
   sidekiq_options retry: 5, queue: :tags, backtrace: true
 
@@ -6,8 +6,8 @@ class TagRepresentativeAssignementWorker
 
   def perform(tag_id, tag_name)
     search_resolution = Tag.resolution_for(tag_name)
-    representative = Tag.search(search_resolution).first
-    Tag.find(tag_id).update(representative_id: representative.id) if representative
+    representative = Tag.search(search_resolution).records.first
+    Tag.find(tag_id).update_parent(representative) if representative
   end
 
 end
