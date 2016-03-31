@@ -20,14 +20,13 @@ class Question < ActiveRecord::Base
     if (updated - created).to_i > 2
       return distance_of_time_in_words(updated, Time.zone.now) + " ago"
     end
-
     nil
   end
 
   def self.with_associations
-    eager_load(:votes).eager_load(answers: [{comments: [{user: [:social_providers]}, :votes]}, {user: [:social_providers]}, :votes]).
-    eager_load(user: [:social_providers]).eager_load(comments: [{user: [:social_providers]}, :votes]).eager_load(:tags)
-
+    eager_load(:votes).eager_load(:tags).eager_load(user: [:social_providers]).
+    eager_load(answers: [{user: [:social_providers]}, :votes, {comments: [{user: [:social_providers]}, :votes]}]).
+    eager_load(comments: [{user: [:social_providers]}, :votes])
   end
 
   def self.with_basic_association
