@@ -70,38 +70,69 @@ RSpec.describe Tag, type: :model do
   end
 
   describe "#push_representative_assignment_to_sidekiq" do
-    it "pushes parent assignment to sidekiq" do
+    let(:subject) { build(:tag) }
 
+    it "pushes parent assignment to sidekiq" do
+      allow(subject).to receive(:push_representative_assignment_to_sidekiq)
+
+      subject.save
+
+      expect(subject).to have_received(:push_representative_assignment_to_sidekiq)
     end
   end
 
   describe "#push_subscription_update_to_sidekiq" do
+    let(:subject) { create(:tag, name: 'tag') }
+    let(:new_rep) { create(:tag, name: 'tag') }
+
     context "when representative is changed" do
-      # allow(subject).to receive(:push_subscription_update_to_sidekiq)
+      before do
+        create_list(:tag, 2, name: 'tag', representative: subject)
+      end
+
+      it "pushes an update to change representative_id of all children" do
+        allow(subject).to receive(:push_subscription_update_to_sidekiq)
+
+        subject.update(representative: new_rep)
+
+        expect(subject).to have_received(:push_subscription_update_to_sidekiq)
+      end
     end
 
     context "when other parameters are changed" do
+      it "does not push any update to change representative_id of children" do
+        subject.update(name: 'tagger')
 
+        expect(subject).not_to receive(:push_subscription_update_to_sidekiq)
+      end
     end
   end
 
   describe "#update_tag_subscriptions" do
+    let(:new_rep) { create(:tag, name: 'tag') }
 
+    context "when there is a representative" do
+      let(:subject) { create(:tag, name: 'tag', representative: new_rep) }
+
+      it "updates the subscriptions of all users subscribed to a tag" do
+        allow(subject.resource_tags).to receive(:remap_to_tag_parent)
+
+        subject.update_tag_subscriptions
+
+        expect(subject.resource_tags).to have_received(:remap_to_tag_parent).with(subject.representative)
+      end
+    end
+
+    context "when there is no representative" do
+      let(:subject) { create(:tag) }
+
+      it "updates the subscription with the its id" do
+        allow(subject.resource_tags).to receive(:remap_to_tag_parent)
+
+        subject.update_tag_subscriptions
+
+        expect(subject.resource_tags).to have_received(:remap_to_tag_parent).with(subject)
+      end
+    end
   end
-  # describe ".search" do
-  #   it "fetches all occurrences of specified tag" do
-  #     expect(Tag.search(tag_name)).to be_an ActiveRecord::Relation
-  #     expect(Tag.search(tag_name).first.name).to eq("Amity")
-  #     expect(Tag.search(tag_name).count).to eq(3)
-  #    end
-  # end
-  #
-  # describe ".search" do
-  #   let(:tag_name) { "Hashcode" }
-  #   it "fetches nothing when specified tag does not exit" do
-  #     expect(Tag.search(tag_name)).to be_an ActiveRecord::Relation
-  #     expect(Tag.search(tag_name).first).to be nil
-  #     expect(Tag.search(tag_name).count).to eq(0)
-  #    end
-  # end
 end

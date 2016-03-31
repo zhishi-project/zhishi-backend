@@ -66,7 +66,7 @@ class Tag < ActiveRecord::Base
   end
 
   def update_tag_subscriptions
-    resource_tags.remap_to_tag_parent(representative || id)
+    resource_tags.remap_to_tag_parent(representative || self)
   end
 
   def update_parent(representative)
