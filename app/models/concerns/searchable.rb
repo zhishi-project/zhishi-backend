@@ -34,7 +34,7 @@ module Searchable
   end
 
     def index_document_with_elastic_job
-      unless (content_that_should_not_be_indexed | self.changed) == self.changed
+      unless (content_that_should_not_be_indexed & self.changed) == self.changed
         ElasticSearchSchedulerWorker.perform_async(:index, model_name.name, self.id)
       end
     end

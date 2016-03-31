@@ -14,6 +14,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question.user = current_user
+    @question.tags = Tag.process_tags(params['tags'])
     if @question.save
       render :show
     else

@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
     update(points: new_point)
   end
 
+  def subscribe(tag)
+    tags << tag
+  end
+
   def member_since
     distance_of_time_in_words(created_at, Time.zone.now) + " ago"
   end

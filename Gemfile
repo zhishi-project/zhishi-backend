@@ -30,16 +30,20 @@ gem 'sinatra', '>= 1.3.0', require: false
 
 group :development, :test do
   gem "sqlite3"
-  gem "rspec-rails"
   gem "pry-rails"
   gem "pry-nav"
   gem "faker"
-  gem "factory_girl_rails"
-  gem "database_cleaner"
+end
+
+group :test do
+  gem "rspec-rails"
   gem "shoulda-matchers", require: false
   gem "codeclimate-test-reporter"
   gem 'simplecov', :require => false, :group => :test
   gem 'coveralls', require: false
+  gem "factory_girl_rails"
+  gem "database_cleaner"
+  gem 'elasticsearch-extensions'
 end
 
 group :production, :staging do

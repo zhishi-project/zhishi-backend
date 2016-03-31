@@ -38,6 +38,7 @@ class AnswersController < ApplicationController
   end
 
   def accept
+    return unauthorized_access unless @question.user == current_user
     @answer.accept
     render json: { message: "Answer Accepted" }, status: 201
   end

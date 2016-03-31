@@ -10,7 +10,7 @@ module OwnershipConcern
       controller_name.singularize
     end
 
-    before_action "check_user_owns_#{resource_name}", only: [:update, :destroy, :accept]
+    before_action "check_user_owns_#{resource_name}", only: [:update, :destroy]
 
     define_method "check_user_owns_#{resource_name}" do
       resource = instance_variable_get("@#{resource_name}")
