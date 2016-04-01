@@ -69,7 +69,7 @@ class Question < ActiveRecord::Base
   end
 
   def content_for_index
-    [:title, :content]
+    [:title, :content, :comments_count, :answers_count, :views]
   end
 
   def content_that_should_not_be_indexed
