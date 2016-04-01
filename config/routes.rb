@@ -13,15 +13,16 @@ Rails.application.routes.draw do
   resources :questions, except: [:new, :edit] do
     collection do
       get :search
+      get :subscription_questions
     end
     member do
-      get "recent_answers"
-      get "popular_answers"
+      get :recent_answers
+      get :popular_answers
     end
 
     resources :answers, except: [:new, :edit] do
       member do
-        post "accept"
+        post :accept
       end
     end
   end

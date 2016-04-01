@@ -38,10 +38,12 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def subscription_questions
+    custom_questions(:from_user_subscription, current_user.tags.pluck(:name))
+  end
+
   def top_questions
-    questions = Question.includes(user: [:social_providers]).top
-    @questions = PaginationPresenter.new(questions)
-    render :index
+    custom_questions(:top)
   end
 
   def search
@@ -57,5 +59,12 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.permit(:title, :content)
+  end
+
+  def custom_questions(type, args=nil)
+    questions = Question.includes(user: [:social_providers])
+    questions = args ? questions.send(type, args) : questions.send(type)
+    @questions = PaginationPresenter.new(questions.paginate(page: params[:page]))
+    render :index
   end
 end
