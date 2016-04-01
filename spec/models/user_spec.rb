@@ -111,7 +111,7 @@ RSpec.describe User, type: :model do
 
     it "returns the url to user picture if user has picture" do
       image = Faker::Avatar.image
-      user.social_providers.create(profile_picture: image)
+      user.update(image: image)
       expect(user.image).not_to be_nil
       expect(user.image).to eql image
     end
