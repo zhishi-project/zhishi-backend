@@ -1,4 +1,4 @@
-json.extract! question, :id, :title, :content, :comments_count, :answers_count
+json.extract! question, :id, :title, :content, :comments_count, :answers_count, :views
 json.user do
   json.extract! question.user, :name, :email
 end
