@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 20160401195419) do
     t.string   "name"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.integer  "parent_id"
     t.integer  "representative_id"
   end
 

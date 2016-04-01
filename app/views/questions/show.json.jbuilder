@@ -1,5 +1,6 @@
 json.partial! 'questions/question', question: @question
 json.partial! 'tags/tag', tags: @question.tags
+json.voted Vote.voted(@question, current_user)
 json.answers(@question.sort_answers) do |answer|
   json.partial! 'answers/answer', answer: answer
 end
