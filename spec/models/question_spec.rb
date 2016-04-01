@@ -45,7 +45,7 @@ RSpec.describe Question, type: :model do
     end
   end
 
-  describe "#with_answers" do
+  describe ".with_answers" do
     it "eager_loads answers" do
       create(:question_with_answers)
       with_answer_loaded = Question.with_answers.all
@@ -53,6 +53,23 @@ RSpec.describe Question, type: :model do
       expect(with_answer_loaded == without_answer_loaded).to be true
       expect(with_answer_loaded.first.association(:answers).loaded?).to be true
       expect(without_answer_loaded.first.association(:answers).loaded?).to be false
+    end
+  end
+
+  describe ".from_user_subscription" do
+    let(:result) { Question.from_user_subscription(user.tags.pluck(:name)) }
+    
+    before(:each) do
+      tag = create(:tag, name: "#custom_tag")
+      create(:user_resource_tag, taggable: user, tag: tag)
+      create(:question_with_tags)
+      create(:question_resource_tag, tag: tag, taggable: question)
+    end
+
+    it "loads only questions with user subscribed tags" do
+      expect(Question.count).to eql 2
+      expect(result.count).to eql 1
+      expect(result.first).to eql question
     end
   end
 end

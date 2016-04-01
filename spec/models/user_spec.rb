@@ -249,4 +249,15 @@ RSpec.describe User, type: :model do
       expect(user_with_association.questions_asked).to eq(4)
     end
   end
+
+  describe "#subscribe" do
+    it "subscribes user to a tag" do
+      expect(user.tags).to be_empty
+      tag = create(:tag)
+      user.subscribe(tag)
+      expect(user.tags).not_to be_empty
+      expect(user.tags.count).to eql 1
+      expect(user.tags.first).to eql tag
+    end
+  end
 end
