@@ -105,6 +105,7 @@ RSpec.describe User, type: :model do
   end
 
   describe ":get_picture" do
+    let(:user) { create(:user, :without_image) }
     it "returns nil if user has no picture" do
       expect(user.image).to be_nil
     end
