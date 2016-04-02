@@ -34,6 +34,10 @@ class Question < ActiveRecord::Base
     by_date.includes(user: [:social_providers])
   end
 
+  def self.from_user_subscription(user_tags)
+    joins(:tags).where(tags: { name: user_tags })
+  end
+
   def increment_views
     increment!(:views)
   end
