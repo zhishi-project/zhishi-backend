@@ -115,7 +115,7 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  describe ":with_associations" do
+  describe ".with_associations" do
     it "eager loads user and comments associations" do
       create(:answer)
       eager_loaded_answer = Answer.with_associations.last
@@ -128,8 +128,33 @@ RSpec.describe Answer, type: :model do
       expect(eager_loaded_answer.association(:comments).loaded?).to be true
       expect(not_eager_loaded_answer.association(:comments).loaded?).to be false
 
-      # expect(eager_loaded_answer.association(:votes).loaded?).to be true
       expect(not_eager_loaded_answer.association(:votes).loaded?).to be false
+    end
+  end
+
+  describe "#as_indexed_json" do
+    it "sets up appropriate parameters for indexing" do
+      obj_format = {
+        "content"=> answer.content,
+        "user"=> { "name" => answer.user.name, "email" => answer.user.email },
+        "comments"=> []
+      }
+      expect(answer.as_indexed_json).to eql obj_format
+    end
+  end
+
+  describe "#accept" do
+    it "sets an answer as accepted and rewards user" do
+      expect(answer.accepted).to be_falsy
+      expect{answer.accept}.to change{answer.user.points}.by 20
+      expect(answer.accepted).to be_truthy
+    end
+
+    it "doesn't reward user twice" do
+      expect(answer.accepted).to be_falsy
+      expect{answer.accept}.to change{answer.user.points}.by 20
+      expect(answer.accepted).to be_truthy
+      expect{answer.accept}.to change{answer.user.points}.by 0
     end
   end
 

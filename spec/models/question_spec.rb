@@ -55,4 +55,24 @@ RSpec.describe Question, type: :model do
       expect(without_answer_loaded.first.association(:answers).loaded?).to be false
     end
   end
+
+  describe "#context_for_index" do
+    it "returns only title and content as the content to be index" do
+      expect(question.content_for_index).to eql [:title, :content]
+    end
+  end
+
+  describe "#as_indexed_json" do
+    it "sets up appropriate parameters for indexing" do
+      obj_format = {
+        "title"=> question.title,
+        "content"=> question.content,
+        "tags"=> question.tags.as_json,
+        "user"=> { "name" => user.name, "email" => user.email },
+        "comments"=> [],
+        "answers"=> []
+      }
+      expect(question.as_indexed_json).to eql obj_format
+    end
+  end
 end
