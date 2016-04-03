@@ -39,6 +39,7 @@ class AnswersController < ApplicationController
 
   def accept
     return unauthorized_access unless @question.user == current_user
+    return invalid_request('Question has an already accepted answer') if @question.answers.any?(&:accepted)
     @answer.accept
     render json: { message: "Answer Accepted" }, status: 201
   end
