@@ -60,11 +60,14 @@ class UsersController < ApplicationController
   end
 
   def questions
-    @user.questions.paginate(page: params[:page])
+    questions = @user.questions.paginate(page: params[:page])
+    @questions = PaginationPresenter.new(questions)
+    render 'questions/index'
   end
 
   def tags
-    @user.tags
+    @tags = @user.tags
+    render 'tags/index'
   end
 
   private
@@ -85,6 +88,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params[:user]
+      params.require(:user).permit(:name, :email, :image)
     end
 end
