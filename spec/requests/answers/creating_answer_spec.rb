@@ -27,13 +27,9 @@ RSpec.describe "Submitting answer to question", type: :request do
 
     it "saves if content is not empty" do
       post create_answer_path_helper(question), { answer: attributes_for(:answer) }, header
-      expect(response.status).not_to eq 400
-      expect(response.body).not_to include error_msg
-      # body = JSON.parse(response.body)
-      # answer = body["id"]
-      # expect(body).to eql answer_show_action_structure(answer)
+      expect(response.status).to eq 200
+      expect(response).to match_response_schema("answer/answer")
     end
+    # test return object format
   end
-
-  # describe ""
 end
