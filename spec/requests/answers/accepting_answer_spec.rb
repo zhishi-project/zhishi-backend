@@ -17,31 +17,31 @@ RSpec.describe "Accepting an answer", type: :request do
 
 
   it_behaves_like "authenticated endpoint", accept_answer_path_helper, 'get'
-  # it_behaves_like "authenticated parent resource", accept_answer_path_helper, 'get'
+  # it_behaves_like "authenticated parent resource", accept_answer_path_helper, 'post'
 
   describe "validates that question belongs to user" do
     it "returns unauthorized_access if question doesn't belong to user" do
-      get accept_answer_path_helper(question, answer), {}, generate_valid_token(user2)
+      post accept_answer_path_helper(question, answer), {}, generate_valid_token(user2)
       expect(response.status).to be 403
       expect(response.body).to include "Unauthorized/Forbidden Access:"
     end
 
     it "allows user access if question belongs to user" do
-      get accept_answer_path_helper(question, answer), {}, header
-      expect(response.status).not_to be 403
-      expect(response.body).not_to include "Unauthorized/Forbidden Access:"
+      post accept_answer_path_helper(question, answer), {}, header
+      expect(response.status).to be 201
+      expect(parsed_json['message']).to eql 'Answer Accepted'
     end
   end
 
   describe "sets answer as accepted" do
     it "sets answer as accepted" do
       expect(answer.accepted).to eql false
-      get accept_answer_path_helper(question, answer), {}, header
+      post accept_answer_path_helper(question, answer), {}, header
       expect(answer.reload.accepted).to eql true
     end
 
     it "increase user reputation by 20 points" do
-      expect{ get(accept_answer_path_helper(question, answer), {}, header) }.to change{ user2.reload.points }.by 20
+      expect{ post accept_answer_path_helper(question, answer), {}, header }.to change{ user2.reload.points }.by 20
     end
   end
 end

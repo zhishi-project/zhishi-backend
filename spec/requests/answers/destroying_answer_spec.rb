@@ -36,6 +36,14 @@ RSpec.describe "Destroying an answer", type: :request do
       expect(response.status).to be 204
       expect{answer.reload.new_record?}.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it "returns invalid request error if something goes wrong" do
+      allow_any_instance_of(Answer).to receive(:destroy).and_return(false)
+      delete path, {}, header
+      expect(response.status).to be 400
+      expect(parsed_json['errors']).to eql "The operation could not be performed."\
+      " Please check your request or try again later"
+    end
   end
 
   # it validates ownership concern
