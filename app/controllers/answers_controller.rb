@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :set_question
   before_action :set_answer, only: [:show, :update, :destroy, :accept]
+  before_action :validate_accept_answer, only: :accept
   include OwnershipConcern
 
   def index
@@ -38,8 +39,6 @@ class AnswersController < ApplicationController
   end
 
   def accept
-    return unauthorized_access unless @question.user == current_user
-    return invalid_request('Question has an already accepted answer') if @question.answers.any?(&:accepted)
     @answer.accept
     render json: { message: "Answer Accepted" }, status: 201
   end
@@ -55,6 +54,11 @@ class AnswersController < ApplicationController
     def set_question
       @question = Question.with_answers.find_by(id: params[:question_id])
       resource_not_found && return unless @question
+    end
+
+    def validate_accept_answer
+      return unauthorized_access unless @question.user == current_user
+      return invalid_request('Question has an already accepted answer') if @question.answers.any?(&:accepted)
     end
 
     def answer_params

@@ -26,7 +26,7 @@ class Question < ActiveRecord::Base
 
   def self.with_associations
     eager_load(:votes).eager_load(answers: [{comments: [{user: [:social_providers]}, :votes]}, {user: [:social_providers]}, :votes]).
-    eager_load(user: [:social_providers]).eager_load(comments: [{user: [:social_providers]}, :votes]).eager_load(:tags)
+    eager_load(user: [:social_providers]).eager_load(comments: [{user: [:social_providers]}, :votes]).eager_load(:tags).order('answers.accepted DESC')
 
   end
 
@@ -74,5 +74,17 @@ class Question < ActiveRecord::Base
 
   def content_that_should_not_be_indexed
     [:views, :updated_at].map(&:to_s)
+  end
+
+  def sort_answers
+    answers.sort do |a, b|
+      if a.accepted
+        -1
+      elsif b.accepted
+        1
+      else
+        b.votes_count <=> a.votes_count
+      end
+    end
   end
 end
