@@ -16,13 +16,10 @@ RSpec.describe "Submitting answer to question", type: :request do
   it_behaves_like "authenticated parent resource", create_answer_path_helper, 'post'
 
   describe "validates content" do
-    let(:error_msg) { "The operation could not be performed."\
-    " Please check your request or try again later" }
-
     it "doesn't save if content is empty" do
       post create_answer_path_helper(question), { answer: attributes_for(:answer, content: "") }, header
       expect(response.status).to eq 400
-      expect(response.body).to include error_msg
+      expect(response).to match_response_schema("error/invalid_request")
     end
 
     it "saves if content is not empty" do
@@ -30,6 +27,5 @@ RSpec.describe "Submitting answer to question", type: :request do
       expect(response.status).to eq 200
       expect(response).to match_response_schema("answer/answer")
     end
-    # test return object format
   end
 end

@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "string",
+      "pattern": "The operation could not be performed. Please check your request or try again later"
+    }
+  }
+}
