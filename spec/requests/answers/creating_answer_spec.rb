@@ -20,13 +20,13 @@ RSpec.describe "Submitting answer to question", type: :request do
     " Please check your request or try again later" }
 
     it "doesn't save if content is empty" do
-      post create_answer_path_helper(question), attributes_for(:answer, content: ""), header
+      post create_answer_path_helper(question), { answer: attributes_for(:answer, content: "") }, header
       expect(response.status).to eq 400
       expect(response.body).to include error_msg
     end
 
     it "saves if content is not empty" do
-      post create_answer_path_helper(question), attributes_for(:answer), header
+      post create_answer_path_helper(question), { answer: attributes_for(:answer) }, header
       expect(response.status).not_to eq 400
       expect(response.body).not_to include error_msg
       # body = JSON.parse(response.body)
