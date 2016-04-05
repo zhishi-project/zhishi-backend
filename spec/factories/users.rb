@@ -3,6 +3,7 @@ FactoryGirl.define do
     name { Faker::Name.name }
     points { Faker::Number.number(2) }
     sequence(:email) { |n| "#{Faker::Lorem.word}#{n}@andela.com" }
+    image { Faker::Avatar.image }
 
     factory :user_with_comments_on_question do
       transient do
@@ -12,6 +13,10 @@ FactoryGirl.define do
       after(:create) do |user, evaluator|
         create_list(:comment_on_question, evaluator.comments_count, user: user)
       end
+    end
+
+    trait :without_image do
+      image nil
     end
 
     factory :user_with_comments_on_answer do

@@ -9,7 +9,7 @@ class Tag < ActiveRecord::Base
   has_many :similar_tags, class_name: 'Tag', foreign_key: 'representative_id'
   belongs_to :representative, class_name: 'Tag'
 
-  before_save :downcase
+  before_save :downcase!, :strip!
   after_create :push_representative_assignment_to_sidekiq
   after_update :push_subscription_update_to_sidekiq, if: :representative_id_changed?
 
@@ -56,7 +56,11 @@ class Tag < ActiveRecord::Base
       end
   end
 
-  def downcase
+  def strip!
+    name.strip!
+  end
+
+  def downcase!
     name.downcase!
   end
 

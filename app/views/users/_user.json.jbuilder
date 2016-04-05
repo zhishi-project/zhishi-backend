@@ -1,3 +1,2 @@
-json.extract! user, :id, :name, :points
-json.image user.image
+json.extract! user, :id, :name, :points, :image
 json.url user_url(user, format: :json)

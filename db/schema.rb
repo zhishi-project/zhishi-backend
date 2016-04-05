@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323093827) do
+ActiveRecord::Schema.define(version: 20160401195419) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -65,9 +65,9 @@ ActiveRecord::Schema.define(version: 20160323093827) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "token"
-    t.string   "profile_picture"
     t.string   "profile_url"
     t.string   "email"
+    t.string   "profile_picture"
   end
 
   add_index "social_providers", ["user_id"], name: "index_social_providers_on_user_id"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20160323093827) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.boolean  "active"
+    t.string   "image"
   end
 
   create_table "votes", force: :cascade do |t|

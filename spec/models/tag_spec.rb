@@ -81,6 +81,24 @@ RSpec.describe Tag, type: :model do
     end
   end
 
+  describe "#strip!" do
+    let(:tag_name) { "tag"}
+    let(:subject) { create(:tag, name: "        #{tag_name} ")}
+
+    it "strips all whitespaces from the name" do
+      expect(subject.name).to eql(tag_name)
+    end
+  end
+
+  describe "#downcase!" do
+    let(:tag_name) { "RUBY-ON-RAILS"}
+    let(:subject) { create(:tag, name: tag_name)}
+
+    it "downcases the tag name" do
+      expect(subject.name).to eql(tag_name.downcase)
+    end
+  end
+
   describe "#push_subscription_update_to_sidekiq" do
     let(:subject) { create(:tag, name: 'tag') }
     let(:new_rep) { create(:tag, name: 'tag') }
