@@ -158,5 +158,16 @@ RSpec.describe Answer, type: :model do
     end
   end
 
+  describe "#sort_value" do
+    it "returns votes_count if answer is not accepted" do
+      expect(answer.sort_value).to eql answer.votes_count
+    end
+
+    it "returns infinity if answer is accepted" do
+      answer.update(accepted: true)
+      expect(answer.sort_value).to eql Float::INFINITY
+    end
+  end
+
   it_behaves_like "a votable", :answer_with_votes
 end
