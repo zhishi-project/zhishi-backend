@@ -25,8 +25,12 @@ class Question < ActiveRecord::Base
   end
 
   def self.with_associations
-    eager_load(:votes).eager_load(answers: [{comments: [{user: [:social_providers]}, :votes]}, {user: [:social_providers]}, :votes]).
-    eager_load(user: [:social_providers]).eager_load(comments: [{user: [:social_providers]}, :votes]).eager_load(:tags).order('answers.accepted DESC')
+    eager_load(:votes)
+      .eager_load(answers: [{comments: [{user: [:social_providers]}, :votes]}, {user: [:social_providers]}, :votes])
+      .eager_load(user: [:social_providers])
+      .eager_load(comments: [{user: [:social_providers]}, :votes])
+      .eager_load(:tags)
+      .order('answers.accepted DESC')
 
   end
 

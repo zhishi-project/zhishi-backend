@@ -82,11 +82,5 @@ class Vote < ActiveRecord::Base
       end
       reward
     end
-
-    def voted(resource, user)
-      vote = where(user_id: user.id, voteable_id: resource.id, voteable_type: resource.class.to_s).first
-      return vote.value if vote
-      0
-    end
   end
 end

@@ -32,7 +32,7 @@ Status: 200
           date_created: 'Wed, 24TH Nov, 2017 10:00AM',
           updated: false,
           score: 8,
-          voted: -1,
+          user_vote: -1,
           user: {
             id: 2,
             name: 'Oscar Laide'
@@ -44,7 +44,7 @@ Status: 200
           date_created: 'Wed, 25TH Nov, 2017 12:00PM',
           updated: true,
           score: 9,
-          voted: 0,
+          user_vote: nil,
           user: {
             id: 3,
             name: 'Bayo Owoade'
@@ -87,7 +87,7 @@ Status: 201
   updated_at: '2016-03-24T13:57:29.219Z',
   updated: true,
   score: 9,
-  voted: 0,
+  user_vote: nil,
   user: {
     "id": 1,
     "name": "Emmanuel Science",
@@ -165,7 +165,7 @@ Status: 200
           date_created: 'Wed, 25TH Nov, 2017 12:00PM',
           updated: true,
           score: 9,
-          voted: 1,
+          user_vote: 1,
           user: {
             id: 3,
             name: 'Bayo Owoade'

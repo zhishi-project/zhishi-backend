@@ -182,31 +182,4 @@ RSpec.describe Vote, type: :model do
       end
     end
   end
-
-  describe ".voted" do
-    context "when user has voted" do
-      before(:each) do
-        create(:vote_on_question, user: user)
-      end
-
-      let(:question) { Question.last }
-
-      it "returns what the given user voted on the resource" do
-        expect(Vote.voted(question, user)).to be_in([1, -1])
-        expect(Vote.voted(question, user)).not_to be 0
-      end
-    end
-
-    context "when user has not voted" do
-      before(:each) do
-        create(:vote_on_question)
-      end
-
-      let(:question) { Question.last }
-
-      it "returns what the given user voted on the resource" do
-        expect(Vote.voted(question, user)).to eq 0
-      end
-    end
-  end
 end

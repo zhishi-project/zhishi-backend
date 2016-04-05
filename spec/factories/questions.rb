@@ -3,7 +3,7 @@ FactoryGirl.define do
     title { Faker::StarWars.quote }
     content { Faker::Hipster.paragraph }
     views { rand(5) }
-    user factory: :user
+    user
 
     factory :question_with_tags do
       transient do
