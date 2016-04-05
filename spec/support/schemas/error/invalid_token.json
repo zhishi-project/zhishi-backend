@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "string",
+      "pattern": "Request was made with invalid token"
+    }
+  }
+}

@@ -56,9 +56,23 @@ RSpec.describe Question, type: :model do
     end
   end
 
+  describe "#sort_answers" do
+    before(:each) { create_list(:answer_with_votes, 2, question: question) }
+    let!(:accepted) { create(:answer, question: question, accepted: true)}
+
+    it "sorts accepted answer to the top" do
+      answers = question.answers
+      sorted_answers = question.sort_answers
+      expect(answers.map(&:id)).to eql [1, 2, 3]
+      expect(sorted_answers.map(&:id)).not_to eql [1, 2, 3]
+      expect(sorted_answers.first).to eql accepted
+      expect(sorted_answers.second.votes_count).to be >= sorted_answers.last.votes_count
+    end
+  end
+
   describe "#context_for_index" do
     it "returns only title and content as the content to be index" do
-      expect(question.content_for_index).to eql [:title, :content]
+      expect(question.content_for_index).to eql [:title, :content, :comments_count, :answers_count, :views]
     end
   end
 
@@ -69,6 +83,9 @@ RSpec.describe Question, type: :model do
         "content"=> question.content,
         "tags"=> question.tags.as_json,
         "user"=> { "name" => user.name, "email" => user.email },
+        "views"=> question.views,
+        "comments_count"=> question.comments_count,
+        "answers_count"=> question.answers_count,
         "comments"=> [],
         "answers"=> []
       }

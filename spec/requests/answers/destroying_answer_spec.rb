@@ -1,47 +1,50 @@
-require "rails_helper"
-require "requests/shared/shared_authenticated_endpoint"
-require "requests/shared/shared_authenticate_parent_resource_exists"
-
-def delete_answer_path_helper(question=nil, answer=nil)
-  question ||= FactoryGirl.create(:question_with_answers)
-  answer ||= FactoryGirl.create(:answer, question: question)
-  "/questions/#{question.id}/answers/#{answer.id}"
-end
+require_relative "answer_request_helper"
 
 RSpec.describe "Destroying an answer", type: :request do
-  let(:user){ create(:active_user) }
-  let(:header) { generate_valid_token(user) }
-  let(:answer) { create(:answer, user: user) }
-  let(:path) { delete_answer_path_helper(answer.question, answer) }
+  let(:answer) { create(:answer, user: valid_user) }
+  let(:path) { question_answer_path(answer.question, answer) }
 
-  it_behaves_like "authenticated endpoint", delete_answer_path_helper, 'get'
+  it_behaves_like "authenticated endpoint", :question_answer_path, 'delete', true
 
-  describe "invalid answer id" do
-    it "returns 404 if answer is not found" do
-      delete delete_answer_path_helper(nil, answer), {}, header
-      expect(response.status).to be 404
-      expect(response).to match_response_schema('error/not_found')
+  describe "DELETE /questions/:question_id/answers/:id" do
+    describe "invalid answer id" do
+      it "returns 404 if answer is not found" do
+        answer.question = create(:question)
+        delete path, { format: :json }, authorization_header
+        expect(response.status).to be 404
+        expect(response).to match_response_schema('error/not_found')
+      end
+
+      it "doesn't return 404 if answer is found" do
+        delete path, { format: :json }, authorization_header
+        expect(response.status).not_to be 404
+      end
     end
 
-    it "doesn't return 404 if answer is found" do
-      delete delete_answer_path_helper, {}, header
-      expect(response.status).not_to be 404
-    end
-  end
+    describe "it validates that answer belongs to user" do
+      let(:answer) { create(:answer) }
 
-  describe "valid answer id" do
-    it "returns 204 if answer is deleted successfully" do
-      expect(answer.new_record?).to be false
-      delete path, {}, header
-      expect(response.status).to be 204
-      expect{answer.reload.new_record?}.to raise_error(ActiveRecord::RecordNotFound)
+      it "returns unauthorized_access if question doesn't belong to user" do
+        delete path, { format: :json }, authorization_header
+        expect(response.status).to be 403
+        expect(response).to match_response_schema("error/unauthorized")
+      end
     end
 
-    it "returns invalid request error if something goes wrong" do
-      allow_any_instance_of(Answer).to receive(:destroy).and_return(false)
-      delete path, {}, header
-      expect(response.status).to be 400
-      expect(response).to match_response_schema('error/invalid_request')
+    describe "valid answer id" do
+      it "returns 204 if answer is deleted successfully" do
+        expect(answer.new_record?).to be false
+        delete path, { format: :json }, authorization_header
+        expect(response.status).to be 204
+        expect{answer.reload.new_record?}.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it "returns invalid request error if something goes wrong" do
+        allow_any_instance_of(Answer).to receive(:destroy).and_return(false)
+        delete path, { format: :json }, authorization_header
+        expect(response.status).to be 400
+        expect(response).to match_response_schema('error/invalid_request')
+      end
     end
   end
 end

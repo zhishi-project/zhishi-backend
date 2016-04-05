@@ -160,6 +160,39 @@ RSpec.describe Tag, type: :model do
     end
   end
 
+  describe ".analyze_tags" do
+    it "returns array from comma seperated string" do
+      string = "a,b,c"
+      expect(Tag.send(:analyze_tags, string)).to eql %w(a b c)
+    end
+
+    it "returns arguement if argument is an array" do
+      arg = %w(a b c)
+      expect(Tag.send(:analyze_tags, arg)).to eql arg
+    end
+
+    it "return nil if argument is neither an Array or a String" do
+      expect(Tag.send(:analyze_tags, 1)).to be_nil
+      expect(Tag.send(:analyze_tags, nil)).to be_nil
+    end
+
+    it "it throws argument error" do
+      expect{Tag.send(:analyze_tags)}.to raise_error ArgumentError
+    end
+  end
+
+  describe ".update_parent" do
+    let(:tag){ create(:tag_with_representative) }
+    it "updates tag representative" do
+      new_rep = create(:tag)
+      expect{ tag.update_parent(new_rep) }.to change{ tag.reload.representative }
+      expect(tag.representative).to eql new_rep
+    end
+    it "throws argument error" do
+      expect{tag.update_parent}.to raise_error ArgumentError
+    end
+  end
+
   describe "#as_indexed_json" do
     it "sets up appropriate parameters for indexing" do
       tag = create(:tag, name: tag_name)

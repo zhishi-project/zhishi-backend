@@ -19,7 +19,7 @@ FactoryGirl.define do
       end
     end
 
-    trait :without_image do
+    factory :user_without_image do
       image nil
     end
 
