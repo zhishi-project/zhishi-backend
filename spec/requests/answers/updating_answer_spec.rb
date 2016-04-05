@@ -21,19 +21,19 @@ RSpec.describe "Updating an answer", type: :request do
     it "updates if content is not empty" do
       patch update_answer_path_helper(answer.question, answer), new_answer, header
       expect(response.status).to eq 200
+      expect(response).to match_response_schema('answer/answer')
     end
 
     it "doesn't update if answer doesn't belongs to user" do
       patch update_answer_path_helper, new_answer, header
       expect(response.status).to eq 403
-      expect(parsed_json["errors"]).to eql "Unauthorized/Forbidden Access: Answer does not belong to user"
+      expect(response).to match_response_schema('error/unauthorized')
     end
 
     it "doesn't update if content is empty" do
       patch update_answer_path_helper(answer.question, answer), {content: ""}, header
       expect(response.status).to eq 400
-      expect(parsed_json["errors"]).to eql "The operation could not be performed."\
-      " Please check your request or try again later"
+      expect(response).to match_response_schema('error/invalid_request')
     end
     # test return object format
   end

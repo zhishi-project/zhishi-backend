@@ -1,23 +1,27 @@
 {
-  "type": "object",
-  "properties": {
-    "question_id": { "type": "integer" },
-    "comments_count": { "type": "integer" },
-    "id": { "type": "integer" },
-    "votes_count": { "type": "integer" },
-    "content": { "type": "string" },
-    "accepted": { "type": "boolean" },
-    "created_at": { "type" : "string", "format": "date-time" },
-    "updated_at": { "type" : "string", "format": "date-time" },
-    "user": {
-      "$ref": "../user/user.json#/definitions/user"
-    },
-    "comments": {
-      "type": "array",
-      "properties":{
-        "$ref": "../comment/comment.json#/definitions/comment"
-      }
+  "definitions":{
+    "answer":{
+      "type": "object",
+      "properties": {
+        "question_id": { "type": "integer" },
+        "comments_count": { "type": "integer" },
+        "id": { "type": "integer" },
+        "votes_count": { "type": "integer" },
+        "content": { "type": "string" },
+        "accepted": { "type": "boolean" },
+        "created_at": { "type" : "string", "format": "date-time" },
+        "updated_at": { "type" : "string", "format": "date-time" },
+        "user": {
+          "$ref": "../user/user.json#/definitions/user"
+        },
+        "comments": {
+          "type": "array",
+          "properties":{
+            "$ref": "../comment/comment.json#/definitions/comment"
+          }
+        }
+      },
+      "required": ["question_id", "comments_count", "id", "content", "votes_count", "accepted", "created_at", "updated_at", "user", "comments"]
     }
-  },
-  "required": ["question_id", "comments_count", "id", "content", "votes_count", "accepted", "created_at", "updated_at", "user", "comments"]
+  }
 }

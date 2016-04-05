@@ -20,7 +20,7 @@ RSpec.describe "Destroying an answer", type: :request do
     it "returns 404 if answer is not found" do
       delete delete_answer_path_helper(nil, answer), {}, header
       expect(response.status).to be 404
-      expect(response.body).to include "The resource you tried to access was not found"
+      expect(response).to match_response_schema('error/not_found')
     end
 
     it "doesn't return 404 if answer is found" do
@@ -41,11 +41,7 @@ RSpec.describe "Destroying an answer", type: :request do
       allow_any_instance_of(Answer).to receive(:destroy).and_return(false)
       delete path, {}, header
       expect(response.status).to be 400
-      expect(parsed_json['errors']).to eql "The operation could not be performed."\
-      " Please check your request or try again later"
+      expect(response).to match_response_schema('error/invalid_request')
     end
   end
-
-  # it validates ownership concern
-  # it validates the @question is set
 end

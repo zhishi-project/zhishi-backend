@@ -23,13 +23,13 @@ RSpec.describe "Accepting an answer", type: :request do
     it "returns unauthorized_access if question doesn't belong to user" do
       post accept_answer_path_helper(question, answer), {}, generate_valid_token(user2)
       expect(response.status).to be 403
-      expect(response.body).to include "Unauthorized/Forbidden Access:"
+      expect(response).to match_response_schema("error/unauthorized")
     end
 
-    it "allows user access if question belongs to user" do
+    it "allows user if question belongs to user" do
       post accept_answer_path_helper(question, answer), {}, header
       expect(response.status).to be 201
-      expect(parsed_json['message']).to eql 'Answer Accepted'
+      expect(response).to match_response_schema('answer/accept')
     end
   end
 
@@ -37,6 +37,7 @@ RSpec.describe "Accepting an answer", type: :request do
     it "sets answer as accepted" do
       expect(answer.accepted).to eql false
       post accept_answer_path_helper(question, answer), {}, header
+      expect(response).to match_response_schema('answer/accept')
       expect(answer.reload.accepted).to eql true
     end
 
