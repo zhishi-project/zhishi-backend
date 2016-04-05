@@ -1,0 +1,6 @@
+{
+  "type": "array",
+  "properties": {
+    "$ref": "result.json#/"
+  }
+}

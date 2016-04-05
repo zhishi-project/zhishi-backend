@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties":{
+    "$ref": "question.json#/definitions/question",
+    "$ref": "../tag/tag.json#/definitions/tag",
+    "answers": {
+      "type": "array",
+      "properties":{
+        "$ref": "../answer/answer.json#/definitions/answer"
+      }
+    },
+    "comments": {
+      "type": "array",
+      "properties": {
+        "$ref": "../comment/comment.json#/definitions/comment"
+      }
+    }
+  },
+  "required": ["answers", "comments"]
+}

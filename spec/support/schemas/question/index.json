@@ -1,0 +1,12 @@
+{
+  "type": "array",
+  "properties": {
+    "$ref": "question.json#/definitions/question"
+  }
+},
+{
+  "type": "object",
+  "properties":{
+    "$ref": "../pagination/pagination.json#/definitions/meta"
+  }
+}

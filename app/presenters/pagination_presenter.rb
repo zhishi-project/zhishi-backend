@@ -18,7 +18,7 @@ class PaginationPresenter
       is_last_page: last_page?,
       previous_page: previous_url,
       next_page: next_url,
-      out_of_bounds: out_of_bounds?,
+      out_of_bounds: out_of_bounds?
     }
   end
 

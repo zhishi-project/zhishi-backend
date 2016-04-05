@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties":{
+    "$ref": "user.json#/definitions/user",
+    "$ref": "../tag/tag.json#/definitions/tag",
+    "email": { "type": "string" },
+    "active": { "type": "boolean" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "member_since": { "type": "string" },
+    "questions_asked": { "type": "integer" },
+    "answers_given": { "type": "integer" }
+  },
+  "required": ["email", "active", "created_at", "updated_at", "member_since", "questions_asked", "answers_given"]
+}

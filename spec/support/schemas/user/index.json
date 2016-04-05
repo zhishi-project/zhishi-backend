@@ -1,0 +1,12 @@
+{
+  "type": "array",
+  "properties":{
+    "$ref": "user.json#/definitions/user"
+  }
+}
+{
+  "type": "object",
+  "properties":{
+    "$ref": "../pagination/pagination.json#/definitions/meta"
+  }
+}
