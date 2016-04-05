@@ -26,8 +26,7 @@ class Tag < ActiveRecord::Base
     end
 
     def process_tags(new_tags)
-      new_tags = new_tags.split(',')
-      new_tags.map do |tag_name|
+      analyze_tags(new_tags).map do |tag_name|
         tag_name = tag_name.strip.downcase
         where(name: tag_name).first_or_initialize
       end
@@ -45,6 +44,16 @@ class Tag < ActiveRecord::Base
         }
       }
     end
+
+    private
+    # TODO create a seperate class that does the processing of params, something like ArrayProcessor that would always return array of objects.
+      def analyze_tags(tag_params)
+        if tag_params.is_a? Array
+          tag_params
+        elsif tag_params.is_a? String
+          tag_params.split(',')
+        end
+      end
   end
 
   def downcase
@@ -74,7 +83,6 @@ class Tag < ActiveRecord::Base
   end
 
   private
-
     def search_resolution
       Tag.resolution_for(name)
     end
