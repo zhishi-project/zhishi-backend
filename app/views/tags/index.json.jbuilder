@@ -1,1 +1,1 @@
-json.partial! 'tag', tags: @tags
+json.partial! 'tags/tag', tags: @tags
