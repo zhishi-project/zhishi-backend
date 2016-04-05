@@ -62,38 +62,6 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "#update" do
-    let(:user) { valid_user }
-    let(:update_params) do
-      {
-        name: Faker::Name.name,
-        email: Faker::Internet.email
-      }
-    end
-
-    context "when it is a valid request", valid_request: true do
-      it "updates the users with the parameters sent" do
-        current_name = user.name
-        current_email = user.email
-
-        put :update, id: user.id, user: update_params
-
-        expect(parsed_json['name']).not_to eq(current_name)
-        expect(parsed_json['email']).not_to eq(current_email)
-      end
-    end
-
-    context "when it is not a valid request" do
-      it "returns a 401 response error" do
-        put :update, id: user.id, user: update_params
-
-        expect(response).to have_http_status(401)
-        expect(response.headers['WWW-Authenticate']).to eql("Token realm=\"Application\"")
-        expect(parsed_json).to have_key('errors')
-      end
-    end
-  end
-
   describe "#questions" do
     let(:user) { valid_user }
     let(:total_records) { 8 }

@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
     get "top_questions" => "questions#top_questions"
 
-    resources :users, only: [:show, :index, :update] do
+    resources :users, only: [:show, :index] do
       member do
         get :questions
         get :tags
