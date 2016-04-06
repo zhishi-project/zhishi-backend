@@ -44,7 +44,7 @@ module SwitchResourceType
     end
 
     def respond_to_missing?(method_name, *args)
-      return true unless method_name.match(/\A(?:answer|comment)_to_(?:answer|comment)\z/)
+      return true if method_name.match(/\A(?:answer|comment)_to_(?:answer|comment)\z/)
       super
     end
   end
