@@ -12,7 +12,7 @@ class SwitchResourceType
       ["id", "comment_on_id", "comment_on_type"]
     end
 
-    def self.answers_except
+    def answers_except
       ["id", "question_id", "comments_count", "accepted"]
     end
 
