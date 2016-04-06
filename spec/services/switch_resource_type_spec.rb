@@ -75,10 +75,6 @@ RSpec.describe SwitchResourceType do
     end
   end
 
-  describe ".permitted_resources" do
-
-  end
-
   context "invalid_method_call" do
     it "should raise error when not switchable or invalid method is called" do
       {answer_to_question: 4, comment_to_question: 5, question_to_answer: 4, start_to_close: nil}.each do |trial_method, arg|
