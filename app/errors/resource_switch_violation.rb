@@ -1,0 +1,1 @@
+  class ResourceSwitchViolation < StandardError; end;

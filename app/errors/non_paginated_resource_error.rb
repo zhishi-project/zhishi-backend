@@ -1,0 +1,1 @@
+class NonPaginatedResourceError < StandardError; end;

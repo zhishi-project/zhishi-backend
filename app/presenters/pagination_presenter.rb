@@ -54,6 +54,4 @@ class PaginationPresenter
     def respond_to_missing?(method_name, *)
       resource.respond_to?(method_name) || super
     end
-
-    class NonPaginatedResourceError < StandardError; end;
 end

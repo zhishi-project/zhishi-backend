@@ -1,10 +1,14 @@
-class SwitchResourceType
+module SwitchResourceType
   class << self
     def switch_resource(from_resource, to_resource, from_resource_id)
-      if from= from_resource.find(from_resource_id).destroy
-        not_needed_attributes = send("#{from.class.table_name}_except")
-        resource_attributes= from.as_json.except(*not_needed_attributes).merge(merge_attributes(from))
+      from_record = from_resource.find_by(id: from_resource_id)
+      if from_record
+        not_needed_attributes = send("#{from_record.class.table_name}_except")
+        resource_attributes= from_record.as_json.except(*not_needed_attributes).merge(merge_attributes(from_record))
         to_resource.create(resource_attributes)
+        from_record.destroy
+      else
+        raise ActiveRecord::RecordNotFound
       end
     end
 
@@ -32,7 +36,7 @@ class SwitchResourceType
     def method_missing(method_name, *args, &block)
       if resource_match = method_name.to_s.match(/\A(?<from_resource>\w+)_to_(?<to_resource>\w+)\z/)
         from_resource, to_resource = [resource_match[:from_resource], resource_match[:to_resource]].map do |resource_type|
-          resource_type.singularize.camelize.constantize
+          resource_type.singularize.camelize.constantize rescue nil
         end
         raise ResourceSwitchViolation unless ([from_resource, to_resource] & permitted_resources).size == permitted_resources.size
         switch_resource(from_resource, to_resource, args[0])
@@ -44,6 +48,4 @@ class SwitchResourceType
       super
     end
   end
-
-  class ResourceSwitchViolation < StandardError; end;
 end
