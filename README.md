@@ -1,4 +1,5 @@
-[![Coverage Status](https://coveralls.io/repos/github/andela-iamadi/zhishi-backend/badge.svg?branch=master)](https://coveralls.io/github/andela-iamadi/zhishi-backend?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/andela-iamadi/zhishi-backend/badge.svg?branch=master)](https://coveralls.io/github/andela-iamadi/zhishi-backend?branch=master) [![Circle CI](https://circleci.com/gh/zhishi-engine/zhishi-backend.svg?style=svg)](https://circleci.com/gh/zhishi-engine/zhishi-backend) [![Issue Count](https://codeclimate.com/github/zhishi-engine/zhishi-backend/badges/issue_count.svg)](https://codeclimate.com/github/zhishi-engine/zhishi-backend) [![Code Climate](https://codeclimate.com/github/zhishi-engine/zhishi-backend/badges/gpa.svg)](https://codeclimate.com/github/zhishi-engine/zhishi-backend)
+
 # Zhishi
 You've definitely being in this situation before:
   > Someone asks you a question;
