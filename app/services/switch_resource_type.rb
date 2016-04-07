@@ -5,11 +5,18 @@ module SwitchResourceType
       if from_record
         not_needed_attributes = send("#{from_record.class.table_name}_except")
         resource_attributes= from_record.as_json.except(*not_needed_attributes).merge(merge_attributes(from_record))
-        to_resource.create(resource_attributes)
+        to_record = to_resource.create(resource_attributes)
+        switch_votes(from: from_record, to: to_record)
         from_record.destroy
       else
         raise ActiveRecord::RecordNotFound
       end
+    end
+
+    def switch_votes(from:, to:)
+      new_voteable_type = to.model_name.to_s
+      new_voteable_id = to.id
+      from.votes.update_all(voteable_type: new_voteable_type, voteable_id: new_voteable_id)
     end
 
     def comments_except

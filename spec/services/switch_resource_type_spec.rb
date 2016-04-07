@@ -31,6 +31,18 @@ RSpec.describe SwitchResourceType do
     end
   end
 
+  describe ".switch_votes" do
+    it "switches the votes to the new resource" do
+      comment = create(:comment)
+      vote = create(:vote_on_comment, voteable: comment)
+      answer = create(:answer)
+      subject.switch_votes(from: comment, to: answer)
+
+      expect(comment.votes).to eq([])
+      expect(answer.votes).to include(vote)
+    end
+  end
+
   describe ".comments_except" do
     it "includes all attributes that should not be added or that should be converted" do
       comment_hash = create(:comment).as_json
