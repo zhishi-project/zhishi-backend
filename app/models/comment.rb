@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
   include VotesCounter
+  include ModelJSONHashHelper
 
   has_many :votes, as: :voteable, dependent: :destroy
   belongs_to :comment_on, polymorphic: true, counter_cache: true, touch: true
@@ -19,12 +20,10 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def as_indexed_json(options={})
+  def as_indexed_json(_options = {})
     self.as_json(
       only: [:content],
-      include: {
-                  user: { only: [:name, :email] },
-               }
+      include: user_attributes
     )
   end
 end

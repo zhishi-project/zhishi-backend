@@ -2,6 +2,7 @@ class Question < ActiveRecord::Base
   include VotesCounter
   include ActionView::Helpers::DateHelper
   include Searchable
+  include ModelJSONHashHelper
 
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy
@@ -46,29 +47,19 @@ class Question < ActiveRecord::Base
     includes(:answers)
   end
 
-  def as_indexed_json(options={})
+  def as_indexed_json(_options = {})
     self.as_json(
       only: content_for_index,
       include: { tags: { only: :name},
-                 user:    { only: [:name, :email] },
-                 comments:   {
+                 comments: {
                    only: [:content],
-                   include: {
-                     user: {only: [:name, :email]}}
+                   include: user_attributes
                  },
                  answers: {
                    only: [:content],
-                   include: {
-                     user:    { only: [:name, :email] },
-                     comments:   {
-                       only: [:content],
-                       include: {
-                         user: {only: [:name, :email]}
-                       }
-                     },
-                   }
+                   include: user_and_comment_attributes
                  },
-               }
+               }.merge(user_attributes)
     )
   end
 

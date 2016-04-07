@@ -27,7 +27,7 @@ module Searchable
 
 
     def self.custom_index_name
-      [Rails.application.class.parent_name.downcase, Rails.env, model_name.collection.gsub('-', '')].join('_')
+      [Rails.application.class.parent_name.downcase, Rails.env, model_name.collection.delete('-')].join('_')
     end
 
     index_name custom_index_name
