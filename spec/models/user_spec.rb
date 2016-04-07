@@ -214,10 +214,10 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "#update_user_reputation" do
+  describe "#update_reputation" do
     context "when 5 is passed to the method" do
       let(:rewarding) do
-        user.update_user_reputation(5)
+        user.update_reputation(5)
       end
 
       it { expect { rewarding }.to change(user, :points).by 5 }

@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
     points >= 15
   end
 
-  def update_user_reputation(new_reward)
+  def update_reputation(new_reward)
     new_point = points + new_reward
     new_point = 0 if new_point < 0
     update(points: new_point)
