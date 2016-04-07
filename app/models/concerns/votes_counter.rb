@@ -30,4 +30,9 @@ module VotesCounter
       sum + vote.value
     end
   end
+
+  def vote_by(user)
+    vote = votes.find { |vote| vote.user_id == user.id }
+    vote ? vote.value : nil
+  end
 end

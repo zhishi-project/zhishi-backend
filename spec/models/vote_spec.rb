@@ -125,7 +125,7 @@ RSpec.describe Vote, type: :model do
   describe ".evaluate_reward" do
     context "when user has NOT voted before" do
       let(:new_vote) { true }
-      
+
       context "when voting an Answer" do
         let(:resource) { Answer }
         context "when making an upvote" do

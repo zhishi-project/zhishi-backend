@@ -2,6 +2,7 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
   attr_reader :current_user
+  helper_method :current_user
   before_action :authenticate_user
 
   def resource_not_found

@@ -79,4 +79,28 @@ RSpec.shared_examples "a votable" do |described_class_factory|
     before { 6.times { create(:vote, value: 1, voteable: subject) } }
     it { expect(subject.votes_count).to eq 6 }
   end
+
+  describe "#vote_by" do
+    let(:user) { create(:user) }
+    let(:vote) { subject.votes.first }
+    let(:resource) { vote.voteable }
+
+    context "when user has voted_on_resource" do
+      before(:each) do
+        vote.update!(user: user)
+      end
+
+
+      it "returns what the given user voted on the resource" do
+        expect(resource.vote_by(user)).to be_in([1, -1])
+        expect(resource.vote_by(user)).not_to be_nil
+      end
+    end
+
+    context "when user has not voted" do
+      it "returns what the given user voted on the resource" do
+        expect(resource.vote_by(user)).to be_nil
+      end
+    end
+  end
 end

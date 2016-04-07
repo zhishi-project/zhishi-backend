@@ -132,6 +132,7 @@ Status: 200
     user_id: 24,
     up_votes: 10
     down_votes: 0
+    user_vote: 1,
     comment:  [
                 {
                   id: 1,
