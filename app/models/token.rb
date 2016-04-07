@@ -5,6 +5,6 @@ class Token < ActiveRecord::Base
   validates :user, presence: true
 
   def set_temp_token
-    self.temp = SecureRandom.uuid.gsub('-', '')
+    self.temp = SecureRandom.uuid.delete('-')
   end
 end

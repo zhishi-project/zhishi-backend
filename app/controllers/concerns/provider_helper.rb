@@ -1,13 +1,8 @@
 module ProviderHelper
   def get_provider(provider)
-    provider_url = case provider
-    when /^google/
-      '/auth/google_oauth2'
-    when /^slack/
-      '/auth/slack'
-    else
-      raise AuthProviderError.new("The provider is not supported on this platform")
-    end
-    provider_url
+    return '/auth/google_oauth2' if provider =~ /^google/
+    return '/auth/slack' if provider =~ /^slack/
+      
+    raise AuthProviderError.new("The provider is not supported on this platform")
   end
 end

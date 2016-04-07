@@ -15,8 +15,10 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       render :show
-    else @user.errors
+    elsif @user.errors
       render json: @user.errors, status: :unprocessable_entity
+    else
+      invalid_request
     end
   end
 
