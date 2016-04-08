@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "string",
+      "pattern": "^Unauthorized/Forbidden Access: \\w+\\sdoes not belong to user$"
+      }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "definitions":{
+    "question":{
+      "type": "object",
+      "properties":{
+        "id": { "type": "integer" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "votes_count": { "type": "integer" },
+        "answers_count": { "type": "integer" },
+        "comments_count": { "type": "integer" },
+        "views": { "type": "integer" },
+        "created_at": { "type" : "string", "format": "date-time" },
+        "updated_at": { "type" : "string", "format": "date-time" },
+        "url": { "type": "string" },
+        "user": {
+          "$ref": "../user/user.json#/definitions/user"
+        }
+      },
+      "required": ["id", "title", "content", "user", "url", "votes_count", "answers_count", "comments_count", "views", "created_at", "updated_at"]
+    }
+  }
+}

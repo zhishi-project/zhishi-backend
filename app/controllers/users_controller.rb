@@ -12,16 +12,6 @@ class UsersController < ApplicationController
   def show
   end
 
-  def update
-    if @user.update(user_params)
-      render :show
-    elsif @user.errors
-      render json: @user.errors, status: :unprocessable_entity
-    else
-      invalid_request
-    end
-  end
-
   def destroy
     @user.destroy
     head :no_content

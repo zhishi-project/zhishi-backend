@@ -105,7 +105,7 @@ RSpec.describe User, type: :model do
   end
 
   describe ":get_picture" do
-    let(:user) { create(:user, :without_image) }
+    let(:user) { create(:user_without_image) }
     it "returns nil if user has no picture" do
       expect(user.image).to be_nil
     end
@@ -248,6 +248,20 @@ RSpec.describe User, type: :model do
       expect(user_with_association).to respond_to(:questions_asked)
       expect(user_with_association.answers_given).to eq(4)
       expect(user_with_association.questions_asked).to eq(4)
+    end
+  end
+
+  describe "#subscribe" do
+    it "it subscribes user to a tag" do
+      expect(user.tags).to be_empty
+      tag = create(:tag)
+      user.subscribe(tag)
+      expect(user.tags.count).to eql 1
+      expect(user.tags.first).to eql tag
+    end
+
+    it "it throws argument error" do
+      expect{user.subscribe}.to raise_error ArgumentError
     end
   end
 end

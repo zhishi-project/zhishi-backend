@@ -73,13 +73,7 @@ class Question < ActiveRecord::Base
 
   def sort_answers
     answers.sort do |a, b|
-      if a.accepted
-        -1
-      elsif b.accepted
-        1
-      else
-        b.votes_count <=> a.votes_count
-      end
+      b.sort_value <=> a.sort_value
     end
   end
 end

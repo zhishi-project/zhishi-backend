@@ -165,9 +165,15 @@ RSpec.describe Vote, type: :model do
       let(:new_vote) { false }
       context "when voting an Answer" do
         let(:resource) { Answer }
-        context "when making an opposite vote (upvote or downvote)" do
-          let(:vote) { [1, -1].sample }
-          let(:reward) { 7 * vote }
+        let(:reward) { 7 * vote }
+
+        context "when making an opposite vote upvote" do
+          let(:vote) { 1 }
+          it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq reward }
+        end
+
+        context "when making an opposite vote downvote" do
+          let(:vote) { -1 }
           it { expect(Vote.evaluate_reward(new_vote, vote, resource)).to eq reward }
         end
       end

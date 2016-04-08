@@ -13,7 +13,7 @@ module Queries
     def call
       relation.joins(join_associations).select(user_data, questions_asked, answers_given).group("users.id")
     end
-    
+
     private
       def user_table
         User.arel_table
@@ -42,10 +42,6 @@ module Queries
 
       def user_data
         user_table[Arel.star]
-      end
-
-      def group_associations
-        user_table.group(user_table[:id])
       end
   end
 end

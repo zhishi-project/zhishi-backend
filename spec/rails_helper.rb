@@ -71,6 +71,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryGirl::Syntax::Methods
+  config.include Rails.application.routes.url_helpers
 end
 
 Shoulda::Matchers.configure do |config|

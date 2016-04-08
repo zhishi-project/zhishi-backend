@@ -1,0 +1,15 @@
+{
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" },
+        "points": { "type": "integer" },
+        "image": { "type": ["string", "nil"] },
+        "url": { "type": "string" }
+      },
+      "required": ["id", "name", "points", "image", "url"]
+    }
+  }
+}

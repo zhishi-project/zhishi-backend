@@ -7,8 +7,8 @@ module RequestAuthenticationHelper
     valid_user.refresh_token
   end
 
-  def authorization_header
-    {authorization: "Token token=#{valid_user_token}"}
+  def authorization_header(token = valid_user_token)
+    {authorization: "Token token=#{token}"}
   end
 end
 

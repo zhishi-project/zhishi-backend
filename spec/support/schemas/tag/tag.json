@@ -1,0 +1,11 @@
+{
+  "definitions": {
+    "tags":{
+      "type": "array",
+      "properties": {
+        "name": { "type": "string" }
+      },
+      "required": ["name"]
+    }
+  }
+}

@@ -4,9 +4,9 @@ RSpec.describe Tag, type: :model do
   let(:arg) { :recent }
   let(:tag_name) { "Amity" }
   before :each do
-    5.times { create(:tag, name: "Contract", created_at: 4.days.ago) }
-    3.times { create(:tag, name: "Amity", created_at: 2.days.ago) }
-    2.times { create(:tag, name: "Kaizen") }
+    create_list(:tag, 5, name: "Contract", created_at: 4.days.ago)
+    create_list(:tag, 3, name: "Amity", created_at: 2.days.ago)
+    create_list(:tag, 2, name: "Kaizen")
   end
 
   describe ".get_tags_that_are" do
@@ -30,7 +30,7 @@ RSpec.describe Tag, type: :model do
   describe ".get_tags_that_are" do
     let(:arg) { :trending }
     it "sorts the tags in trending order" do
-      7.times { create(:tag, name: "Kaizen") }
+      create_list(:tag, 7, name: "Kaizen")
       expect(Tag.get_tags_that_are(arg)).to be_a Hash
       expect(Tag.get_tags_that_are(arg).first.first).to eq("kaizen")
       expect(Tag.get_tags_that_are(arg).first.last).to eq(9)
@@ -50,8 +50,7 @@ RSpec.describe Tag, type: :model do
     end
 
     it "returns an array of the objects if they already exist" do
-      tags = []
-      3.times { tags << create(:tag).name }
+      tags = create_list(:tag, 3).map(&:name)
       result = Tag.process_tags(tags.join(","))
       expect(result.length).to be 3
       expect(result.map(&:name)).to eql tags
@@ -151,6 +150,57 @@ RSpec.describe Tag, type: :model do
 
         expect(subject.resource_tags).to have_received(:remap_to_tag_parent).with(subject)
       end
+    end
+  end
+
+  describe "#search_resolution" do
+    it "returns hash object for resolving tag representative" do
+      tag = create(:tag, name: tag_name)
+      expect(tag.send(:search_resolution)).to eql query: {filtered: {query: {match: {name: "amity"}}, filter: {missing: {field: :representative_id}}}}
+    end
+  end
+
+  describe ".analyze_tags" do
+    it "returns array from comma seperated string" do
+      string = "a,b,c"
+      expect(Tag.send(:analyze_tags, string)).to eql %w(a b c)
+    end
+
+    it "returns arguement if argument is an array" do
+      arg = %w(a b c)
+      expect(Tag.send(:analyze_tags, arg)).to eql arg
+    end
+
+    it "return nil if argument is neither an Array or a String" do
+      expect(Tag.send(:analyze_tags, 1)).to be_nil
+      expect(Tag.send(:analyze_tags, nil)).to be_nil
+    end
+
+    it "it throws argument error" do
+      expect{Tag.send(:analyze_tags)}.to raise_error ArgumentError
+    end
+  end
+
+  describe ".update_parent" do
+    let(:tag){ create(:tag_with_representative) }
+    it "updates tag representative" do
+      new_rep = create(:tag)
+      expect{ tag.update_parent(new_rep) }.to change{ tag.reload.representative }
+      expect(tag.representative).to eql new_rep
+    end
+    it "throws argument error" do
+      expect{tag.update_parent}.to raise_error ArgumentError
+    end
+  end
+
+  describe "#as_indexed_json" do
+    it "sets up appropriate parameters for indexing" do
+      tag = create(:tag, name: tag_name)
+      obj_format = {
+        "name" => "amity",
+        "representative_id" => nil
+      }
+      expect(tag.as_indexed_json).to eql obj_format
     end
   end
 end

@@ -1,0 +1,19 @@
+{
+  "definitions": {
+    "comment": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer" },
+        "content": { "type": "string" },
+        "votes_count": { "type": "integer" },
+        "created_at": { "type" : "string", "format": "date-time" },
+        "updated_at": { "type" : "string", "format": "date-time" },
+        "comment_on_id": { "type": "integer" },
+        "comment_on_type": { "type": "string" },
+        "user": {
+          "$ref": "../user/user.json#/definitions/user"
+        }
+      }
+    }
+  }
+}

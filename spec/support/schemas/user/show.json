@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties":{
+    "id": { "type": "integer" },
+    "name": { "type": "string" },
+    "points": { "type": "integer" },
+    "image": { "type": ["string", "nil"] },
+    "url": { "type": "string" },
+    "email": { "type": "string" },
+    "active": { "type": ["boolean", "null"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "member_since": { "type": "string" },
+    "questions_asked": { "type": "integer" },
+    "answers_given": { "type": "integer" },
+    "tags":{
+      "type": "array",
+      "properties": {
+        "name": { "type": "string" }
+      },
+      "required": ["name"]
+    }
+  },
+  "required": ["id", "name", "points", "image", "url", "email", "active", "created_at", "updated_at", "member_since", "questions_asked", "answers_given", "tags"]
+}

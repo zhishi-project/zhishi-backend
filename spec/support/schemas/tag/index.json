@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties":{
+    "tags":{
+      "type": "array",
+      "properties":{
+        "$ref": "tag.json#/definitions/tags"
+      }
+    }
+  }
+}

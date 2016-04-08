@@ -44,6 +44,7 @@ group :test do
   gem "factory_girl_rails"
   gem "database_cleaner"
   gem 'elasticsearch-extensions'
+  gem "json-schema"
 end
 
 group :production, :staging do

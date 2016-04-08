@@ -28,4 +28,8 @@ class Answer < ActiveRecord::Base
     user.update_user_reputation(ACCEPTED_ANSWER_REWARD) if changed?
     save
   end
+
+  def sort_value
+    accepted ? Float::INFINITY : votes_count
+  end
 end
