@@ -4,6 +4,10 @@ module CreateResource
     3.times { create(:tag, name: "Amity", created_at: 2.days.ago) }
     2.times { create(:tag, name: "Kaizen") }
   end
+
+  def create_user
+    create(:user)
+  end
 end
 
 RSpec.configure do |config|

@@ -18,5 +18,6 @@ class TagsController < ApplicationController
 
   def update_subscription
     current_user.tags = Tag.process_tags(params[:tags])
+    render json: {}, status: 200
   end
 end

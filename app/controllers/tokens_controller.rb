@@ -5,7 +5,7 @@
 
   def validate
     @user = @token.user
-    @user.update(active: true)
+    render json: {}, status: 200 if @user.update(active: true)
   end
 
   private

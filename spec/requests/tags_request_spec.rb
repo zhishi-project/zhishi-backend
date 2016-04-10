@@ -3,17 +3,19 @@ require 'rails_helper'
 RSpec.describe TagsController, type: :request do
 
   let(:user) { valid_user }
+  let(:contact_tag) { Tag.find_by(name: "contract") }
   before :each do
     create_tags
   end
 
-  # describe "GET /tags" do
-  #   it "returns 200 status and tag" do
-
-  #     get tags_path("contract"), {}, authorization_header
-  #     # expect(status).to eq 200
-  #   end
-  # end
+  describe "GET /tags" do
+    it "returns 200 status and tag" do
+      allow(Tag).to receive(:search).and_return([contact_tag])
+      get tags_path("contract"), {format: :json}, authorization_header
+      expect(status).to eq 200
+      expect(response).to match_response_schema("tag/index")
+    end
+  end
 
   describe "GET /tags/popular" do
     it "returns 200 status and popular tags" do
@@ -47,13 +49,12 @@ RSpec.describe TagsController, type: :request do
     end
   end
 
-  # describe "POST /tags/update_subscription" do
-  #   it "returns 200 status and updated tags" do
+  describe "POST /tags/update_subscription" do
+    it "returns 200 status" do
 
-  #     post update_subscription_tags_path, {tags: "contract", format: :json}, authorization_header
-
-  #     expect(status).to eq 200
-  #   end
-  # end
+      post update_subscription_tags_path, {tags: "contract"}, authorization_header
+      expect(status).to eq 200
+    end
+  end
 
 end
