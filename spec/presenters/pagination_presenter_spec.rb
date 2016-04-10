@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PaginationPresenter do
-  before do
-    40.times{
-      create(:question)
-    }
-  end
+  before { create_list(:question, 40) }
 
   describe ".new" do
     context "when it is not a paginated resource" do
@@ -47,10 +43,10 @@ RSpec.describe PaginationPresenter do
   end
 
   describe "delegated methods" do
-    it "responds to the methods of the association" do
-      questions_resource = Question.paginate(page: 1)
-      paginated_resource = described_class.new(questions_resource)
+    let(:questions_resource) { Question.paginate(page: 1) }
+    let(:paginated_resource) { described_class.new(questions_resource) }
 
+    it "responds to the methods of the association" do
       expect(questions_resource).to receive(:find)
       expect(questions_resource).to receive(:first)
       expect(questions_resource).to receive(:last)
@@ -58,6 +54,11 @@ RSpec.describe PaginationPresenter do
       paginated_resource.find(1)
       paginated_resource.first
       paginated_resource.last
+    end
+
+    it "throws error if association doesn't respond to attempted method" do
+      expect(paginated_resource.respond_to? :some_random_mtd).to eql false
+      expect{paginated_resource.some_random_mtd}.to raise_error NoMethodError
     end
   end
 end

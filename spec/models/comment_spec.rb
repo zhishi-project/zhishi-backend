@@ -36,6 +36,31 @@ RSpec.describe Comment, type: :model do
     end
   end
 
+  describe "#as_indexed_json" do
+    it "sets up appropriate parameters for indexing" do
+      obj_format = {
+        "content"=> subject.content,
+        "user"=> { "name" => user.name, "email" => user.email }
+      }
+      expect(subject.as_indexed_json).to eql obj_format
+    end
+  end
+
+  describe "#question" do
+    let(:question) { create(:question) }
+    let(:answer) { create(:answer, question: question) }
+
+    it "returns question that is commented on" do
+      comment = create(:comment_on_question, comment_on: question)
+      expect(comment.question).to eql question
+    end
+
+    it "returns the question of the answer that is commented on" do
+      comment = create(:comment_on_answer, comment_on: answer)
+      expect(comment.question).to eql question
+    end
+  end
+
   context "when I create a new comment" do
     it { expect(Comment.all).to be_empty }
 

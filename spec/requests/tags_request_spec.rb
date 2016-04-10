@@ -7,6 +7,14 @@ RSpec.describe TagsController, type: :request do
     create_tags
   end
 
+  # describe "GET /tags" do
+  #   it "returns 200 status and tag" do
+
+  #     get tags_path("contract"), {}, authorization_header
+  #     # expect(status).to eq 200
+  #   end
+  # end
+
   describe "GET /tags/popular" do
     it "returns 200 status and popular tags" do
 
@@ -38,5 +46,14 @@ RSpec.describe TagsController, type: :request do
       expect(status).to eq 200
     end
   end
+
+  # describe "POST /tags/update_subscription" do
+  #   it "returns 200 status and updated tags" do
+
+  #     post update_subscription_tags_path, {tags: "contract", format: :json}, authorization_header
+
+  #     expect(status).to eq 200
+  #   end
+  # end
 
 end

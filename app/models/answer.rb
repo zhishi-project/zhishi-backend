@@ -2,6 +2,7 @@ class Answer < ActiveRecord::Base
   ACCEPTED_ANSWER_REWARD = 20
 
   include VotesCounter
+  include ModelJSONHashHelper
 
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy
@@ -15,17 +16,10 @@ class Answer < ActiveRecord::Base
     includes(:user).includes(:comments).with_votes
   end
 
-  def as_indexed_json(options={})
+  def as_indexed_json(_options = {})
     self.as_json(
       only: [:content],
-      include: { user: { only: [:name, :email] },
-                 comments: {
-                   only: [:content],
-                   include: {
-                     user: { only: [:name, :email]}
-                   }
-                 },
-               }
+      include: user_and_comment_attributes
     )
   end
 
@@ -33,5 +27,9 @@ class Answer < ActiveRecord::Base
     self.accepted = true
     user.update_user_reputation(ACCEPTED_ANSWER_REWARD) if changed?
     save
+  end
+
+  def sort_value
+    accepted ? Float::INFINITY : votes_count
   end
 end

@@ -5,6 +5,10 @@ FactoryGirl.define do
     sequence(:email) { |n| "#{Faker::Lorem.word}#{n}@andela.com" }
     image { Faker::Avatar.image }
 
+    factory :active_user do
+      active true
+    end
+
     factory :user_with_comments_on_question do
       transient do
         comments_count 5
@@ -15,7 +19,7 @@ FactoryGirl.define do
       end
     end
 
-    trait :without_image do
+    factory :user_without_image do
       image nil
     end
 

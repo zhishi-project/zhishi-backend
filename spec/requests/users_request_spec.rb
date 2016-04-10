@@ -8,6 +8,7 @@ RSpec.describe "Users", type: :request do
       get users_path, {format: :json}, authorization_header
 
       expect(parsed_json).to have_key('users')
+      expect(response).to match_response_schema('user/index')
     end
   end
 
@@ -21,6 +22,7 @@ RSpec.describe "Users", type: :request do
       expect(parsed_json['questions_asked']).to eq(user.questions.size)
       expect(parsed_json['member_since']).to eq(user.member_since)
       expect(parsed_json['answers_given']).to eq(user.answers.size)
+      expect(response).to match_response_schema('user/show')
     end
   end
 
@@ -36,6 +38,7 @@ RSpec.describe "Users", type: :request do
 
       expect(parsed_json).to have_key('questions')
       expect(parsed_json['meta']['total_records']).to eql(total_records)
+      expect(response).to match_response_schema('question/index')
     end
   end
 
@@ -51,6 +54,7 @@ RSpec.describe "Users", type: :request do
 
       expect(parsed_json).to have_key('tags')
       expect(parsed_json['tags'].size).to eql(total_tags)
+      expect(response).to match_response_schema('tag/index')
     end
   end
 end

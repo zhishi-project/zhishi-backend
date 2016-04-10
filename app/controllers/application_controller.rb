@@ -21,7 +21,7 @@ private
   end
 
   def authenticate_token
-    authenticate_with_http_token do |auth_token, options|
+    authenticate_with_http_token do |auth_token, _|
       user_id = TokenManager.authenticate(auth_token)['user']
       @current_user = User.find_by(id: user_id)
     end

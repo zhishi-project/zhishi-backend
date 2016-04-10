@@ -1,0 +1,17 @@
+{
+  "definitions":{
+    "meta":{
+      "type": "object",
+      "properties":{
+        "total_records": { "type": "integer" },
+        "total_pages": { "type": "integer" },
+        "current_page": { "type": "integer" },
+        "is_first_page": { "type": "boolean" },
+        "is_last_page": { "type": "boolean" },
+        "previous_page": { "type": "string" },
+        "next_page": { "type": "string" },
+        "out_of_bounds": { "type": "boolean" }
+      }
+    }
+  }
+}

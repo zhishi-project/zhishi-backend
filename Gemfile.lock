@@ -36,6 +36,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.3.8)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
     ansi (1.5.0)
@@ -96,6 +97,8 @@ GEM
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
     json (1.8.3)
+    json-schema (2.6.1)
+      addressable (~> 2.3.8)
     jwt (1.5.1)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -263,6 +266,7 @@ DEPENDENCIES
   faker
   figaro
   jbuilder
+  json-schema
   jwt
   newrelic_rpm
   omniauth-google-oauth2

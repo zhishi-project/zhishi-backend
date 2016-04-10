@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "string",
+      "pattern": "^The resource you tried to access was not found$"
+      }
+  }
+}

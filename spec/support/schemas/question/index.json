@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "questions": {
+      "type": "array",
+      "properties":{
+        "$ref": "question.json#/definitions/question"
+      }
+    },
+    "meta": {
+      "$ref": "../pagination/pagination.json#/definitions/meta"
+    }
+  }
+}
