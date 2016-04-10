@@ -6,6 +6,10 @@ module JsonParserHelper
   def body
     response.body
   end
+
+  def status
+    response.status
+  end
 end
 
 

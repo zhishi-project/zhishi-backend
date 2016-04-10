@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20160401195419) do
     t.integer  "user_id"
     t.integer  "question_id"
     t.string   "content"
+    t.integer  "votes"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "comments_count", default: 0
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160401195419) do
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "content"
+    t.integer  "votes"
     t.integer  "comment_on_id"
     t.string   "comment_on_type"
     t.datetime "created_at",      null: false
@@ -38,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160401195419) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "content"
+    t.integer  "votes"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "views",          default: 0
