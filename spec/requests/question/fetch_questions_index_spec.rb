@@ -1,27 +1,85 @@
-require "question_request_helper"
+require "rails_helper"
+require "requests/question/question_request_helper"
 
 RSpec.describe "Fetching Question Index", type: :request do
   # it_behaves_like "authenticated endpoint", :question_answers_path, 'get'
 
   describe "GET /questions" do
-    before(:each) { create_list(:question, 1) }
     let(:path) { questions_path }
 
-    it "returns all the question" do
-      get path, { format: :json }, authorization_header
-      binding.pry
-      expect(response.status).to eql 200
-      expect(parsed_json.size).to eql 5
-      # expect(response).to match_response_schema('answer/index')
+    context "when there are fewer than 25 questions" do
+      let(:question_count) { 10 }
+
+      before(:each) do
+        create_list(:question, question_count)
+        get path, { format: :json }, authorization_header
+      end
+
+      describe "status code" do
+        it { expect(response.status).to eql 200 }
+      end
+
+      describe "number of questions returned" do
+        it { expect(parsed_json["questions"].size).to eql question_count }
+      end
+
+      describe "current page" do
+        it { expect(parsed_json["meta"]["current_page"]).to be 1 }
+      end
+
+      describe "response schema" do
+        it { expect(response).to match_response_schema('question/index') }
+      end
     end
 
-    # it "doesn't return answers that don't belong to the question" do
-    #   question2 = create(:question_with_answers, answers_count: 3)
-    #   get path, { format: :json }, authorization_header
-    #   expect(response.status).to eql 200
-    #   expect(parsed_json.size).to eql 5
-    #   expect(response).to match_response_schema('answer/index')
-    #   expect(Answer.count).to eql 8
-    # end
+    context "when there are more than 25 questions in the DB" do
+      let(:question_count) { 35 }
+
+      before(:each) { create_list(:question, question_count) }
+
+      context "when no custom page is provided" do
+        before(:each) { get path, { format: :json }, authorization_header }
+
+        describe "status code" do
+          it { expect(response.status).to eql 200 }
+        end
+
+        describe "number of questions returned" do
+          it { expect(parsed_json["questions"].size).to eql 25 }
+        end
+
+        describe "current page" do
+          it { expect(parsed_json["meta"]["current_page"]).to be 1 }
+        end
+
+        describe "response schema" do
+          it { expect(response).to match_response_schema('question/index') }
+        end
+      end
+
+      context "when custom page is specified" do
+        let(:page) { 2 }
+
+        before(:each) do
+          get path, { format: :json, page: page }, authorization_header
+        end
+
+        describe "status code" do
+          it { expect(response.status).to eql 200 }
+        end
+
+        describe "number of questions returned" do
+          it { expect(parsed_json["questions"].size).to be <= 25 }
+        end
+
+        describe "current page" do
+          it { expect(parsed_json["meta"]["current_page"]).to be page }
+        end
+
+        describe "response schema" do
+          it { expect(response).to match_response_schema('question/index') }
+        end
+      end
+    end
   end
 end
