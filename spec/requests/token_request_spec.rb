@@ -10,10 +10,10 @@ RSpec.describe TagsController, type: :request do
   let(:temp) {token.temp}
 
 describe "POST /validate_token" do
-    it "returns 200 status" do
-      post "/validate_token", {temp_token: temp}, authorization_header
-      expect(status).to eq 200
-    end
+  it "returns 200 status" do
+    post "/validate_token", {temp_token: temp, format: :json}, authorization_header
+    expect(status).to eq 200
+  end
   end
 
 end
