@@ -5,7 +5,7 @@ RSpec.describe "Fetching Top Question", type: :request do
   describe "GET /top_questions" do
     let(:path) { top_questions_path }
 
-    it_behaves_like "authenticated endpoint", :top_questions_path, :get
+    it_behaves_like "question authenticated endpoint", :top_questions_path, :get
 
     context "with valid authorization header" do
       before(:each) do
@@ -24,11 +24,6 @@ RSpec.describe "Fetching Top Question", type: :request do
 
       describe "number of objects returned" do
         it { expect(parsed_json["questions"].size).to eql 10 }
-      end
-
-      describe "inclusion of the first question" do
-        it { expect(parsed_json["questions"][0]["title"]).
-          to eql Question.first.title }
       end
 
       describe "response body" do

@@ -5,7 +5,7 @@ RSpec.describe "Question Create Endpoint", type: :request do
   describe "POST /questions" do
     let(:path) { questions_path }
 
-    it_behaves_like "authenticated endpoint", :questions_path, :post
+    it_behaves_like "question authenticated endpoint", :questions_path, :post
 
     context "with valid athorization header" do
       before(:each) { post path, question_params, authorization_header }
@@ -28,7 +28,7 @@ RSpec.describe "Question Create Endpoint", type: :request do
         end
 
         describe "response body" do
-          # it { expect(response).to match_response_schema('question/show') }
+          it { expect(response).to match_response_schema('question/show') }
         end
       end
 

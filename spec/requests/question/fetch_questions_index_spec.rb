@@ -5,7 +5,7 @@ RSpec.describe "Fetching Question Index", type: :request do
   describe "GET /questions" do
     let(:path) { questions_path }
 
-    it_behaves_like "authenticated endpoint", :questions_path, :get
+    it_behaves_like "question authenticated endpoint", :questions_path, :get
 
     context "with valid authorization header" do
       context "when there are fewer than 25 questions" do

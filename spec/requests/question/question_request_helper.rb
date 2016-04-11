@@ -1,6 +1,6 @@
-require "requests/shared/shared_authenticated_endpoint"
+require_relative "shared_authenticated_endpoint"
 
-def path_helper(path, show=false)
+def question_path_helper(path, show=false)
   question = create(:question)
   if show
     send(path, question)

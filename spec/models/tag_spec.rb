@@ -172,8 +172,8 @@ RSpec.describe Tag, type: :model do
     end
 
     it "return nil if argument is neither an Array or a String" do
-      expect(Tag.send(:analyze_tags, 1)).to be_nil
-      expect(Tag.send(:analyze_tags, nil)).to be_nil
+      expect(Tag.send(:analyze_tags, 1)).to eql []
+      expect(Tag.send(:analyze_tags, nil)).to eql []
     end
 
     it "it throws argument error" do
