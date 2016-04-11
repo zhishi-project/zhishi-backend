@@ -1,6 +1,11 @@
 {
-  "type": "array",
+  "type": "object",
   "properties": {
-    "$ref": "result.json#/"
+    "questions":{
+      "type": "array",
+      "properties":{
+        "$ref": "result.json#/"
+      }
+    }
   }
 }

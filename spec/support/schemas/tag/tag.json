@@ -1,7 +1,7 @@
 {
   "definitions": {
     "tags":{
-      "type": "array",
+      "type": "object",
       "properties": {
         "name": { "type": "string" }
       },

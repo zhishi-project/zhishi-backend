@@ -1,6 +1,6 @@
 module ModelJSONHashHelper
   def user_and_comment_attributes
-    { 
+    {
       comments: {
         only: [:content],
         include: user_attributes

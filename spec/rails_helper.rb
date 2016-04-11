@@ -35,6 +35,10 @@ SimpleCov.start 'rails'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 Dir[Rails.root.join('spec/models/shared/**/*.rb')].each { |f| require f }
 
+Dir[Rails.root.join('spec/support/**/*.json')].each do |schema|
+  # JSON::Validator.add_schema(schema)
+end
+
 require 'elasticsearch_helper'
 # Checks for pending migration and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.

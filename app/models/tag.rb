@@ -52,6 +52,8 @@ class Tag < ActiveRecord::Base
           tag_params
         elsif tag_params.is_a? String
           tag_params.split(',')
+        else
+          []
         end
       end
   end

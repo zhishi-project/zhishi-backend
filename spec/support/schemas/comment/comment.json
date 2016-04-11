@@ -6,6 +6,7 @@
         "id": { "type": "integer" },
         "content": { "type": "string" },
         "votes_count": { "type": "integer" },
+        "user_vote": { "type": "integer" },
         "created_at": { "type" : "string", "format": "date-time" },
         "updated_at": { "type" : "string", "format": "date-time" },
         "comment_on_id": { "type": "integer" },
