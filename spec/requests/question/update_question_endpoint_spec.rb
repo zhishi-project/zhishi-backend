@@ -44,6 +44,11 @@ RSpec.describe "Question Create Endpoint", type: :request do
           it { expect(parsed_json["content"]).to eql question.reload.content }
         end
 
+        describe "No creation of new question" do
+          let(:request) { put path, question_params, authorization_header }
+          it { expect { request }.not_to change(Question, :count) }
+        end
+
         describe "response body" do
           it { expect(response).to match_response_schema('question/show') }
         end

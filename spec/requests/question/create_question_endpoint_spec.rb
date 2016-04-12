@@ -23,8 +23,9 @@ RSpec.describe "Question Create Endpoint", type: :request do
           it { expect(response.status).to eql 200 }
         end
 
-        describe "creation of a new record" do
-          it { expect(Question.count).not_to be 0 }
+        describe "creation of new question" do
+          let(:request) { post path, question_params, authorization_header }
+          it { expect{ request }.to change(Question, :count).by 1 }
         end
 
         describe "response body" do
@@ -44,8 +45,9 @@ RSpec.describe "Question Create Endpoint", type: :request do
           it { expect(response.status).to eql 400 }
         end
 
-        describe "creation of a new record" do
-          it { expect(Question.count).to be 0 }
+        describe "No creation of new question" do
+          let(:request) { post path, question_params, authorization_header }
+          it { expect{ request }.not_to change(Question, :count) }
         end
 
         describe "response body" do

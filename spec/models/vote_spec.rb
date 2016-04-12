@@ -86,8 +86,6 @@ RSpec.describe Vote, type: :model do
     end
 
     context "when the user has not voted before" do
-      before(:each) { allow_any_instance_of(subject_class).to receive(:vote_by).and_return (nil) }
-
       context "when making an upvote" do
         let(:reward) do
           Vote.store_vote(subject_class, subject_id, user, 1)
