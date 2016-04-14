@@ -51,7 +51,10 @@ RSpec.describe TagsController, type: :request do
   describe "POST /tags/update_subscription" do
     it "returns 200 status" do
 
-      post update_subscription_tags_path, {tags: "contract"}, authorization_header
+      post update_subscription_tags_path, {tags: "contract", format: :json}, authorization_header
+      expect(parsed_json).to be_a Hash
+      expect(parsed_json.keys.count).to eq(1)
+      expect(parsed_json.keys).to include("tags")
       expect(status).to eq 200
     end
   end
