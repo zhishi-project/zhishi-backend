@@ -25,6 +25,12 @@ module Zhishi
     config.autoload_paths += [config.root.join('app', 'presenters')]
     # $: << Rails.root.join('app', 'presenters')
     # config.autoload_paths += %W( #{config.root}/workers )
+    config.autoload_paths += [config.root.join('lib')]
+    Dir[config.root.join('lib', '**', '*.rb')].each do |path|
+      config.autoload_paths += [path]
+    end
+    # Rails.application.
+    routes.default_url_options[:host] = ENV['BASE_URL'] #'localhost:3000'
 
     config.middleware.insert_after(ActiveRecord::QueryCache, ActionDispatch::Cookies)
     config.middleware.insert_after(ActionDispatch::Cookies, ActionDispatch::Session::CookieStore)

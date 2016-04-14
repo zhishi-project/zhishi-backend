@@ -25,6 +25,7 @@ association_count.rb
 /.idea/
 /coverage/*
 /.coveralls.yml
-.DS_Store
 /.backup
+.DS_Store
 .codesnip
+.backup

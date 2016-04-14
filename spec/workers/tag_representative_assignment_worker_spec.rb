@@ -18,7 +18,7 @@ RSpec.describe TagRepresentativeAssignmentWorker, type: :worker do
 
       it "update tag representative if match" do
         allow(Tag).to receive_message_chain(:search, :records).and_return([tag2])
-        expect{subject.perform(tag.id, tag.name)}.to change{tag.reload.representative}.from(nil).to(tag2)
+        expect{subject.perform(tag.id, tag.name)}.to change{tag.reload.representative_id}.from(nil).to(tag2.id)
       end
 
       it "doesn't update tag representative no match" do

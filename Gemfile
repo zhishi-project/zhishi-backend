@@ -32,12 +32,15 @@ gem 'sidekiq-failures'
 gem 'sidekiq-status'
 gem 'redis-namespace'
 gem 'sinatra', '>= 1.3.0', require: false
+gem 'active_model_serializers'
+# gem 'backport_new_renderer'
 
 group :development, :test do
   gem "sqlite3"
   gem "pry-rails"
   gem "pry-nav"
   gem "faker"
+  gem 'guard-rspec', require: false
 end
 
 group :test do

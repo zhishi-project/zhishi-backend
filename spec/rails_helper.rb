@@ -8,6 +8,10 @@ $: << File.join(Rails.root, "spec/support")
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 require "shoulda/matchers"
+
+Dir[Rails.root.join('spec', 'serializers', 'notifications', 'shared_examples', '*.rb')].each{|f| require f }
+Dir[Rails.root.join('spec/models/shared/**/*.rb')].each { |f| require f }
+
 require "spec_helper"
 require "rspec/rails"
 
@@ -33,7 +37,6 @@ Coveralls.wear!
 # require only the support files necessary.
 #
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-Dir[Rails.root.join('spec/models/shared/**/*.rb')].each { |f| require f }
 
 require 'elasticsearch_helper'
 # Checks for pending migration and applies them before tests are run.
