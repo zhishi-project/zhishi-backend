@@ -1,4 +1,5 @@
-class TokensController < ApplicationController
+
+ class TokensController < ApplicationController
   before_action :set_token, only: [:validate]
   skip_before_action :authenticate_user, only: [:validate]
 

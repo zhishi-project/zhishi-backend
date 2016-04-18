@@ -4,9 +4,7 @@ RSpec.describe Tag, type: :model do
   let(:arg) { :recent }
   let(:tag_name) { "Amity" }
   before :each do
-    create_list(:tag, 5, name: "Contract", created_at: 4.days.ago)
-    create_list(:tag, 3, name: "Amity", created_at: 2.days.ago)
-    create_list(:tag, 2, name: "Kaizen")
+    create_tags
   end
 
   describe ".get_tags_that_are" do
