@@ -17,23 +17,17 @@ RSpec.describe Tag, type: :model do
   describe ".get_tags_that_are" do
     let(:arg) { :popular }
     it "sorts the tags in popular order" do
-      expect(Tag.get_tags_that_are(arg)).to be_a Hash
-      expect(Tag.get_tags_that_are(arg).first.first).to eq("contract")
-      expect(Tag.get_tags_that_are(arg).first.last).to eq(5)
-      expect(Tag.get_tags_that_are(arg).keys.last).to eq("kaizen")
-      expect(Tag.get_tags_that_are(arg).values.last).to eq(2)
-     end
+      expect(Tag.get_tags_that_are(arg).first.name).to eq("contract")
+      expect(Tag.get_tags_that_are(arg).last.name).to eq("kaizen")
+    end
   end
 
   describe ".get_tags_that_are" do
     let(:arg) { :trending }
     it "sorts the tags in trending order" do
       create_list(:tag, 7, name: "Kaizen")
-      expect(Tag.get_tags_that_are(arg)).to be_a Hash
-      expect(Tag.get_tags_that_are(arg).first.first).to eq("kaizen")
-      expect(Tag.get_tags_that_are(arg).first.last).to eq(9)
-      expect(Tag.get_tags_that_are(arg).keys.last).to eq("amity")
-      expect(Tag.get_tags_that_are(arg).values.last).to eq(3)
+      expect(Tag.get_tags_that_are(arg).first.name).to eq("kaizen")
+      expect(Tag.get_tags_that_are(arg).last.name).to eq("amity")
      end
   end
 

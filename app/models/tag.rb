@@ -15,13 +15,14 @@ class Tag < ActiveRecord::Base
 
   class << self
     def get_tags_that_are(arg)
+      colns = 'name, id, representative_id, COUNT(name) as count_id'
       case arg
       when :recent
-        all.order('id DESC')
+        all.order('id DESC').select(:name, :id, :representative_id)
       when :popular
-        group(:name).order('count_id DESC').count('id')
+        select(colns).group(:name).order('count_id DESC')
       when :trending
-        group('name').order('count_id DESC, DATE(created_at) DESC').count('id')
+        select(colns).group(:name).order('count_id DESC, DATE(created_at) DESC')
       end
     end
 

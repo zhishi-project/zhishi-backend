@@ -52,9 +52,8 @@ RSpec.describe "Users", type: :request do
     it "retrieves all the tags a user has subscribed to" do
       get tags_user_path(user.id), {format: :json}, authorization_header
 
-      expect(parsed_json).to have_key('tags')
       expect(parsed_json['tags'].size).to eql(total_tags)
-      expect(response).to match_response_schema('tag/index')
+      expect(response).to match_response_schema('tag/tag_properties')
     end
   end
 end

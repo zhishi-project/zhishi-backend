@@ -1,1 +1,0 @@
-json.partial! 'tags/tag', tags: current_user.tags
