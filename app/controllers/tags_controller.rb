@@ -3,16 +3,10 @@ class TagsController < ApplicationController
     render partial: 'tag_properties', locals: { tags: Tag.search(params[:q])}
   end
 
-  def popular
-    render partial: 'tag_properties', locals: { tags: Tag.get_tags_that_are(:popular) }
-  end
-
-  def recent
-    render partial: 'tag_properties', locals: { tags: Tag.get_tags_that_are(:recent) }
-  end
-
-  def trending
-    render partial: 'tag_properties', locals: { tags: Tag.get_tags_that_are(:trending) }
+  %i(popular recent trending).each do |action|
+    define_method(action) do
+      render partial: 'tag_properties', locals: { tags: Tag.get_tags_that_are(action) }
+    end
   end
 
   def update_subscription
