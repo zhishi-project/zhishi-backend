@@ -20,8 +20,13 @@ gem 'rack-cors'
 # new relic provides a dashboard to view the perfomance of our application
 gem "rack-timeout"
 gem 'newrelic_rpm'
+gem "bugsnag"
+
+# elasticsearch for full text searches
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+
+# sidekiq for asynchronous jobs. relevant to enable app to keep functioning even when there are long running jobs
 gem 'sidekiq'
 gem 'sidekiq-failures'
 gem 'sidekiq-status'
