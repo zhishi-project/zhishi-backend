@@ -109,7 +109,18 @@ Response
 ```ruby
 Status: 200
   {
-    tags: ["operations", "andela"]
+    tags: [
+      {
+        name: 'operations',
+        id: 1,
+        representative_id: nil
+      },
+      {
+        name: 'andela',
+        id: 2,
+        representative_id: nil
+      }
+    ]
   }
 ```
 

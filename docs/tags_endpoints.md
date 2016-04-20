@@ -6,6 +6,7 @@ GET /tags/?q=query |	Returns the tags that match the given the argument (autocom
 GET /tags/popular | Returns the popular tags | True
 GET /tags/recent | Returns the recent tags | True
 GET /tags/trending | Returns the trending tags | True
+POST /tags/update_subscription | Returns the users tags | True
 
 ### GET /tags/?q=query
 
@@ -20,7 +21,13 @@ Response
 ```ruby
 Status: 200
   {
-    matches: ["mac", "machine", "mac-book", "mac-book"]
+    tags: [
+      {
+        name: 'mac',
+        id: 1,
+        representative_id: nil
+      }
+    ]
   }
 ```
 
@@ -37,7 +44,13 @@ Response
 ```ruby
 Status: 200
 {
-  tags: ["#simulations", "#mac-book", "#checkpoint", "#accommodation", "#promotion"]
+  tags: [
+    {
+      name: 'mac',
+      id: 1,
+      representative_id: nil
+    }
+  ]
 }
 ```
 > Might be paginated
@@ -47,7 +60,13 @@ Response
 ```ruby
 Status: 200
 {
-  tags: ["#simulations", "#mac-book", "#checkpoint", "#accommodation", "#promotion"]
+  tags: [
+    {
+      name: 'mac',
+      id: 1,
+      representative_id: nil
+    }
+  ]
 }
 ```
 
@@ -56,6 +75,39 @@ Response
 ```ruby
 Status: 200
 {
-  tags: ["#simulations", "#mac-book", "#checkpoint", "#accommodation", "#promotion"]
+  tags: [
+    {
+      name: 'mac',
+      id: 1,
+      representative_id: nil
+    }
+  ]
+}
+```
+
+### POST /tags/update_subscription
+Request
+```ruby
+{
+  tags: 'tag1, tag2'
+}
+```
+
+Response
+```ruby
+Status: 200
+{
+  tags: [
+    {
+      name: 'tag1',
+      id: 1,
+      representative_id: nil
+    },
+    {
+      name: 'tag2',
+      id: 2,
+      representative_id: nil
+    }
+  ]
 }
 ```
