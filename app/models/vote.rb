@@ -25,14 +25,14 @@ class Vote < ActiveRecord::Base
       if subject_exists?(subject, subject_id)
         reward = store_vote(subject, subject_id, user, value)
         user = subject.find_by(id: subject_id).user
-        user.update_user_reputation(reward) if reward
+        user.update_reputation(reward) if reward
 
         total_votes(subject, subject_id)
       end
     end
 
     def store_vote(subject, subject_id, user, value)
-      if voted?(subject, subject_id, user, value) || voted?(subject, subject_id, user)
+      if subject.find(subject_id).vote_by(user)
         vote = subject_of_vote(subject, subject_id).votes.find_by(user: user)
         vote.value = value
 
@@ -46,11 +46,6 @@ class Vote < ActiveRecord::Base
       end
 
       new_reward
-    end
-
-    def voted?(subject, subject_id, user, value = nil)
-      return exists?(user: user, voteable_type: "#{subject}", voteable_id: subject_id) unless value
-      exists?(user: user, voteable_type: "#{subject}", voteable_id: subject_id, value: value)
     end
 
     def subject_exists?(subject, subject_id)

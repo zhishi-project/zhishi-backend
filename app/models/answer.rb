@@ -25,7 +25,7 @@ class Answer < ActiveRecord::Base
 
   def accept
     self.accepted = true
-    user.update_user_reputation(ACCEPTED_ANSWER_REWARD) if changed?
+    user.update_reputation(ACCEPTED_ANSWER_REWARD) if changed?
     save
   end
 

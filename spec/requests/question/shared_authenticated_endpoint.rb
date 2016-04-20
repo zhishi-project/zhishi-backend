@@ -1,6 +1,6 @@
-RSpec.shared_examples "authenticated endpoint" do |endpoint, verb, include_answer|
+RSpec.shared_examples "question authenticated endpoint" do |endpoint, verb, show|
   before(:each) do
-    path = path_helper(endpoint, include_answer)
+    path = question_path_helper(endpoint, show)
     send(verb, path, { format: :json }, token)
   end
 

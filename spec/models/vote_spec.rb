@@ -60,20 +60,6 @@ RSpec.describe Vote, type: :model do
     end
   end
 
-  describe ".voted?" do
-    it "returns false if the user has not voted" do
-      expect(Vote.voted?(subject_class, subject_id, user)).to eq(false)
-      expect(Vote.voted?(subject_class, subject_id, user, invalid_value)).to eq(false)
-      expect(Vote.voted?(subject_class, invalid_subject_id, user, value)).to eq(false)
-    end
-
-    it "returns true if the user has voted" do
-      vote
-      expect(Vote.voted?(subject_class, subject_id, user)).to eq(true)
-      expect(Vote.voted?(subject_class, subject_id, user, value)).to eq(true)
-    end
-  end
-
   describe ".store_vote" do
     context "when the user has already voted" do
       let(:vote) { create(:vote_on_question, value: 1, user: user) }
@@ -100,8 +86,6 @@ RSpec.describe Vote, type: :model do
     end
 
     context "when the user has not voted before" do
-      before(:each) { allow(Vote).to receive(:voted?).and_return (false) }
-
       context "when making an upvote" do
         let(:reward) do
           Vote.store_vote(subject_class, subject_id, user, 1)

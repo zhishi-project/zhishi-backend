@@ -4,6 +4,9 @@
     "id": { "type": "integer" },
     "title": { "type": "string" },
     "content": { "type": "string" },
+    "comments_count": { "type": "string" },
+    "answers_count": { "type": "string" },
+    "views": { "type": "integer" },
     "user": {
       "type": "object",
       "properties":{
