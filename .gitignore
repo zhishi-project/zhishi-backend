@@ -26,3 +26,5 @@ association_count.rb
 /coverage/*
 /.coveralls.yml
 .DS_Store
+/.backup
+.codesnip

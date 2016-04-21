@@ -25,6 +25,10 @@ class Question < ActiveRecord::Base
     nil
   end
 
+  def self.personalized(user)
+    Queries::UserQuestionsQuery.new(user).call
+  end
+
   def self.with_associations
     eager_load(:votes)
       .eager_load(answers: [{comments: [{user: [:social_providers]}, :votes]}, {user: [:social_providers]}, :votes])

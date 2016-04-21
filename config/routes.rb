@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :questions, except: [:new, :edit] do
       collection do
         get :search
+        get :personalized
       end
       member do
         get "recent_answers"
