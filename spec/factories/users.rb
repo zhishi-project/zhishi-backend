@@ -9,6 +9,14 @@ FactoryGirl.define do
       active true
     end
 
+    factory :user_with_voteable_status do
+      points 15
+    end
+
+    factory :user_without_voteable_status do
+      points 0
+    end
+
     factory :user_with_comments_on_question do
       transient do
         comments_count 5

@@ -25,8 +25,6 @@ RSpec.describe VotesController, type: :controller do
       expect(response.body).to eq "{\"response\":-1}"
       expect(response.status).to eq 200
     end
-
-
   end
 
   context "when user votes own resource" do
@@ -62,7 +60,6 @@ RSpec.describe VotesController, type: :controller do
       post :downvote, {resource_name: 'answers', resource_id: 1}
       expect(response.body).to include "Not qualified to vote"
       expect(response.status).to eq 400
-
     end
   end
 
