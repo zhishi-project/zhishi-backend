@@ -13,7 +13,7 @@ module VotesCounter
     }
 
     scope :by_date, -> {
-      with_votes.order('created_at DESC')
+      with_votes.order("#{table_name}.created_at DESC")
     }
   end
 

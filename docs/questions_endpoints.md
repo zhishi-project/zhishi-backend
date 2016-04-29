@@ -9,6 +9,7 @@ GET questions/top_questions | offset, limit ( both could be optional ), auth_tok
 PUT questions/:id| question's id, update information(title, description), auth_token in header | Returns the updated question and all the information concerning it  or error message if any.
 DELETE questions/:id| question's id, auth_token in header | Returns a confirmation that the question has been deleted  or error message if any.
 GET questions/search | `q` which has the value of the params to search | Returns an array of questions, with a few things stripped off, such as association counts etc
+GET questions/personalized | offset, limit ( both could be optional ), auth_token in header | Returns all questions based on the tags a user has subscribed to with all the basic data
 
 ## GET /questions/
 Request
