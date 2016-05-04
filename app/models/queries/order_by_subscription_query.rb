@@ -1,5 +1,5 @@
 module Queries
-  class OrderBySubscriptionQuery
+  class OrderBySubscriptionQuery < UserQuestionsQuery
     attr_reader :user
 
     def initialize(user)
@@ -33,39 +33,8 @@ module Queries
         # case_handler.when(user_subscriptions).then(0).else(2)
       end
 
-      def user_subscriptions
-        tag_table[:id].in(user_tag_association).or(tag_table[:representative_id].in(user_tag_association))
-      end
-
-      def user_model
-        user.model_name.to_s
-      end
-
-      def user_id
-        user.id
-      end
-
       def question_table
         Question.arel_table
-      end
-
-      def tag_table
-        Tag.arel_table
-      end
-
-      def resource_tag_table
-        ResourceTag.arel_table
-      end
-
-      def resource_tag_to_user_assocation
-        resource_tag_table[:taggable_type].eq(user_model).and(resource_tag_table[:taggable_id].eq(user_id))
-      end
-
-      def user_tag_association
-        tag_table.project(tag_table[:id]).
-        outer_join(resource_tag_table).
-        on(tag_table[:id].eq(resource_tag_table[:tag_id])).
-        where(resource_tag_to_user_assocation)
       end
 
       def join_associations
