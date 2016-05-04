@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   include OwnershipConcern
 
   def index
-    questions = Question.with_basic_association.paginate(page: params[:page])
+    questions = Question.order_by_user_subscription(current_user).paginate(page: params[:page])
     @questions = PaginationPresenter.new(questions)
   end
 
@@ -12,6 +12,7 @@ class QuestionsController < ApplicationController
     @questions = PaginationPresenter.new(questions)
     render :index
   end
+
 
   def show
     @question.increment_views

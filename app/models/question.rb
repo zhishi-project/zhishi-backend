@@ -25,6 +25,10 @@ class Question < ActiveRecord::Base
     nil
   end
 
+  def self.order_by_user_subscription(user)
+    Queries::OrderBySubscriptionQuery.new(user).call
+  end
+
   def self.personalized(user)
     Queries::UserQuestionsQuery.new(user).call
   end
@@ -40,7 +44,11 @@ class Question < ActiveRecord::Base
   end
 
   def self.with_basic_association
-    by_date.includes(user: [:social_providers])
+    by_date.with_users
+  end
+
+  def self.with_users
+    includes(user: [:social_providers])
   end
 
   def increment_views
