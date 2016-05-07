@@ -13,7 +13,7 @@ RSpec.describe TagsController, type: :request do
       allow(Tag).to receive(:search).and_return([contract_tag])
       get tags_path, {q: "contract", format: :json}, authorization_header
       expect(status).to eq 200
-      expect(response).to match_response_schema("tag/tag_properties")
+      expect(response).to match_response_schema("tag/tag")
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe TagsController, type: :request do
 
       expect(parsed_json['tags'].first).to have_value("contract")
       expect(status).to eq 200
-      expect(response).to match_response_schema("tag/tag_properties")
+      expect(response).to match_response_schema("tag/tag")
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe TagsController, type: :request do
       expect(parsed_json['tags'].last["id"]).to eq(Tag.first.id)
       expect(parsed_json['tags'].count).to eq(Tag.count)
       expect(status).to eq 200
-      expect(response).to match_response_schema("tag/tag_properties")
+      expect(response).to match_response_schema("tag/tag")
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe TagsController, type: :request do
 
       expect(parsed_json['tags'].first['name']).to eq('contract')
       expect(status).to eq 200
-      expect(response).to match_response_schema("tag/tag_properties")
+      expect(response).to match_response_schema("tag/tag")
     end
   end
 
@@ -55,7 +55,7 @@ RSpec.describe TagsController, type: :request do
       expect(parsed_json['tags'].size).to eq(1)
       expect(parsed_json['tags'].first['name']).to eql("contract")
       expect(status).to eq 200
-      expect(response).to match_response_schema("tag/tag_properties")
+      expect(response).to match_response_schema("tag/tag")
     end
   end
 

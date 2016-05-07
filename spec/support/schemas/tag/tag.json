@@ -1,11 +1,18 @@
 {
-  "definitions": {
-    "tags":{
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" }
-      },
-      "required": ["name"]
+  "type": "object",
+  "properties":{
+    "tags": {
+      "type": ["array"],
+      "properties":{
+        "type": "object",
+        "properties":{
+          "name": { "type": "string" },
+          "representative_id": { "type": ["integer", null] },
+          "id": { "type": "integer" }
+          },
+        "required": ["name", "representative_id", "id"]
+        }
     }
-  }
+  },
+  "required": ["tags"]
 }
