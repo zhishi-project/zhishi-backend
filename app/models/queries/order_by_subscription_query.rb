@@ -1,11 +1,5 @@
 module Queries
   class OrderBySubscriptionQuery < UserQuestionsQuery
-    attr_reader :user
-
-    def initialize(user)
-      @user = user
-    end
-
     def call
       Question.with_votes.with_users.joins(join_associations).order(case_statement, sort_by_date_created, sort_by_votes_sum, sort_by_views)
     end
@@ -23,9 +17,9 @@ module Queries
         "questions.created_at DESC"
       end
 
-      def case_handler
-        Arel::Nodes::Case.new
-      end
+      # def case_handler
+      #   Arel::Nodes::Case.new
+      # end
 
       def case_statement
         "CASE WHEN #{user_subscriptions.to_sql} THEN 0 ELSE 2 END"
