@@ -185,6 +185,16 @@ RSpec.describe Tag, type: :model do
     end
   end
 
+  describe ".subscribable" do
+    it "returns only tag representatives" do
+      tag = create(:tag_with_representative)
+      tags = Tag.subscribable
+      expect(Tag.count).to eql 12
+      expect(tags.count).to eql 11
+      expect(tags.include?(tag)).to be_falsey
+    end
+  end
+
   describe "#as_indexed_json" do
     it "sets up appropriate parameters for indexing" do
       tag = create(:tag, name: tag_name)

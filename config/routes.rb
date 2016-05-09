@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         get :popular
         get :recent
         get :trending
+        get :subscribable
         post :update_subscription
       end
     end

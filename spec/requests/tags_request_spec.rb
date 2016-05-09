@@ -17,6 +17,17 @@ RSpec.describe TagsController, type: :request do
     end
   end
 
+  describe "GET /tags/subscribable" do
+    it "returns subscribable tags" do
+      tag = create(:tag_with_representative)
+      expect(Tag.count).to eql 12
+      get subscribable_tags_path, { format: :json }, authorization_header
+      expect(status).to eq 200
+      expect(parsed_json['tags'].size).to eql 11
+      expect(response).to match_response_schema("tag/tag")
+    end
+  end
+
   describe "GET /tags/popular" do
     it "returns status 200 with all tags ordered by the popular ones" do
       get popular_tags_path, {format: :json}, authorization_header
