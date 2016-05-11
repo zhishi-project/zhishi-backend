@@ -53,7 +53,7 @@ RSpec.describe "Users", type: :request do
       get tags_user_path(user.id), {format: :json}, authorization_header
 
       expect(parsed_json['tags'].size).to eql(total_tags)
-      expect(response).to match_response_schema('tag/tag_properties')
+      expect(response).to match_response_schema('tag/tag')
     end
   end
 end

@@ -7,4 +7,8 @@ class Token < ActiveRecord::Base
   def set_temp_token
     self.temp = SecureRandom.uuid.delete('-')
   end
+
+  def get_user
+    User.eager_load(:tags).joins(:tokens).where(id: user_id).first
+  end
 end

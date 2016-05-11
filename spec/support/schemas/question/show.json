@@ -16,7 +16,7 @@
       "$ref": "../user/user.json#/definitions/user"
     },
     "tags":{
-      "type": "array"
+      "$ref": "../tag/tag.json#/properties/tags"
     },
     "answers": {
       "type": "array",
@@ -31,5 +31,5 @@
       }
     }
   },
-  "required": ["answers", "comments"]
+  "required": ["answers", "comments", "tags"]
 }

@@ -33,6 +33,10 @@ class Tag < ActiveRecord::Base
       end
     end
 
+    def subscribable
+      where(representative_id: nil)
+    end
+
     def resolution_for(tag_name)
       {
         query: {

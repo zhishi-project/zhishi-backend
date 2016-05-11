@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   end
 
   def tags
-    render partial: 'tags/tag_properties', locals: { tags: @user.tags }
+    render partial: 'tags/tag', locals: { tags: @user.tags }
   end
 
   private
