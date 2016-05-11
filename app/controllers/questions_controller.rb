@@ -7,6 +7,12 @@ class QuestionsController < ApplicationController
     @questions = PaginationPresenter.new(questions)
   end
 
+  def all
+    questions = Question.with_basic_association.paginate(page: params[:page])
+    @questions = PaginationPresenter.new(questions)
+    render :index
+  end
+
   def personalized
     questions = Question.personalized(current_user).paginate(page: params[:page])
     @questions = PaginationPresenter.new(questions)
