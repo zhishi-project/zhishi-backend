@@ -50,6 +50,7 @@ group :test do
   gem "database_cleaner"
   gem 'elasticsearch-extensions'
   gem "json-schema"
+  gem "mock_redis"
 end
 
 group :production, :staging do

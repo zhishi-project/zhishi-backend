@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Personalized Questions", type: :request do
-  describe "GET /personalized" do
+  describe "GET /questions/personalized" do
     let(:path) { personalized_questions_path }
 
     context "when user has subscribed to tags and questions exists for the tags" do

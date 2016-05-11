@@ -10,6 +10,7 @@ CodeClimate::TestReporter.start
 require "shoulda/matchers"
 require "spec_helper"
 require "rspec/rails"
+require "sidekiq/testing"
 
 require 'coveralls'
 Coveralls.wear!
@@ -40,11 +41,26 @@ require 'elasticsearch_helper'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+REDIS = MockRedis.new
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do | example |
+    # Clears out the jobs for tests using the fake testing
+    Sidekiq::Worker.clear_all
+
+    if example.metadata[:sidekiq] == :inline
+      Sidekiq::Testing.inline!
+    else
+      Sidekiq::Testing.fake!
+    end
+    REDIS.flushdb
+    allow(Sidekiq).to receive(:redis).and_yield(REDIS) # Or else Sidekiq.redis will attempt to make a real connection
   end
 
   config.around(:each) do |example|
