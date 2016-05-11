@@ -13,6 +13,7 @@ GET questions/search | `q` which has the value of the params to search | Returns
 GET questions/personalized | offset, limit ( both could be optional ), auth_token in header | Returns all questions based on the tags a user has subscribed to with all the basic data
 
 ## GET /questions/
+## GET /questions/all
 Request
 ```ruby
  GET  /questions?limit=5&offset=1
