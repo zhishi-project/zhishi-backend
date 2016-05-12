@@ -1,7 +1,7 @@
 module Queries
   class OrderBySubscriptionQuery < UserQuestionsQuery
     def call
-      Question.with_votes.with_users.joins(join_associations).order(case_statement, sort_by_date_created, sort_by_votes_sum, sort_by_views)
+      Question.with_votes.with_users.joins(join_associations).order(case_statement, sort_by_date_created, sort_by_votes_sum, sort_by_views).group("tags.id")
     end
 
     private
