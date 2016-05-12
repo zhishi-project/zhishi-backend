@@ -4,6 +4,9 @@ class Answer < ActiveRecord::Base
   include VotesCounter
   include ModelJSONHashHelper
   include NewNotification
+  include UserActivityTracker
+  include ZhishiDateHelper
+  include RouteKey
 
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy
@@ -33,5 +36,24 @@ class Answer < ActiveRecord::Base
 
   def sort_value
     accepted ? Float::INFINITY : votes_count
+  end
+
+  def create_action_verb
+    "Answered a Question"
+  end
+
+  def update_action_verb
+    "Updated an Answer on a Question"
+  end
+
+  def should_create_activity?
+    true unless changed.include?('accepted')
+  end
+
+  def zhishi_url_options
+    {
+      question_id: question_id,
+      id: id
+    }
   end
 end

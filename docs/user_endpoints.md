@@ -9,6 +9,7 @@ GET /users	| Returns all users (possibly paginated)	| False
 GET /users/:id	| Returns information of a particular user	| False
 GET users/:id/questions| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the questions with the user_id and all the information concerning it  or error message if any.
 GET users/:id/tags| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the tags with the user_id or error message if any.
+GET users/:id/activities| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the all the activities of a user with the user_id or error message if any.
 
 
 ### POST /users
@@ -177,4 +178,42 @@ Status 404
   {
 	  message: "Token seem valid but User record is not found"
   }
+```
+
+## GET /users/:id/activities
+Request
+```ruby
+  GET /users/1/activities
+```
+Response
+
+NOTE: When the activity is on a question, the related information field is an empty object
+
+```ruby
+Status: 200
+{
+  activities: [
+    {
+      "key": "answer.create",
+      "display_message": "Answered a Question",
+      "url": "/questions/1/answers/1",
+      "activity_on": {
+        "type": "Answer",
+        "activity_action": "create",
+        "id": 1,
+        "content": "The content of the answer",
+        "created_since": "2 minutes ago",
+        "related_information": {
+          "type": "Question",
+          "id": 1,
+          "title": "The title of the question",
+          "content": "The content of the question",
+          "user_id": 1,
+          "tags": []
+        },
+        "question_url": "/questions/1"
+      }
+    }
+  ]
+}
 ```

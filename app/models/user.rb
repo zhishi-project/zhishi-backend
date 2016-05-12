@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   include AndelaValidator
-  include ActionView::Helpers::DateHelper
   include NewNotification
-
+  include ZhishiDateHelper
+  include RouteKey
+  
   has_many :comments
   has_many :questions
   has_many :answers
@@ -11,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :votes
   has_many :resource_tags, as: :taggable
   has_many :tags, through: :resource_tags
+  has_many :activities, foreign_key: :owner_id
   EMAIL_FORMAT= /(?<email>[.\w]+@andela).co[m]?\z/
 
   scope :with_statistics, Queries::StatisticsQuery
@@ -48,7 +50,7 @@ class User < ActiveRecord::Base
   end
 
   def member_since
-    distance_of_time_in_words(created_at, Time.zone.now) + " ago"
+    created_since
   end
 
   def self.with_associations

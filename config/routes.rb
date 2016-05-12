@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       member do
         get :questions
         get :tags
+        get :activities
       end
 
       collection do

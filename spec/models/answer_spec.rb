@@ -170,4 +170,5 @@ RSpec.describe Answer, type: :model do
   end
 
   it_behaves_like "a votable", :answer_with_votes
+  it_behaves_like :activity_tracker, :answer
 end

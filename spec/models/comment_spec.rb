@@ -89,4 +89,7 @@ RSpec.describe Comment, type: :model do
   end
 
   it_behaves_like "a votable", :comment_with_votes
+  it_behaves_like :activity_tracker, :comment
+  it_behaves_like :activity_tracker, :comment_on_answer
+
 end

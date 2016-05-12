@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties":{
+    "activities":{
+      "type": "array",
+      "properties":{
+        "key": { "type": "string" },
+        "display_message": { "type": ["string", "nil"] },
+        "url": { "type": "string" },
+        "activity_on": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string" },
+            "activity_action": { "type": "string" },
+            "id": { "type": "int" },
+            "content": { "type": "string" },
+            "created_since": { "type": "string" },
+            "related_information": {
+              "type": ["object", "nil"]
+            }
+          }
+        }
+      }
+    },
+    "meta": {
+      "$ref": "../pagination/pagination.json#/definitions/meta"
+    }
+  }
+}

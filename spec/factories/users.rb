@@ -23,7 +23,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        create_list(:comment_on_question, evaluator.comments_count, user: user)
+        create_list(:comment, evaluator.comments_count, user: user)
       end
     end
 

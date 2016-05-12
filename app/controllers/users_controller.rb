@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   include ProviderHelper
   before_action :set_user, only: [:update, :destroy, :questions, :tags]
+  before_action :set_user_with_activities, only: [:activities]
   before_action :set_user_with_associations_and_statistics, only: [:show]
   skip_before_action :authenticate_user, only: [:login, :authenticate]
 
@@ -61,11 +62,21 @@ class UsersController < ApplicationController
     render partial: 'tags/tag', locals: { tags: @user.tags }
   end
 
+  def activities
+    activities = @user.activities.paginate(page: params[:page]).with_basic_association
+    @activities = NestedResourcePaginationPresenter.new(activities, {id: @user.id})
+  end
+
   private
     def append_to_redirect_url(url, additional_params={})
       url += url.include?('?') ? '&' : '?'
       url += additional_params.to_query
       url
+    end
+
+    def set_user_with_activities
+      @user = User.find_by(id: params[:id])
+      resource_not_found && return unless @user
     end
 
     def set_user

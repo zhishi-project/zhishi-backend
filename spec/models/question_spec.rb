@@ -4,8 +4,6 @@ RSpec.describe Question, type: :model do
   let(:user) { build(:user) }
   let(:question){create(:question, user: user)}
 
-  it_behaves_like "a votable", :question_with_votes
-
   describe "#time_updated" do
     it "returns nil if time is not updated" do
       expect(question.time_updated).to be nil
@@ -101,4 +99,8 @@ RSpec.describe Question, type: :model do
       expect(question.as_indexed_json).to eql obj_format
     end
   end
+
+
+  it_behaves_like "a votable", :question_with_votes
+  it_behaves_like :activity_tracker, :question
 end

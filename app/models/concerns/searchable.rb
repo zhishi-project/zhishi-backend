@@ -34,7 +34,7 @@ module Searchable
   end
 
     def index_document_with_elastic_job
-      unless (content_that_should_not_be_indexed & self.changed) == self.changed
+      unless condition_for_reindexing?
         ElasticSearchSchedulerWorker.perform_async(:index, model_name.name, self.id)
       end
     end
@@ -46,4 +46,8 @@ module Searchable
     def content_that_should_not_be_indexed
       []
     end
+
+    def condition_for_reindexing?
+     (content_that_should_not_be_indexed & self.changed) == self.changed
+   end
 end
