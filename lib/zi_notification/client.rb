@@ -2,20 +2,10 @@ module ZiNotification
   # NOTE we still need to implement other interfaces to the different notifications actions
   module Client
     class << self
-      def post(path, options = {})
-        request(:post, path, options)
-      end
-
-      def get(path, options = {})
-        request(:get, path, options)
-      end
-
-      def put(path, options = {})
-        request(:put, path, options)
-      end
-
-      def delete(path, options = {})
-        request(:delete, path, options)
+      [:post, :get, :put, :delete].each do |http_method|
+        define_method http_method do |path, options = {}|
+          request(http_method, path, options)
+        end
       end
 
       def request(method, endpoint, options)
