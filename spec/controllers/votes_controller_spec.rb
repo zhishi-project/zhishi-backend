@@ -11,7 +11,7 @@ RSpec.describe VotesController, type: :controller do
 
   context "when user votes another user's resource" do
     before do
-      request.headers['Authorization'] = "Token token=#{user2.refresh_token}"
+      request.headers['Authorization'] = "Token token=#{valid_user_token(user2)}"
     end
 
     it "upvotes another user's resource" do
@@ -29,7 +29,7 @@ RSpec.describe VotesController, type: :controller do
 
   context "when user votes own resource" do
     before do
-      request.headers['Authorization'] = "Token token=#{user2.refresh_token}"
+      request.headers['Authorization'] = "Token token=#{valid_user_token(user2)}"
     end
 
     it "doesnt downvote resource" do
@@ -47,7 +47,7 @@ RSpec.describe VotesController, type: :controller do
 
   context "when user cannot vote on resource" do
     before do
-      request.headers['Authorization'] = "Token token=#{user3.refresh_token}"
+      request.headers['Authorization'] = "Token token=#{valid_user_token(user3)}"
     end
 
     it "doesnt upvotes another user's resource" do
