@@ -143,6 +143,18 @@ RSpec.describe Tag, type: :model do
         expect(subject.resource_tags).to have_received(:remap_to_tag_parent).with(subject)
       end
     end
+
+    context "#update_parent" do
+      it "updates the parent tag of with the given tag" do
+        tag = create(:tag)
+        tag1 = create(:tag)
+        expect(tag.representative).to be_nil
+        tag.update_parent(tag1)
+        expect(tag.representative).to eql tag1
+        tag.update_parent(new_rep)
+        expect(tag.representative).to eql new_rep
+      end
+    end
   end
 
   describe "#search_resolution" do
