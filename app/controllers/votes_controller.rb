@@ -27,7 +27,7 @@ class VotesController < ApplicationController
     end
 
     def check_user_voteable_status
-      invalid_request("Not qualified to vote") unless current_user.can_vote?
+      invalid_request("Not qualified to vote", 403) unless current_user.can_vote?
     end
 
     def check_against_owned_resource
@@ -37,6 +37,6 @@ class VotesController < ApplicationController
       return resource_not_found if resource.nil?
 
       same_user = current_user.id == resource.user.id
-      invalid_request("You can't vote for your post") if same_user
+      invalid_request("You can't vote for your post", 403) if same_user
     end
 end

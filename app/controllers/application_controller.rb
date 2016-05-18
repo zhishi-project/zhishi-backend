@@ -10,8 +10,8 @@ class ApplicationController < ActionController::API
     render json: {errors: not_found}, status: 404
   end
 
-  def invalid_request(message = error_msg)
-    render json: {errors: message}, status: 400
+  def invalid_request(message = error_msg, status = 400)
+    render json: {errors: message}, status: status
   end
 
 

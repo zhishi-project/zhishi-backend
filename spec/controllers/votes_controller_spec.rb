@@ -35,13 +35,13 @@ RSpec.describe VotesController, type: :controller do
     it "doesnt downvote resource" do
       post :downvote, {resource_name: 'answers', resource_id: 1}
       expect(response.body).to include "You can't vote for your post"
-      expect(response.status).to eq 400
+      expect(response.status).to eq 403
     end
 
     it "doesnt upvote resource" do
       post :upvote, {resource_name: 'answers', resource_id: 1}
       expect(response.body).to include "You can't vote for your post"
-      expect(response.status).to eq 400
+      expect(response.status).to eq 403
     end
   end
 
@@ -53,13 +53,13 @@ RSpec.describe VotesController, type: :controller do
     it "doesnt upvotes another user's resource" do
       post :upvote, {resource_name: 'questions', resource_id: 1}
       expect(response.body).to include "Not qualified to vote"
-      expect(response.status).to eq 400
+      expect(response.status).to eq 403
     end
 
     it "doesnt downvote another user's resource" do
       post :downvote, {resource_name: 'answers', resource_id: 1}
       expect(response.body).to include "Not qualified to vote"
-      expect(response.status).to eq 400
+      expect(response.status).to eq 403
     end
   end
 
