@@ -61,7 +61,7 @@ class Question < ActiveRecord::Base
 
   def self.by_tags(tag_ids)
     tag_ids = tag_ids.map(&:to_i)
-    Queries::QuestionFilterQuery.new(tag_ids: tag_ids).call
+    Queries::QuestionFilterQuery.new(tag_ids: tag_ids, relation: self).call
   end
 
   def as_indexed_json(_options = {})
