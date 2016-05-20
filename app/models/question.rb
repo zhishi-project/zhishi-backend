@@ -60,6 +60,11 @@ class Question < ActiveRecord::Base
     includes(:answers)
   end
 
+  def self.by_tags(tags_id)
+    tags_id = tags_id.map(&:to_i)
+    with_basic_association.joins(:tags).where(tags: {id: tags_id}).distinct
+  end
+
   def as_indexed_json(_options = {})
     self.as_json(
       only: content_for_index,

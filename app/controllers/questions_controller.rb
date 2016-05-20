@@ -61,6 +61,10 @@ class QuestionsController < ApplicationController
     @questions = Question.search(params[:q])
   end
 
+  def by_tags
+    @questions = Question.by_tags(params[:tags_id])
+  end
+
   private
 
   def set_question
