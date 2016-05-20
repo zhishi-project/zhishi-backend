@@ -56,7 +56,9 @@ class QuestionsController < ApplicationController
   end
 
   def by_tags
-    @questions = Question.by_tags(params[:tags_id])
+    questions = Question.by_tags(params[:tag_ids]).paginate(page: params[:page])
+    @questions = PaginationPresenter.new(questions)
+    render :index
   end
 
   private

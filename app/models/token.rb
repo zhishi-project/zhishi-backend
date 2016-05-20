@@ -9,6 +9,10 @@ class Token < ActiveRecord::Base
   end
 
   def get_user
-    User.eager_load(:tags).joins(:tokens).where(id: user_id).first
+    User.eager_load(:tags).find_by(id: user_id)
+  end
+
+  def self.with_user_and_tags
+    eager_load(user: :tags)
   end
 end
