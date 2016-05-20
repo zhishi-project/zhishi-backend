@@ -8,7 +8,7 @@ module Queries
     end
 
     def call
-      relation.with_basic_association.joins(join_associations).where(association_query)
+      relation.joins(join_associations).where(association_query)
     end
 
     private
