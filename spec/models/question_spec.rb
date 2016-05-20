@@ -56,6 +56,15 @@ RSpec.describe Question, type: :model do
     end
   end
 
+  describe ".by_tags" do
+    it "returns questions by tags with the specified ids" do
+      create(:question_with_tags)
+      questions_by_tags = Question.by_tags([1,2,3])
+      expect(questions_by_tags).to be_an ActiveRecord::Relation
+      expect(questions_by_tags.first).to be_a Question
+    end
+  end
+
   describe "#sort_answers" do
     before(:each) { create_list(:answer_with_votes, 2, question: question) }
     let!(:accepted) { create(:answer, question: question, accepted: true)}

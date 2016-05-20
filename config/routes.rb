@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       collection do
         get :search
         get :personalized
+        get :by_tags
       end
       member do
         get "recent_answers"
