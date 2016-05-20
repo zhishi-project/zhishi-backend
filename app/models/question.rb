@@ -60,9 +60,9 @@ class Question < ActiveRecord::Base
     includes(:answers)
   end
 
-  def self.by_tags(tags_id)
-    tags_id = tags_id.map(&:to_i)
-    with_basic_association.joins(:tags).where(tags: {id: tags_id}).distinct
+  def self.by_tags(tag_ids)
+    tag_ids = tag_ids.map(&:to_i)
+    Queries::QuestionFilterQuery.new(tag_ids: tag_ids).call
   end
 
   def as_indexed_json(_options = {})

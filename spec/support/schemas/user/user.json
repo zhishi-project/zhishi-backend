@@ -7,12 +7,9 @@
         "name": { "type": "string" },
         "points": { "type": "integer" },
         "image": { "type": ["string", "nil"] },
-        "url": { "type": "string" },
-        "tags":{
-          "$ref": "../tag/tag.json#/properties/tags"
-        }
+        "url": { "type": "string" }
       },
-      "required": ["id", "name", "points", "image", "url", "tags"]
+      "required": ["id", "name", "points", "image", "url"]
     }
   }
 }
