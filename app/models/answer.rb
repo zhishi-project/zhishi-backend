@@ -7,9 +7,10 @@ class Answer < ActiveRecord::Base
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy
   belongs_to :user
-  validates :user, presence: true
   belongs_to :question, counter_cache: true, touch: true
 
+  validates :user, presence: true
+  validates :question, presence: true
   validates :content, presence: true
 
   def self.with_associations

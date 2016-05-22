@@ -1,61 +1,72 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-FakeOmniAuth = Struct.new(:uid, :provider) do
-  Info = Struct.new(:name, :email, :image, :urls)
-  Credential = Struct.new(:token, :refresh_token)
-
-  def info
-    user_credentials = {
-      name: name,
-      email: Faker::Internet.email.gsub(/@.+/, '@andela.com'),
-      image: Faker::Avatar.image(name),
-      url: {
-        Google: Faker::Internet.url,
-      }
+class Seed < SeedHelper
+  def create_users
+    24.times{
+      email = Faker::Internet.email.gsub(/@.+/, '@andela.com')
+      name = Faker::Name.first_name
+      id_number = Faker::IDNumber.valid
+      User.from_omniauth(FakeOmniAuth.new(id_number, 'google-oauth2'))
     }
-    Info.new(*user_credentials.values)
   end
 
-  def name
-    @name ||= Faker::Name.first_name
+  def create_comments(fields)
+    5.times{ Comment.create( fields.merge!(comment_on_id: question.id,
+                            comment_on_type: objectify("question"))
+                           )
+            }
+    15.times{ Comment.create(fields.merge!(comment_on_id: answer.id,
+                             comment_on_type: objectify("answer"))
+                            )
+            }
   end
 
-  def credentials
-    token = SecureRandom.uuid.gsub('-', '')
-    Credential.new(token, nil)
+  def create_resource_tags
+    %w(question user).each do |resource|
+      10.times{ ResourceTag.create(tag: tag, taggable_id: (send(:"#{resource}")).id,
+                                   taggable_type: objectify(resource)
+                                  )
+              }
+    end
+  end
+
+  def create_votes
+    %w(question answer comment).each do |resource|
+      10.times{ Vote.create(user: user, voteable_id: (send(:"#{resource}")).id,
+                            voteable_type: objectify(resource), value: 1
+                           )
+              }
+    end
+  end
+
+  def create_resources
+    # This array order should be maintained because these resources are interdependent
+    %w(question answer comment tag resource_tag vote).each do |resource|
+      fields = { content: content, user: user }
+      fields.merge!(title: title) if resource == "question"
+      fields.merge!(question: question) if resource == "answer"
+      if ["question", "answer"].include? resource
+        20.times{ objectify(resource).create(fields) }
+      elsif resource == "comment"
+        create_comments(fields)
+      elsif resource == "tag"
+        10.times{ objectify(resource).create(name: title) }
+      elsif resource == "resource_tag"
+        create_resource_tags
+      elsif resource == "vote"
+        create_votes
+      end
+    end
+  end
+
+  def destroy_resources
+    %w(user question answer comment tag resource_tag vote).
+      each { |resource| objectify(resource).destroy_all }
+  end
+
+  def create_all
+    destroy_resources
+    create_users
+    create_resources
   end
 end
 
-24.times{
-  email = Faker::Internet.email.gsub(/@.+/, '@andela.com')
-  name = Faker::Name.first_name
-  id_number = Faker::IDNumber.valid
-
-  User.from_omniauth(FakeOmniAuth.new(id_number, 'google-oauth2'))
-}
-
-questions_list =[
-  ["Requirements for Amity", "What are the requirements for geting accommodation at Amity" ],
-  ["Renewing Amity Contract", "What happens at the expiration of the 6 months Amity resident agreement? Is it automatically renewed or are there processes to follow to get it renew. In same vein what steps are required if someone wants to leave before the expiration of the agreement."],
-  ["What is simulations all about?", "What is simulations all about?"],
-  ["Leaving Amity before end of Contract", "What happenes if I want to leave Amity before the the time my agreement expires? Will the dues still be deducted from my salary? "],
-  ["Coding classes during month one?", "Why dont we have coding classes during month one?"],
-  ["Simulations", "Is there a fixed time period for completing simulations? If yes what is it? If no, why were some fellows dropped for 'been slow' in completing their simulation's checkpoint project?"],
-  ["Going on leave", "How do I request for leave when I am not yet eligible to go on leave and when I am?"],
-  ["Dropping a fellow.", "What actions or inactions might cause a fellow to be dropped from simulations?"],
-  ["Must we do simulations and checkpoints at the same time?", "We've got simulations project, we've got checkpoints; any particular reason why it's necessary that we undertake the two concurrently?"],
-  ["Does Billable hours count outside work hours?", "For instance, if I organize a weekly catch up session for fellows who are not very comfortable with their stack, on a saturday or sunday, would it be consodered as billable hours?"],
-  ["Duties of the Amity Reps?", "What are the duties of the Amity Reps?"],
-  ["Why is month one just for a month?", "Why is month one just for a month? Can't it be a part and parcel of simulations as a whole?"],
-  ["What is the whole purpose of simulations project?", "What is the whole purpose of simulations project when the checkpoints do a better job of enabling fellows to learn things faster?"]
-]
-
-questions_list.each do |title, content|
-  Question.create(title: title, content: content, user: User.order('RANDOM()').limit(1).first)
-end
+Seed.new.create_all

@@ -22,7 +22,7 @@ module Zhishi
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    config.autoload_paths += [config.root.join('app', 'presenters')]
+    config.autoload_paths += [config.root.join('app', 'presenters'), config.root.join('db', 'helpers')]
     # $: << Rails.root.join('app', 'presenters')
     # config.autoload_paths += %W( #{config.root}/workers )
 
