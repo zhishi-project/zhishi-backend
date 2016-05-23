@@ -1,7 +1,6 @@
 class SeedHelper
   def objectify(model)
-    return model.titleize.constantize unless model.include? "_"
-    model.split("_").map(&:capitalize).join.constantize
+    model.camelize.constantize
   end
 
   def get_offset(model)

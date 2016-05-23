@@ -43,15 +43,16 @@ class Seed < SeedHelper
       fields = { content: content, user: user }
       fields.merge!(title: title) if resource == "question"
       fields.merge!(question: question) if resource == "answer"
-      if ["question", "answer"].include? resource
+      case resource
+      when "question", "answer"
         20.times{ objectify(resource).create(fields) }
-      elsif resource == "comment"
+      when "comment"
         create_comments(fields)
-      elsif resource == "tag"
+      when "tag"
         10.times{ objectify(resource).create(name: title) }
-      elsif resource == "resource_tag"
+      when "resource_tag"
         create_resource_tags
-      elsif resource == "vote"
+      when "vote"
         create_votes
       end
     end
