@@ -1,13 +1,14 @@
 module Queries
   class UserQuestionsQuery
-    attr_reader :user
+    attr_reader :user, :relation
 
-    def initialize(user)
+    def initialize(user, relation = Question.eager_load_basic_association)
       @user = user
+      @relation = relation
     end
 
     def call
-      Question.with_basic_association.joins(:tags).where(user_subscriptions).distinct
+      relation.joins(:tags).where(user_subscriptions).distinct
     end
 
     private

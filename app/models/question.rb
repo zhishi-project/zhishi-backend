@@ -30,6 +30,12 @@ class Question < ActiveRecord::Base
     Queries::OrderBySubscriptionQuery.new(user).call
   end
 
+  def self.eager_load_basic_association
+    # NOTE this was prompted because after using the AR#includes, it appears there was an N+1
+    # query to fetch all tags OR votes(note OR). This is wierd and needs a little bit more research as to the behaviour 
+    eager_load(:votes).eager_load(:tags).with_votes.with_users
+  end
+
   def self.personalized(user)
     Queries::UserQuestionsQuery.new(user).call
   end
@@ -61,7 +67,7 @@ class Question < ActiveRecord::Base
   end
 
   def self.by_tags(tag_ids)
-    tag_ids = tag_ids.map(&:to_i)
+    # tag_ids = tag_ids.map(&:to_i)
     Queries::QuestionFilterQuery.new(tag_ids: tag_ids, relation: self).call
   end
 
