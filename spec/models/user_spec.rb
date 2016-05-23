@@ -89,14 +89,14 @@ RSpec.describe User, type: :model do
   end
 
   describe "has_many :votes" do
-    before(:each) { create(:vote) }
+    before(:each) { create(:vote_on_question) }
     it "returns empty collection for user with no votes" do
       expect(Vote.all).not_to be_empty
       expect(user.votes).to be_empty
     end
 
     it "returns collection of user votes" do
-      create(:vote, user: user, value: 1)
+      create(:vote_on_question, user: user, value: 1)
       expect(Vote.count).to be 2
       expect(user.votes).not_to be_empty
       expect(user.votes.count).to be 1

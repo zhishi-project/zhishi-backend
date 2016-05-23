@@ -1,11 +1,8 @@
 FactoryGirl.define do
   factory :comment do
     content { Faker::Hacker.say_something_smart }
+    association :comment_on, factory: :question
     user
-
-    factory :comment_on_question do
-      association :comment_on, factory: :question
-    end
 
     factory :comment_on_answer do
       association :comment_on, factory: :answer

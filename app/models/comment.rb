@@ -5,8 +5,10 @@ class Comment < ActiveRecord::Base
   has_many :votes, as: :voteable, dependent: :destroy
   belongs_to :comment_on, polymorphic: true, counter_cache: true, touch: true
   belongs_to :user
+
   validates :user, presence: true
   validates :content, presence: true
+  validates :comment_on, presence: true
 
   def self.with_associations
     includes(:user).with_votes

@@ -51,7 +51,7 @@ RSpec.describe Comment, type: :model do
     let(:answer) { create(:answer, question: question) }
 
     it "returns question that is commented on" do
-      comment = create(:comment_on_question, comment_on: question)
+      comment = create(:comment, comment_on: question)
       expect(comment.question).to eql question
     end
 
@@ -73,7 +73,7 @@ RSpec.describe Comment, type: :model do
   end
 
   context "when I create a comment on question" do
-    let(:comment) { create(:comment_on_question) }
+    let(:comment) { create(:comment) }
 
     it { expect(comment).to be_a Comment }
     it { expect(comment.comment_on).to be_a Question}

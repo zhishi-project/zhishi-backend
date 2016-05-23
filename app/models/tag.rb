@@ -2,10 +2,10 @@ class Tag < ActiveRecord::Base
   include Searchable
 
   validates :name, presence: true
+
   has_many :resource_tags, dependent: :destroy
   has_many :questions, through: :resource_tags, source: :taggable, source_type: 'Question'
   has_many :users, through: :resource_tags, source: :taggable, source_type: 'User'
-
   has_many :similar_tags, class_name: 'Tag', foreign_key: 'representative_id'
   belongs_to :representative, class_name: 'Tag'
 
