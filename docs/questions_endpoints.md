@@ -2,7 +2,8 @@
 
 Endpoints |Params| Usage |
 --------- | ----- |--------
-GET /questions | offset, limit ( both could be optional ), auth_token in header |	Returns all questions with up-vote and down-vote data, or error message if any.
+GET /questions | offset, limit ( both could be optional ), auth_token in header |	Returns all questions ordered by the tags the user is subscribed to, with up-vote and down-vote data, or error message if any.
+GET /questions/all | offset, limit ( both could be optional ), auth_token in header |	Returns all questions with up-vote and down-vote data, or error message if any.
 POST /questions |title, description, user_id, auth_token in header | Returns success message if question creation is successful  or error message if any.
 GET /questions/:id |question's id, auth_token in header| Returns the question with that id and all other information concerning the the question or error message if any.
 GET questions/top_questions | offset, limit ( both could be optional ), auth_token in header | Returns the questions matching the criteria for top questions or error message if any.
@@ -12,6 +13,7 @@ GET questions/search | `q` which has the value of the params to search | Returns
 GET questions/personalized | offset, limit ( both could be optional ), auth_token in header | Returns all questions based on the tags a user has subscribed to with all the basic data
 
 ## GET /questions/
+## GET /questions/all
 Request
 ```ruby
  GET  /questions?limit=5&offset=1
