@@ -6,11 +6,9 @@ class Activity < PublicActivity::Activity
       includes(:trackable).order(created_at: :desc)
     end
   end
-
   belongs_to :user, foreign_key: :owner_id
   validates :trackable, presence: true
   validates :key, presence: true
-
 
   def on?(resource_name)
     trackable_type == resource_name.to_s.capitalize
