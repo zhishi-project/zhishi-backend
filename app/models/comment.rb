@@ -2,6 +2,9 @@ class Comment < ActiveRecord::Base
   include VotesCounter
   include ModelJSONHashHelper
   include NewNotification
+  include UserActivityTracker
+  include ZhishiDateHelper
+  include RouteKey
 
   has_many :votes, as: :voteable, dependent: :destroy
   belongs_to :comment_on, polymorphic: true, counter_cache: true, touch: true
@@ -48,5 +51,29 @@ class Comment < ActiveRecord::Base
 
   def participants_involved_in_comment
     parents.map(&:user)
+  end
+
+  def create_action_verb
+    "Commented on #{activity_made_on}"
+  end
+
+  def update_action_verb
+    "Updated a Comment on #{activity_made_on}"
+  end
+
+  def activity_made_on
+    %w(a e i o u).include?(comment_on_type.first.downcase) ? "an #{comment_on_type}" : "a #{comment_on_type}"
+  end
+
+  def comment_on_klass
+    comment_on_type.constantize
+  end
+
+  def zhishi_url_options
+    {
+      resource_name: comment_on_klass.route_key,
+      resource_id: comment_on_id,
+      id: id
+    }
   end
 end

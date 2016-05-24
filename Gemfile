@@ -35,6 +35,9 @@ gem 'sinatra', '>= 1.3.0', require: false
 gem 'active_model_serializers'
 # gem 'backport_new_renderer'
 
+# track users' activity
+gem 'public_activity'
+
 group :development, :test do
   gem "sqlite3"
   gem "pry-rails"

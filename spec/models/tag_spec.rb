@@ -148,7 +148,7 @@ RSpec.describe Tag, type: :model do
       it "updates the parent tag of with the given tag" do
         tag = create(:tag)
         tag1 = create(:tag)
-        expect(tag.representative).to be_nil
+        expect(tag.representative_id).to be_nil
         tag.update_parent(tag1)
         expect(tag.representative).to eql tag1
         tag.update_parent(new_rep)

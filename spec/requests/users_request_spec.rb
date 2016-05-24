@@ -31,11 +31,10 @@ RSpec.describe "Users", type: :request do
 
     before do
       create_list(:question, total_records, user: user)
+      get questions_user_path(user.id), {format: :json}, authorization_header
     end
 
     it "retrieves the paginated questions asked by a user" do
-      get questions_user_path(user.id), {format: :json}, authorization_header
-
       expect(parsed_json).to have_key('questions')
       expect(parsed_json['meta']['total_records']).to eql(total_records)
       expect(response).to match_response_schema('question/index')
@@ -47,13 +46,35 @@ RSpec.describe "Users", type: :request do
 
     before do
       create_list(:user_resource_tag, total_tags, taggable: user)
+      get tags_user_path(user.id), {format: :json}, authorization_header
+    end
+
+    it "matches the tag json schema" do
+      expect(response).to match_response_schema('tag/tag')
     end
 
     it "retrieves all the tags a user has subscribed to" do
-      get tags_user_path(user.id), {format: :json}, authorization_header
-
       expect(parsed_json['tags'].size).to eql(total_tags)
-      expect(response).to match_response_schema('tag/tag')
     end
+  end
+
+  describe "GET /users/:id/activities", track_activity: true do
+    let(:total_resources) { 9 }
+    before do
+      [:comment_on_answer, :comment, :question, :answer].each do |activity_factory|
+        create_list(activity_factory, total_resources , user: user )
+      end
+      get activities_user_path(user), {format: :json}, authorization_header
+    end
+
+    it "matches the activities json schema" do
+      expect(response).to match_response_schema("user/activities")
+    end
+
+    it "retrieves the paginated activities of the user" do
+      activity_count = 25 # 25 is the default limit for paginated resources
+      expect(parsed_json['activities'].size).to eql(activity_count)
+    end
+
   end
 end

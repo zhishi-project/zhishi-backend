@@ -1,9 +1,11 @@
 class Question < ActiveRecord::Base
   include VotesCounter
-  include ActionView::Helpers::DateHelper
+  include ZhishiDateHelper
   include Searchable
   include ModelJSONHashHelper
   include NewNotification
+  include UserActivityTracker
+  include RouteKey
 
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy
@@ -15,13 +17,17 @@ class Question < ActiveRecord::Base
   validates :title, presence: true
   validates :content, presence: true
   validates :user, presence: true
+  has_many :resource_tags, as: :taggable
+  has_many :tags, through: :resource_tags
+  has_many :associated_resource_activities, class_name: "Activity", foreign_key: "recipient_id"
+  after_update :update_associated_resource_activities, if: :condition_for_reindexing?
 
   def time_updated
     created = DateTime.parse(created_at.to_s).in_time_zone
     updated = DateTime.parse(updated_at.to_s).in_time_zone
 
     if (updated - created).to_i > 2
-      return distance_of_time_in_words(updated, Time.zone.now) + " ago"
+      return updated_since
     end
 
     nil
@@ -104,5 +110,44 @@ class Question < ActiveRecord::Base
     answers.sort do |a, b|
       b.sort_value <=> a.sort_value
     end
+  end
+
+  def create_action_verb
+    "Asked a Question"
+  end
+
+  def update_action_verb
+    "Updated a Question"
+  end
+
+  def tracking_information
+    [:id, :title, :content, :created_since]
+  end
+
+  def update_associated_resource_activities
+    associated_resource_activities.update_all(parameters: related_information)
+  end
+
+  def related_information
+      {
+        type: "Question",
+        id: id,
+        title: title,
+        content: content,
+        user_id: user_id,
+        tags: tags.map{ |t|
+          {
+            id: t.id,
+            name: t.name,
+            representative_id: t.representative_id
+          }
+        }
+      }
+  end
+
+  def zhishi_url_options
+    {
+      id: id
+    }
   end
 end

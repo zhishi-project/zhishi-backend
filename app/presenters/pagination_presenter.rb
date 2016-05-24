@@ -40,7 +40,7 @@ class PaginationPresenter
     end
 
     def page_url(page_number)
-      send("#{resource.model_name.route_key}_path", page: page_number)
+      send("#{resource.route_key}_path", page: page_number)
     end
 
     def method_missing(method_name, *args, &block)
