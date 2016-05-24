@@ -12,7 +12,7 @@ RSpec.describe Notifications::NewCommentSerializer do
   end
 
   context "comment on question" do
-    let(:comment) { create(:comment_on_question) }
+    let(:comment) { create(:comment) }
     it_behaves_like :shared_comment_serializer
 
   end
