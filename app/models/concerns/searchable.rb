@@ -35,12 +35,12 @@ module Searchable
 
     def index_document_with_elastic_job
       unless condition_for_reindexing?
-        ElasticSearchSchedulerWorker.perform_async(:index, model_name.name, self.id)
+        ElasticSearchSchedulerWorker.perform_in(5.seconds, :index, model_name.name, self.id)
       end
     end
 
     def delete_document_from_elastic_with_job
-      ElasticSearchSchedulerWorker.perform_async(:delete, model_name.name, self.id)
+      ElasticSearchSchedulerWorker.perform_in(5.seconds, :delete, model_name.name, self.id)
     end
 
     def content_that_should_not_be_indexed

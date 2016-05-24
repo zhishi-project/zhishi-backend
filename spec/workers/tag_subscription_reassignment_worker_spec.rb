@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe TagSubscriptionReassignmentWorker, type: :worker do
   before do
-    allow(described_class).to receive(:perform_async)
     create_list(:tag, 3, name: 'tag')
   end
 
@@ -12,7 +11,7 @@ RSpec.describe TagSubscriptionReassignmentWorker, type: :worker do
     it "receives the tag params for reassignment" do
       tag.update(representative: Tag.first)
 
-      expect(described_class).to have_received(:perform_async).with(tag.id)
+      expect(described_class).to have_enqueued_job(tag.id)
     end
 
     it "executes #update_tag_subscriptions" do
