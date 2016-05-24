@@ -51,15 +51,4 @@ RSpec.describe Token, type: :model do
       it { expect(subject.temp).not_to be_nil }
     end
   end
-
-  describe "#get_user" do
-    before { subject.save }
-    it "returns the user object" do
-      expect(subject.get_user).to eql user
-    end
-
-    it "returns the user object with eager loaded tags" do
-      expect(subject.get_user.association(:tags).loaded?).to be_truthy
-    end
-  end
 end

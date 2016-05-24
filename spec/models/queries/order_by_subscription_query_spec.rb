@@ -6,15 +6,15 @@ RSpec.describe Queries::OrderBySubscriptionQuery do
 
   describe "#call" do
     it "calls the defined association" do
-      allow(subject).to receive(:sort_by_votes_sum)
-      allow(subject).to receive(:sort_by_views)
+      # allow(subject).to receive(:sort_by_votes_sum)
+      # allow(subject).to receive(:sort_by_views)
       allow(subject).to receive(:sort_by_date_created)
       allow(subject).to receive(:join_associations)
 
       subject.call
 
-      expect(subject).to have_received(:sort_by_votes_sum)
-      expect(subject).to have_received(:sort_by_views)
+      # expect(subject).to have_received(:sort_by_votes_sum)
+      # expect(subject).to have_received(:sort_by_views)
       expect(subject).to have_received(:sort_by_date_created)
       expect(subject).to have_received(:join_associations)
     end

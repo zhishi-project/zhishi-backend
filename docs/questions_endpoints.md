@@ -11,6 +11,7 @@ PUT questions/:id| question's id, update information(title, description), auth_t
 DELETE questions/:id| question's id, auth_token in header | Returns a confirmation that the question has been deleted  or error message if any.
 GET questions/search | `q` which has the value of the params to search | Returns an array of questions, with a few things stripped off, such as association counts etc
 GET questions/personalized | offset, limit ( both could be optional ), auth_token in header | Returns all questions based on the tags a user has subscribed to with all the basic data
+GET questions/by_tags | `tag_ids` which is an array of tag_id, this allows the client to filter by multiple tags. Preferably, send the representative_id of the tags as well | Returns the questions matching the tag_ids provided.
 
 ## GET /questions/
 ## GET /questions/all
@@ -359,6 +360,62 @@ Status: 200
           }
           {
             id: 4
+            title: "What is DevOps?"
+            user_id: 12
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+          {
+            id: 5
+            title: "What is month one all about?"
+            user_id: 12
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+    ]
+  }
+```
+
+## GET /top_questions
+Request
+```ruby
+ GET  /questions/by_tags?tag_ids[]=1&tag_ids[]=2&tag_ids[]=3&tag_ids[]=4&page=1
+ OR
+ GET  /questions/by_tags?page=1
+ data: { tag_ids: [1,2,3,4] }
+```
+Response
+```ruby
+Status: 200
+  {
+    question:[{
+            id: 12,
+            title: "what is Andela?",
+            user_id: 1,
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+          {
+            id: 24
+            title: "where is Amity?"
+            user_id: 12
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+          {
+            id: 300
+            title: "what is M55?"
+            user_id: 4
+            tags:  [{
+                      matches: [ "operations", "Andela"],
+                   }],
+          }
+          {
+            id: 41
             title: "What is DevOps?"
             user_id: 12
             tags:  [{

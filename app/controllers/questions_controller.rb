@@ -61,6 +61,12 @@ class QuestionsController < ApplicationController
     @questions = Question.search(params[:q])
   end
 
+  def by_tags
+    questions = Question.with_basic_association.by_tags(params[:tag_ids]).paginate(page: params[:page])
+    @questions = PaginationPresenter.new(questions)
+    render :index
+  end
+
   private
 
   def set_question
