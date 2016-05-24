@@ -1,5 +1,7 @@
 class Tag < ActiveRecord::Base
   include Searchable
+  # NOTE we may need to watch for new tags to alert tags admin to check it out too
+  # include NewNotification
 
   validates :name, presence: true
 
@@ -91,6 +93,10 @@ class Tag < ActiveRecord::Base
 
   def update_parent(representative)
     update(representative: representative)
+  end
+
+  def representative
+    super || self
   end
 
   private

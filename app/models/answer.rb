@@ -3,6 +3,7 @@ class Answer < ActiveRecord::Base
 
   include VotesCounter
   include ModelJSONHashHelper
+  include NewNotification
 
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy

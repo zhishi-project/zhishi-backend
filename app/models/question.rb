@@ -3,6 +3,7 @@ class Question < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
   include Searchable
   include ModelJSONHashHelper
+  include NewNotification
 
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy
@@ -85,6 +86,10 @@ class Question < ActiveRecord::Base
                  },
                }.merge(user_attributes)
     )
+  end
+
+  def users_subscribed_to_question_tag
+    Queries::TagsSubscriberQuery.new(self).call
   end
 
   def content_for_index

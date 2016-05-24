@@ -8,3 +8,4 @@ production:
   - default
   - [elasticsearch, 2]
   - [tags, 2]
+  - [notifications, 2]
