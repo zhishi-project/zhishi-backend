@@ -5,7 +5,7 @@ module NewNotification
   end
 
   def notify
-    NotificationSystemWorker.perform_async(model_name.to_s, id)
+    NotificationSystemWorker.perform_in(5.seconds, model_name.to_s, id)
   end
 
   def object_for_notification

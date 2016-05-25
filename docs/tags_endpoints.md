@@ -2,11 +2,12 @@
 
 Endpoints |	Usage |	Public Access
 --------- | ----- | -------------
-GET /tags/?q=query |	Returns the tags that match the given the argument (autocomplete feature) |	True
-GET /tags/popular | Returns the popular tags | True
-GET /tags/recent | Returns the recent tags | True
-GET /tags/trending | Returns the trending tags | True
-POST /tags/update_subscription | Returns the users tags | True
+GET /tags/?q=query |	Returns the tags that match the given the argument (autocomplete feature) |	False
+GET /tags/popular | Returns the popular tags | False
+GET /tags/recent | Returns the recent tags | False
+GET /tags/trending | Returns the trending tags | False
+GET /tags/subscribable | Returns all tags that can be subscribed to. | False
+POST /tags/update_subscription | Returns the users tags | False
 
 ### GET /tags/?q=query
 
@@ -71,6 +72,21 @@ Status: 200
 ```
 
 ### GET /tags/trending
+Response
+```ruby
+Status: 200
+{
+  tags: [
+    {
+      name: 'mac',
+      id: 1,
+      representative_id: nil
+    }
+  ]
+}
+```
+
+### GET /tags/subscribable
 Response
 ```ruby
 Status: 200

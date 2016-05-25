@@ -57,6 +57,7 @@ group :test do
   gem 'elasticsearch-extensions'
   gem "json-schema"
   gem "mock_redis"
+  gem 'rspec-sidekiq'
 end
 
 group :production, :staging do
