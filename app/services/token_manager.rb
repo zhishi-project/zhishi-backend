@@ -2,8 +2,9 @@ require "jwt"
 
 class TokenManager
   class << self
-    def generate_token(user_id, exp = 24.hours.from_now)
+    def generate_token(user_id, exp = 24.hours.from_now, notify_object = nil)
       payload = { user: user_id, exp: exp.to_i }
+      payload = { object: notify_object, exp: exp.to_i } if notify_object
       issue_token(payload)
     end
 
