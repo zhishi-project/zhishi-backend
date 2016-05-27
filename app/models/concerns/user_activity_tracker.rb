@@ -34,4 +34,12 @@ module UserActivityTracker
   def tracking_information
     [:id, :content, :created_since]
   end
+
+  def content_that_should_not_cause_update_on_activities
+    []
+  end
+
+  def should_create_activity?
+    (self.changed - content_that_should_not_cause_update_on_activities).any?
+  end
 end

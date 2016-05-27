@@ -46,8 +46,8 @@ class Answer < ActiveRecord::Base
     "Updated an Answer on a Question"
   end
 
-  def should_create_activity?
-    true unless changed.include?('accepted')
+  def content_that_should_not_cause_update_on_activities
+    [:comments_count, :accepted, :updated_at].map(&:to_s)
   end
 
   def zhishi_url_options
