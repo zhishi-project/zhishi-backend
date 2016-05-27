@@ -20,7 +20,7 @@ class Question < ActiveRecord::Base
   has_many :resource_tags, as: :taggable
   has_many :tags, through: :resource_tags
   has_many :associated_resource_activities, class_name: "Activity", foreign_key: "recipient_id"
-  after_update :update_associated_resource_activities, if: :condition_for_reindexing?
+  after_update :update_associated_resource_activities, if: :should_create_activity?
 
   def time_updated
     created = DateTime.parse(created_at.to_s).in_time_zone
@@ -125,7 +125,7 @@ class Question < ActiveRecord::Base
   end
 
   def update_associated_resource_activities
-    associated_resource_activities.update_all(parameters: related_information)
+    associated_resource_activities.update_all(parameters: { related_information: related_information})
   end
 
   def related_information
@@ -143,6 +143,10 @@ class Question < ActiveRecord::Base
           }
         }
       }
+  end
+
+  def content_that_should_not_cause_update_on_activities
+    content_that_should_not_be_indexed.push(:comments_count, :answers_count).map(&:to_s)
   end
 
   def zhishi_url_options
