@@ -8,8 +8,8 @@ module ZiNotification
         end
       end
 
-      def request(method, endpoint, options)
-        ZiNotification::Connection.connection.send(method, endpoint, options)
+      def request(http_method, path, options)
+        ZiNotification::Connection.connection.send(http_method, path, options)
       end
     end
   end

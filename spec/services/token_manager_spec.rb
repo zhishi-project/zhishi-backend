@@ -60,10 +60,10 @@ RSpec.describe TokenManager do
     end
 
     describe "arguments" do
-      it "accepts only no arguement" do
+      it "accepts no arguements" do
         expect{subject.secret}.not_to raise_error
-        expect{subject.secret('arg1', 'arg2')}.to raise_error(ArgumentError, 'wrong number of arguments (2 for 0)')
-        expect{subject.secret('arg1')}.to raise_error(ArgumentError, 'wrong number of arguments (1 for 0)')
+        expect{subject.secret('arg1', 'arg2')}.to raise_error(ArgumentError)
+        expect{subject.secret('arg1')}.to raise_error(ArgumentError)
       end
     end
   end
