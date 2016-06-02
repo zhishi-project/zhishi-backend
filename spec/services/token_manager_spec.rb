@@ -48,7 +48,7 @@ RSpec.describe TokenManager do
     end
 
     describe "arguments" do
-      it "accepts only one arguement" do
+      it "accepts only one argument" do
         expect{ subject.issue_token }.to raise_error ArgumentError
       end
     end
@@ -60,7 +60,7 @@ RSpec.describe TokenManager do
     end
 
     describe "arguments" do
-      it "accepts no arguements" do
+      it "accepts no arguments" do
         expect{subject.secret}.not_to raise_error
         expect{subject.secret('arg1', 'arg2')}.to raise_error(ArgumentError)
         expect{subject.secret('arg1')}.to raise_error(ArgumentError)
@@ -90,7 +90,7 @@ RSpec.describe TokenManager do
     end
 
     describe "arguments" do
-      it "accepts only one arguement" do
+      it "accepts only one argument" do
         expect{ subject.decode }.to raise_error ArgumentError
       end
     end
@@ -125,7 +125,7 @@ RSpec.describe TokenManager do
     end
 
     describe "arguments" do
-      it "accepts only one arguement" do
+      it "accepts only one argument" do
         expect{ subject.authenticate }.to raise_error ArgumentError
       end
     end
