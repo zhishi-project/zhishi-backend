@@ -22,7 +22,7 @@ namespace :remap_tags do
             "operations" => ["leave", "leave-request", "annual-leave"],
             "mac" => ["osx"],
             "nairobi-fellows" => ["brown-bag", "kenya"],
-            "databases" => ["sql", "database-relation"],
+            "databases" => ["sql", "database-relationships"],
             "api" => ["rest"],
             "css" => ["flexbox"]
             }
@@ -48,7 +48,7 @@ namespace :remap_tags do
         ResourceTag.joins(:tag).where(tags: {name: key}).update_all(tag_id: new_tag)
     end
 
-    tags_to_delete = ["computer", "operation", "forms", "networking", "pdo-connection",
+    tags_to_delete = ["computer science", "operation", "forms", "networking", "pdo-connection",
      "paid-courses", "programming", "associations", "facility", "ci", "mixin",
      "discussion", "promotions", "beautiful soup"] + old_tags.keys
 
