@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/comment_shared_contexts"
 
 RSpec.describe "Creating a comment", type: :request do
-  include_context "comment resource helpers"
+  include_context :comment_resource_helpers
   subject { build(:comment) }
 
   it "fails to save when comment body is empty" do

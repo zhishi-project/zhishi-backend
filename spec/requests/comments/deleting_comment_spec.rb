@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/comment_shared_contexts"
 
 RSpec.describe "Deleting a comment", type: :request do
-  include_context "comment resource helpers"
+  include_context :comment_resource_helpers
   subject do
     create :comment, user: valid_user
   end

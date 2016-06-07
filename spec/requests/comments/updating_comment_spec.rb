@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/comment_shared_contexts"
 
 RSpec.describe "Updating a comment", type: :request do
-  include_context "comment resource helpers"
+  include_context :comment_resource_helpers
 
   context "when a different user tries to update" do
     subject { create :comment }
