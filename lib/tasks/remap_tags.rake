@@ -4,6 +4,7 @@ namespace :remap_tags do
   task execute: :environment do
     map_tags
     rename_and_delete_tags
+    implement_new_tag_naming_convention
     puts "Completed!!!"
   end
 
@@ -22,7 +23,7 @@ namespace :remap_tags do
             "operations" => ["leave", "leave-request", "annual-leave"],
             "mac" => ["osx"],
             "nairobi-fellows" => ["brown-bag", "kenya"],
-            "databases" => ["sql", "database-relationships"],
+            "databases" => ["sql", "database relationships"],
             "api" => ["rest"],
             "css" => ["flexbox"]
             }
@@ -52,12 +53,20 @@ namespace :remap_tags do
      "paid-courses", "programming", "associations", "facility", "ci", "mixin",
      "discussion", "promotions", "beautiful soup"] + old_tags.keys
 
-    Tag.where(name: "orders").update_all(name: "NY-Office")
+    Tag.where(name: "orders").update_all(name: "ny-office")
     Tag.where(name: "history").update_all(name: "andela-history")
     Tag.where(name: "databases").update_all(name: "database")
 
     Tag.where(name: tags_to_delete).destroy_all
 
     puts "Sucessfuly Renamed And Deleted Unwanted Tags!!"
+  end
+
+  def implement_new_tag_naming_convention
+    Tag.find_each do |tag|
+      name = tag.name.split(' ').join('-')
+      tag.update(name: name)
+    end
+    puts "Naming convention successfully implemented"
   end
 end
