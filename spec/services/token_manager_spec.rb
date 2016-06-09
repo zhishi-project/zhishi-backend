@@ -51,7 +51,7 @@ RSpec.describe TokenManager do
 
         it 'sets the notification object' do
           decoded = subject.decode(token)
-          expect(decoded.first['object']).to eql object
+          expect(decoded.first['payload']).to eql object
         end
       end
     end
