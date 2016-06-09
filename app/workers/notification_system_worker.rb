@@ -7,8 +7,6 @@ class NotificationSystemWorker
 
   def perform(klass, object_id)
     object = klass.constantize.find(object_id).object_for_notification
-    token = TokenManager.generate_token(nil, 5.minutes.from_now, object)
-    options = { object: object, json_token: token }
-    ZiNotification::Client.post(Endpoints[:new_resource], options)
+    ZiNotification::Client.post(Endpoints[:new_resource], object)
   end
 end
