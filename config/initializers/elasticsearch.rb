@@ -1,5 +1,6 @@
+hosts = ENV["ELASTIC_SEARCH_HOST_URL"].try(:split, ',').try(:map, &:strip)
 config = {
-  host: (ENV["ELASTIC_SEARCH_HOST_URL"] || "http://localhost:9200/"),
+  hosts: (hosts || "http://localhost:9200/"),
   transport_options: {
     request: { timeout: 5 }
   },
