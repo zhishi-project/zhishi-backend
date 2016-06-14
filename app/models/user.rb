@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   include NewNotification
   include ZhishiDateHelper
   include RouteKey
-  
+
   has_many :comments
   has_many :questions
   has_many :answers
@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
   has_many :resource_tags, as: :taggable
   has_many :tags, through: :resource_tags
   has_many :activities, foreign_key: :owner_id
-  EMAIL_FORMAT= /(?<email>[.\w]+@andela).co[m]?\z/
+  EMAIL_FORMAT= /(?<email>[.\w-]+@andela).co[m]?\z/
+  # /(?<email>[.\w]+@andela).co[m]?\z/
 
   scope :with_statistics, Queries::StatisticsQuery
 
