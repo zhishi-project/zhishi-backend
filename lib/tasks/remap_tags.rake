@@ -29,7 +29,7 @@ namespace :remap_tags do
             }
 
     tags.each do |key, value|
-      parent_tag = Tag.where(name: key)
+      parent_tag = Tag.find_by(name: key)
       Tag.where(name: value).update_all(representative_id: parent_tag)
     end
     puts "Sucessfuly Mapped Tags!"
