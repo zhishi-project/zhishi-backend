@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
 
 private
   def authenticate_user
-    authenticate_token || unauthorized_token
+    authenticate_token || authenticate_cookie || unauthorized_token
   end
 
   def authenticate_token
@@ -25,6 +25,12 @@ private
       user_id = TokenManager.authenticate(auth_token)['user']
       @current_user = User.find_by(id: user_id)
     end
+  end
+
+  def authenticate_cookie
+    cookie = request.headers['HTTP_ANDELA_COOKIE']
+    @current_user, @token = CookieHandler.validate_with_cookie(cookie)
+    return true if @current_user
   end
 
   def unauthorized_token

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   include NewNotification
   include ZhishiDateHelper
   include RouteKey
-  
+
   has_many :comments
   has_many :questions
   has_many :answers
@@ -28,6 +28,16 @@ class User < ActiveRecord::Base
     end
     return user unless user.valid?
     user.social_providers.from_social(auth)
+    user
+  end
+
+  def self.from_andela_auth(user)
+    user = where("email LIKE :email", email: user['email']).first_or_create do |u|
+      u.name= user['name']
+      u.email= user['email']
+      u.image = user['picture']
+    end
+
     user
   end
 
