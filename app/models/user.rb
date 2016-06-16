@@ -32,6 +32,16 @@ class User < ActiveRecord::Base
     user
   end
 
+  def self.from_andela_auth(user)
+    user = where("email LIKE :email", email: user['email']).first_or_create do |u|
+      u.name= user['name']
+      u.email= user['email']
+      u.image = user['picture']
+    end
+
+    user
+  end
+
   def refresh_token
     TokenManager.generate_token(self.id)
   end
