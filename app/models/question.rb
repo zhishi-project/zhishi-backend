@@ -6,6 +6,7 @@ class Question < ActiveRecord::Base
   include NewNotification
   include UserActivityTracker
   include RouteKey
+  include NotificationQueueResource
 
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy

@@ -261,4 +261,18 @@ RSpec.describe User, type: :model do
       expect(user.tags.first).to eql tag
     end
   end
+
+  describe "#push_to_queue", type: :notifications_queue do
+    it "should push the resource to the user's queue" do
+      expect{
+        subject.push_to_queue(MockResource.new)
+      }.to change(subject.queue, :total).by(1)
+    end
+  end
+
+  describe "#queue", type: :notifications_queue do
+    it "should be an instance of UserQueue" do
+      expect(subject.queue).to be_an_instance_of(UserQueue)
+    end
+  end
 end

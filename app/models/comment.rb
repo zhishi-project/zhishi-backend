@@ -5,6 +5,7 @@ class Comment < ActiveRecord::Base
   include UserActivityTracker
   include ZhishiDateHelper
   include RouteKey
+  include NotificationQueueResource
 
   has_many :votes, as: :voteable, dependent: :destroy
   belongs_to :comment_on, polymorphic: true, counter_cache: true, touch: true

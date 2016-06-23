@@ -3,6 +3,10 @@ module Notifications
     attributes :type
     # has_many :ancesr
     has_many :subscribers
+    
+    def subscribers
+      object.participants_involved_in_comment
+    end
 
     private
       def type
@@ -11,10 +15,6 @@ module Notifications
 
       def root
         :notification
-      end
-
-      def subscribers
-        object.participants_involved_in_comment
       end
 
       def ancestors

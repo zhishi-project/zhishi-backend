@@ -3,6 +3,10 @@ module Notifications
     attributes :type
     has_many :subscribers
 
+    def subscribers
+      [object.question.user]
+    end
+
     private
       def root
         :notification
@@ -10,10 +14,6 @@ module Notifications
 
       def type
         'new.answer'
-      end
-
-      def subscribers
-        [object.question.user]
       end
   end
 end

@@ -57,4 +57,12 @@ class User < ActiveRecord::Base
   def self.with_associations
     includes(:tags, :social_providers)
   end
+
+  def push_to_queue(object)
+    queue.push(object)
+  end
+
+  def queue
+    @queue ||= UserQueue.new(self)
+  end
 end
