@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties":{
+    "notifications":{
+      "type": "array",
+      "properties":{
+        "id": { "type": "int" },
+        "key": { "type": "string" },
+        "type": { "type": "string" },
+        "url": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" }
+      }
+    }
+  }
+}
