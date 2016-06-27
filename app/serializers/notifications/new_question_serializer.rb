@@ -3,10 +3,6 @@ module Notifications
     attributes :type
     has_many :subscribers
 
-    def subscribers
-      object.users_subscribed_to_question_tag
-    end
-
     private
       def type
         'new.question'

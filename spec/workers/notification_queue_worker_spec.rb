@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NotificationQueueWorker, type: :worker do
-  [:question, :answer, :comment].each do |resource|
+  [:question, :answer, :comment, :vote_on_question].each do |resource|
 
     describe '#perform' do
       context "when new #{resource} is created" do

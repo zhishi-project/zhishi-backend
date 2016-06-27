@@ -8,6 +8,7 @@ class Answer < ActiveRecord::Base
   include ZhishiDateHelper
   include RouteKey
   include NotificationQueueResource
+  include AcceptAnswerHelper
 
   has_many :comments, as: :comment_on, dependent: :destroy
   has_many :votes, as: :voteable, dependent: :destroy
@@ -56,5 +57,9 @@ class Answer < ActiveRecord::Base
       question_id: question_id,
       id: id
     }
+  end
+
+  def subscribers
+    [*question.user]
   end
 end

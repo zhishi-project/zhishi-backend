@@ -81,4 +81,8 @@ class Comment < ActiveRecord::Base
       id: id
     }
   end
+
+  def subscribers
+    [*participants_involved_in_comment]
+  end
 end

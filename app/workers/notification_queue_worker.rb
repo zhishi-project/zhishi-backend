@@ -1,6 +1,6 @@
 class NotificationQueueWorker
   include Sidekiq::Worker
-  sidekiq_options retry: 5, queue: :notifications, backtrace: true
+  sidekiq_options retry: 5, queue: :notifications, backtrace: true, unique: :while_executing
 
   Logger = Sidekiq.logger.level == Logger::DEBUG ? Sidekiq.logger : nil
 

@@ -63,7 +63,12 @@ class UsersController < ApplicationController
   end
 
   def notifications
-    @notifications = current_user.queue.all
+    @notifications = current_user.resources_queue.all
+  end
+
+  def point_notifications
+    @notifications = current_user.votes_queue.all
+    render :notifications
   end
 
   def activities

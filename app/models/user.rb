@@ -58,11 +58,16 @@ class User < ActiveRecord::Base
     includes(:tags, :social_providers)
   end
 
-  def push_to_queue(object)
+  def push_to_queue(object, queue: :resources_queue)
+    queue = send(queue)
     queue.push(object)
   end
 
-  def queue
-    @queue ||= UserQueue.new(self)
+  def resources_queue
+    @resources_queue ||= UserQueue.new(self)
+  end
+
+  def votes_queue
+    @votes_queue ||= UserVotesQueue.new(self)
   end
 end

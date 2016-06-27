@@ -10,17 +10,25 @@ module NotificationQueueResource
   end
 
   def distribute_to_notification_queue
-    serialized_notification_object.subscribers.each do |subscriber|
-      subscriber.push_to_queue(self) unless subscriber == user
+    subscribers.each do |subscriber|
+      subscriber.push_to_queue(self, queue: queue_name) unless subscriber == user
     end
+  end
+
+  def queue_name
+    :resources_queue
   end
 
   def queue_tracking_info
     {
       type: "New #{self.class}",
-      key: "new.#{model_name.param_key}",
+      key: notification_key,
       payload: serialized_notification_queue_object.as_json
     }
+  end
+
+  def notification_key
+    "new.#{model_name.param_key}"
   end
 
   def queue_tracking_info_json

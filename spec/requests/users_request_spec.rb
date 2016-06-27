@@ -87,4 +87,14 @@ RSpec.describe "Users", type: :request do
       expect(response).to match_response_schema("user/notifications")
     end
   end
+
+  describe "GET /point_notifications", type: :notifications_queue do
+    before do
+      get point_notifications_path, {format: :json}, authorization_header
+    end
+
+    it "matches the activities json schema" do
+      expect(response).to match_response_schema("user/notifications")
+    end
+  end
 end

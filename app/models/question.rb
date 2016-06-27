@@ -155,4 +155,8 @@ class Question < ActiveRecord::Base
       id: id
     }
   end
+
+  def subscribers
+    [*users_subscribed_to_question_tag]
+  end
 end
