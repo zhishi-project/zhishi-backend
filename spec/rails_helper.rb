@@ -16,11 +16,11 @@ require "spec_helper"
 require "rspec/rails"
 require "sidekiq/testing"
 
-require 'coveralls'
-Coveralls.wear!
+# require 'coveralls'
+# Coveralls.wear!
 
-# require 'simplecov'
-# SimpleCov.start 'rails'
+require 'simplecov'
+SimpleCov.start 'rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -64,7 +64,6 @@ RSpec.configure do |config|
     end
     REDIS.flushdb
     allow(Sidekiq).to receive(:redis).and_yield(REDIS) # Or else Sidekiq.redis will attempt to make a real connection
-    allow(CookieHandler).to receive(:validate_with_cookie) { false }
   end
 
   config.around(:each) do |example|
