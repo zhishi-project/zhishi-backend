@@ -29,6 +29,7 @@ private
 
   def authenticate_cookie
     cookie = request.headers['HTTP_ANDELA_COOKIE']
+    return unless cookie
     @current_user, @token = CookieHandler.validate_with_cookie(cookie)
     return true if @current_user
   end
