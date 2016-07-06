@@ -40,7 +40,7 @@ class Question < ActiveRecord::Base
   def self.eager_load_basic_association
     # NOTE this was prompted because after using the AR#includes, it appears there was an N+1
     # query to fetch all tags OR votes(note OR). This is wierd and needs a little bit more research as to the behaviour
-    eager_load(:votes).eager_load(:tags).with_votes.with_users.group("votes_questions.id", "tags.id", "users.id", "social_providers.id")
+    eager_load(:votes).eager_load(:tags).with_votes.with_users.group("votes_questions.id", "tags.id", "users.id")
   end
 
   def self.personalized(user)
@@ -49,9 +49,9 @@ class Question < ActiveRecord::Base
 
   def self.with_associations
     eager_load(:votes)
-      .eager_load(answers: [{comments: [{user: [:social_providers]}, :votes]}, {user: [:social_providers]}, :votes])
-      .eager_load(user: [:social_providers])
-      .eager_load(comments: [{user: [:social_providers]}, :votes])
+      .eager_load(answers: [{comments: [:user, :votes]}, :user, :votes])
+      .eager_load(:user)
+      .eager_load(comments: [:user, :votes])
       .eager_load(:tags)
       .order('answers.accepted DESC')
 
@@ -62,7 +62,7 @@ class Question < ActiveRecord::Base
   end
 
   def self.with_users
-    includes(user: [:social_providers])
+    includes(:user)
   end
 
   def increment_views

@@ -43,20 +43,4 @@ private
     "The operation could not be performed."\
     " Please check your request or try again later"
   end
-
-
-  def set_attrs_in_session(hash={})
-    hash.each do |key, val|
-      session[key] = val
-    end
-  end
-
-  def get_attrs_from_session(attrs=[])
-    vals = []
-    attrs.each do |key|
-      vals << session[key]
-    end
-    vals
-  end
-
 end
