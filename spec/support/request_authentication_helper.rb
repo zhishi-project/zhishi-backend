@@ -8,7 +8,11 @@ module RequestAuthenticationHelper
   end
 
   def authorization_header(token = valid_user_token)
-    {authorization: "Token token=#{token}"}
+    { authorization: "Token token=#{token}" }
+  end
+
+  def cookie_header
+    { HTTP_ANDELA_COOKIE: "valid cookie" }
   end
 end
 
