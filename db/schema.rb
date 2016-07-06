@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706122804) do
+ActiveRecord::Schema.define(version: 20160706131029) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -81,17 +81,6 @@ ActiveRecord::Schema.define(version: 20160706122804) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name"
-
-  create_table "tokens", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "temp"
-    t.integer  "status",     default: 0
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "tokens", ["temp"], name: "index_tokens_on_temp"
-  add_index "tokens", ["user_id"], name: "index_tokens_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
