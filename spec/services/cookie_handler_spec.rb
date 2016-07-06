@@ -43,17 +43,9 @@ RSpec.describe CookieHandler do
   end
 
   describe ".validate_with_cookie" do
-    let(:🙈){ Object.new.tap do |obj|
-        obj.instance_eval {
-          def body=(val); @body = val; end;
-          def body; @body; end;
-        }
-      end
-    }
-
     context "when cookie is valid" do
       it "returns the user and token" do
-        🙈.body = '{ "name": "John Doe", "email": "email@andela.com"}'
+        🙈 = Dummy.create_with_methods({body: '{ "name": "John Doe", "email": "email@andela.com"}'})
 
         allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(🙈)
         allow(TokenManager).to receive(:generate_token).with(1).and_return("user_1_token")
@@ -66,7 +58,7 @@ RSpec.describe CookieHandler do
 
     context "when cookie is invalid" do
       it "returns false" do
-        🙈.body = ""
+        🙈 = Dummy.create_with_methods({body: ""})
         allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(🙈)
         expect(subject.validate_with_cookie("")).to be nil
       end
