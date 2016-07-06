@@ -1,6 +1,11 @@
 {
-  "type": "array",
+  "type": "object",
   "properties": {
-    "$ref": "answer.json#/definitions/comment"
+    "answers": {
+      "type": "array",
+      "properties": {
+        "$ref": "answer.json#/definitions/comment"
+      }
+    }
   }
 }
