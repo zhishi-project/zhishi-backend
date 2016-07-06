@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525060037) do
+ActiveRecord::Schema.define(version: 20160706122804) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -72,22 +72,6 @@ ActiveRecord::Schema.define(version: 20160525060037) do
 
   add_index "resource_tags", ["tag_id"], name: "index_resource_tags_on_tag_id"
   add_index "resource_tags", ["taggable_type", "taggable_id"], name: "index_resource_tags_on_taggable_type_and_taggable_id"
-
-  create_table "social_providers", force: :cascade do |t|
-    t.string   "provider"
-    t.string   "uuid"
-    t.string   "auth_token"
-    t.string   "refresh_token"
-    t.integer  "user_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "token"
-    t.string   "profile_picture"
-    t.string   "profile_url"
-    t.string   "email"
-  end
-
-  add_index "social_providers", ["user_id"], name: "index_social_providers_on_user_id"
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
