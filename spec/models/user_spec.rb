@@ -261,4 +261,29 @@ RSpec.describe User, type: :model do
       expect(user.tags.first).to eql tag
     end
   end
+
+  describe ".from_andela_auth" do
+    context "when user object is valid" do
+      context "and user already exists" do
+        it "returns the user" do
+          valid_user_email = user.email
+          expect{User.from_andela_auth({'email': valid_user_email})}.to change{User.count}.by 0
+        end
+      end
+
+      context "and user doesn't exists" do
+        it "creates a new user" do
+          expect{User.from_andela_auth(build(:user))}.to change{User.count}.by 1
+        end
+      end
+    end
+
+    context "when user object is invalid" do
+      it "returns validation errors" do
+        result = User.from_andela_auth({})
+        expect(result.valid?).to be false
+        expect(result.errors).not_to be_nil
+      end
+    end
+  end
 end
