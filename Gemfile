@@ -27,6 +27,7 @@ gem 'elasticsearch-rails'
 gem 'sidekiq'
 gem 'sidekiq-failures'
 gem 'sidekiq-status'
+gem 'sidekiq-unique-jobs'
 gem 'redis-namespace'
 gem 'sinatra', '>= 1.3.0', require: false
 gem 'active_model_serializers'

@@ -202,4 +202,32 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#push_to_queue", type: :notifications_queue do
+    it "should push the resource to the user's queue" do
+      expect{
+        subject.push_to_queue(MockResource.new)
+      }.to change(subject.resources_queue, :total).by(1)
+    end
+  end
+
+  describe "#queue", type: :notifications_queue do
+    it "should be an instance of UserQueue" do
+      expect(subject.resources_queue).to be_an_instance_of(UserQueue)
+    end
+  end
+
+  describe "#push_to_queue", type: :notifications_queue do
+    it "should push the resource to the user's queue" do
+      expect{
+        subject.push_to_queue(MockResource.new, queue: :votes_queue)
+      }.to change(subject.votes_queue, :total).by(1)
+    end
+  end
+
+  describe "#queue", type: :notifications_queue do
+    it "should be an instance of UserQueue" do
+      expect(subject.votes_queue).to be_an_instance_of(UserVotesQueue)
+    end
+  end
 end

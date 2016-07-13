@@ -9,7 +9,8 @@ module ZiNotification
       end
 
       def request(http_method, path, options)
-        ZiNotification::Connection.connection.send(http_method, path, options)
+        token = TokenManager.generate_token(nil, 5.minutes.from_now, options)
+        ZiNotification::Connection.connection(token).send(http_method, path)
       end
     end
   end

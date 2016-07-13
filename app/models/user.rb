@@ -47,4 +47,17 @@ class User < ActiveRecord::Base
   def self.with_associations
     includes(:tags)
   end
+
+  def push_to_queue(object, queue: :resources_queue)
+    queue = send(queue)
+    queue.push(object)
+  end
+
+  def resources_queue
+    @resources_queue ||= UserQueue.new(self)
+  end
+
+  def votes_queue
+    @votes_queue ||= UserVotesQueue.new(self)
+  end
 end

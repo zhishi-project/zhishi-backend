@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       resources :comments, except: [:new, :edit], resource_name: /(?!comments).*/
     end
 
+    get :notifications, to: 'users#notifications'
+    get :point_notifications, to: 'users#point_notifications'
+
     resources :questions, except: [:new, :edit] do
       collection do
         get :search

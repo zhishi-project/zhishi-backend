@@ -91,5 +91,7 @@ RSpec.describe Comment, type: :model do
   it_behaves_like "a votable", :comment_with_votes
   it_behaves_like :activity_tracker, :comment
   it_behaves_like :activity_tracker, :comment_on_answer
+  it_behaves_like :shared_notification_queue, :comment
+  it_behaves_like :shared_notification_queue, :comment_on_answer
 
 end
