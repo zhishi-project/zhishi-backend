@@ -8,7 +8,6 @@ Rails.application.routes.draw do
       resources :comments, except: [:new, :edit], resource_name: /(?!comments).*/
     end
 
-    post '/validate_token', to: 'tokens#validate'
     get :notifications, to: 'users#notifications'
     get :point_notifications, to: 'users#point_notifications'
 
@@ -39,11 +38,6 @@ Rails.application.routes.draw do
         get :tags
         get :activities
       end
-
-      collection do
-        post :logout
-        get :renew_token
-      end
     end
 
     resources :tags, only: [:index] do
@@ -56,10 +50,6 @@ Rails.application.routes.draw do
       end
     end
 
-    get 'login', to: "users#login"
-    get 'login/:provider', to: "users#login"
-
-    get 'auth/:provider/callback', to: 'users#authenticate', as: :authenticate
     mount Sidekiq::Web => '/sidekiq'
 
     match "*path", to: 'application#resource_not_found', via: :all

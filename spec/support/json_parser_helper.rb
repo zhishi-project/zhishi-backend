@@ -1,6 +1,6 @@
 module JsonParserHelper
-  def parsed_json
-    JSON.parse(body)
+  def parsed_json(key=nil)
+    key ? JSON.parse(body)[key] : JSON.parse(body)
   end
 
   def body

@@ -7,8 +7,6 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :questions
   has_many :answers
-  has_many :social_providers
-  has_many :tokens
   has_many :votes
   has_many :resource_tags, as: :taggable
   has_many :tags, through: :resource_tags
@@ -18,18 +16,10 @@ class User < ActiveRecord::Base
 
   scope :with_statistics, Queries::StatisticsQuery
 
-  def self.from_omniauth(auth)
-    email_address = auth.info.email
-    grabbed = EMAIL_FORMAT.match(email_address).try(:[], :email)
-    grabbed = grabbed ? "#{grabbed}%" : email_address
-    user = where("email LIKE :email", email: grabbed).first_or_create do |u|
-      u.name= auth.info.name
-      u.email= auth.info.email
-      u.image = auth.info.image
-    end
-    return user unless user.valid?
-    user.social_providers.from_social(auth)
-    user
+  def self.from_andela_auth(user_info)
+    user = find_or_initialize_by(email: user_info['email'])
+
+    user.tap{|u| u.update_attributes({name: user_info['name'], image: user_info['image']})}
   end
 
   def refresh_token
@@ -55,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def self.with_associations
-    includes(:tags, :social_providers)
+    includes(:tags)
   end
 
   def push_to_queue(object, queue: :resources_queue)

@@ -16,11 +16,11 @@ require "spec_helper"
 require "rspec/rails"
 require "sidekiq/testing"
 
-require 'coveralls'
-Coveralls.wear!
+# require 'coveralls'
+# Coveralls.wear!
 
-# require 'simplecov'
-# SimpleCov.start 'rails'
+require 'simplecov'
+SimpleCov.start 'rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
