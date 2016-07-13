@@ -5,10 +5,13 @@ module ZiNotification
         ENV['ZI_NOTIFICATION_URL']
       end
 
-      def self.connection
+      def self.connection(token)
         # NOTE we need to also add the authorization once implemented on notifications
         options = {
-          headers: { 'Accept' => 'application/json; charset=utf-8' }
+          headers: {
+            'Accept' => 'application/json; charset=utf-8',
+            'Authorization' => "Token token=#{token}"
+          }
         }
 
         ::Faraday::Connection.new(endpoint, options) do |connection|

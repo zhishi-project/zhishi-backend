@@ -5,33 +5,56 @@ RSpec.describe TokenManager do
   let(:user){ create(:user) }
 
   describe ".generate_token" do
-    let(:token){ subject.generate_token(user.id) }
-
-    it 'generates a valid token' do
-      expect(token.split('.').count).to eq 3
-      expect{subject.decode(token)}.not_to raise_error
-    end
-
-    describe 'token expiration' do
-      it 'sets expiration time to 24hrs by default' do
-        decoded = subject.decode(token)
-        expect(decoded.first['exp']).to eql 24.hours.from_now.to_i
-      end
-
-      it 'sets expiration time to any time given' do
-        temp_token = subject.generate_token(user.id, 2.minutes.from_now)
-        decoded = subject.decode(temp_token)
-        expect(decoded.first['exp']).to eql 2.minutes.from_now.to_i
-        expect(decoded.first['exp']).not_to eql 24.hours.from_now.to_i
-      end
-    end
-
     describe 'arguments' do
       it 'throws argument error if no arg is provided' do
         expect{ subject.generate_token }.to raise_error ArgumentError
       end
     end
 
+    context "when generating token for a user" do
+      let(:token){ subject.generate_token(user.id) }
+
+      it 'generates a valid token' do
+        expect(token.split('.').count).to eq 3
+        expect{subject.decode(token)}.not_to raise_error
+      end
+
+      describe 'token expiration' do
+        it 'sets expiration time to 24hrs by default' do
+          decoded = subject.decode(token)
+          expect(decoded.first['exp']).to eql 24.hours.from_now.to_i
+        end
+
+        it 'sets expiration time to any time given' do
+          temp_token = subject.generate_token(user.id, 2.minutes.from_now)
+          decoded = subject.decode(temp_token)
+          expect(decoded.first['exp']).to eql 2.minutes.from_now.to_i
+          expect(decoded.first['exp']).not_to eql 24.hours.from_now.to_i
+        end
+      end
+    end
+
+    context "when generating token for notification" do
+      let(:object) { { "id" => 1, "title" => "sample object" } }
+      let(:token){ subject.generate_token(nil, 5.minutes.from_now, object) }
+
+      it 'generates a valid token' do
+        expect(token.split('.').count).to eq 3
+        expect{subject.decode(token)}.not_to raise_error
+      end
+
+      describe 'token expiration' do
+        it 'sets expiration time to 5 minutes' do
+          decoded = subject.decode(token)
+          expect(decoded.first['exp']).to eql 5.minutes.from_now.to_i
+        end
+
+        it 'sets the notification object' do
+          decoded = subject.decode(token)
+          expect(decoded.first['payload']).to eql object
+        end
+      end
+    end
   end
 
   describe ".issue_token" do
