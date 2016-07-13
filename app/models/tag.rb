@@ -11,7 +11,7 @@ class Tag < ActiveRecord::Base
   has_many :similar_tags, class_name: 'Tag', foreign_key: 'representative_id'
   belongs_to :representative, class_name: 'Tag'
 
-  before_save :downcase!, :strip!
+  before_save :downcase!, :strip!, :ensure_naming_convention
   after_create :push_representative_assignment_to_sidekiq
   after_update :push_subscription_update_to_sidekiq, if: :representative_id_changed?
 
@@ -97,6 +97,10 @@ class Tag < ActiveRecord::Base
 
   def representative
     super || self
+  end
+
+  def ensure_naming_convention
+    self.name = self.name.split.join("-")
   end
 
   private

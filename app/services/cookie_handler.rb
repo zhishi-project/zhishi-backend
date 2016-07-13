@@ -1,12 +1,7 @@
 class CookieHandler
-
-  AUTH_URL = 'http://authentication.andela.com/'
-  DATA_PATH = 'loggedin'
-  COOKIE_KEY = 'andela:session'
-
   def self.validate_with_cookie(cookie)
-    response = connect.get(DATA_PATH) do |request|
-      request.headers['Cookie'] = "#{COOKIE_KEY}=#{cookie}"
+    response = connect.get(ENV['DATA_PATH']) do |request|
+      request.headers['Cookie'] = "#{ENV['COOKIE_KEY']}=#{cookie}"
     end
 
     user_obj = confirm_response(response.body)
@@ -17,7 +12,7 @@ class CookieHandler
 
   private
   def self.connect
-    Faraday.new(AUTH_URL) do |conn|
+    Faraday.new(ENV['AUTH_URL']) do |conn|
       conn.request  :url_encoded             # form-encode POST params
       conn.response :logger                  # log requests to STDOUT
       conn.adapter  Faraday.default_adapter  # make requests with Net::HTTP
@@ -35,7 +30,7 @@ class CookieHandler
   def self.confirm_response(response)
     begin
       JSON.parse(response)
-    rescue JSON::ParserError => e
+    rescue
       false
     end
   end

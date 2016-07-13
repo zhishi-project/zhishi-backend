@@ -178,15 +178,18 @@ RSpec.describe User, type: :model do
   describe ".from_andela_auth" do
     context "when user object is valid" do
       context "and user already exists" do
-        it "returns the user" do
-          valid_user_email = user.email
-          expect{User.from_andela_auth({'email': valid_user_email})}.to change{User.count}.by 0
+        it "updates the user information" do
+          user_attr = user.attributes.stringify_keys
+          user_attr['name'] = "John Doe"
+          expect{User.from_andela_auth(user_attr)}.to change{User.count}.by 0
+          expect(user_attr['id']).to eql user.reload.id
+          expect(user.name).to eql user_attr['name']
         end
       end
 
       context "and user doesn't exists" do
         it "creates a new user" do
-          expect{User.from_andela_auth(build(:user))}.to change{User.count}.by 1
+          expect{User.from_andela_auth(attributes_for(:user).stringify_keys)}.to change{User.count}.by 1
         end
       end
     end

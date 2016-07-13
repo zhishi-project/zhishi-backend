@@ -11,18 +11,15 @@ class User < ActiveRecord::Base
   has_many :resource_tags, as: :taggable
   has_many :tags, through: :resource_tags
   has_many :activities, foreign_key: :owner_id
-  EMAIL_FORMAT= /(?<email>[.\w]+@andela).co[m]?\z/
+  EMAIL_FORMAT= /(?<email>[.\w-]+@andela).co[m]?\z/
+  # /(?<email>[.\w]+@andela).co[m]?\z/
 
   scope :with_statistics, Queries::StatisticsQuery
 
-  def self.from_andela_auth(user)
-    user = where("email LIKE :email", email: user['email']).first_or_create do |u|
-      u.name= user['name']
-      u.email= user['email']
-      u.image = user['picture']
-    end
+  def self.from_andela_auth(user_info)
+    user = find_or_initialize_by(email: user_info['email'])
 
-    user
+    user.tap{|u| u.update_attributes({name: user_info['name'], image: user_info['image']})}
   end
 
   def refresh_token
