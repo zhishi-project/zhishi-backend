@@ -11,9 +11,5 @@ module Notifications
       def root
         :notification
       end
-
-      def subscribers
-        object.users_subscribed_to_question_tag
-      end
   end
 end

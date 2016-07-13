@@ -62,6 +62,15 @@ class UsersController < ApplicationController
     render partial: 'tags/tag', locals: { tags: @user.tags }
   end
 
+  def notifications
+    @notifications = current_user.resources_queue.all
+  end
+
+  def point_notifications
+    @notifications = current_user.votes_queue.all
+    render :notifications
+  end
+
   def activities
     activities = @user.activities.paginate(page: params[:page]).with_basic_association
     @activities = NestedResourcePaginationPresenter.new(activities, {id: @user.id})

@@ -6,7 +6,7 @@ class NotificationSystemWorker
   Endpoints = ZiNotification::Endpoints
 
   def perform(klass, object_id)
-    object = klass.constantize.find(object_id).object_for_notification
+    object = klass.constantize.find(object_id).object_for_notification.as_json
     ZiNotification::Client.post(Endpoints[:new_resource], object)
   end
 end

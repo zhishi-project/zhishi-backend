@@ -6,6 +6,8 @@ class Vote < ActiveRecord::Base
   validates :voteable, presence: true
   validates :value, presence: true
 
+  include NotificationQueueResource
+
 
   REWARD = {
     "question_upvote" => 5,
@@ -15,6 +17,30 @@ class Vote < ActiveRecord::Base
     "answer_downvote" => -2,
     "comment_downvote" => 0
   }
+
+  def subscribers
+    [*voteable.user]
+  end
+
+  def queue_name
+    :votes_queue
+  end
+
+  def notification_key
+    vote_on =voteable_type.downcase
+    "#{vote_on}.#{vote_type}"
+  end
+
+  def vote_type
+    case value
+    when 1
+      'upvote'
+    when -1
+      'downvote'
+    when 20 # hacking this to be able to use with Answer#accept
+      'accept'
+    end
+  end
 
   class << self
 

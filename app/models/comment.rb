@@ -5,6 +5,7 @@ class Comment < ActiveRecord::Base
   include UserActivityTracker
   include ZhishiDateHelper
   include RouteKey
+  include NotificationQueueResource
 
   has_many :votes, as: :voteable, dependent: :destroy
   belongs_to :comment_on, polymorphic: true, counter_cache: true, touch: true
@@ -79,5 +80,9 @@ class Comment < ActiveRecord::Base
       resource_id: comment_on_id,
       id: id
     }
+  end
+
+  def subscribers
+    [*participants_involved_in_comment]
   end
 end

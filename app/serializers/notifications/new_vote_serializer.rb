@@ -1,7 +1,7 @@
 module Notifications
-  class NewAnswerSerializer < AnswerSerializer
+  class NewVoteSerializer < VoteSerializer
     attributes :type
-    has_many :subscribers
+    has_one :subscribers
 
     private
       def root
@@ -9,7 +9,7 @@ module Notifications
       end
 
       def type
-        'new.answer'
+        'new.vote'
       end
   end
 end

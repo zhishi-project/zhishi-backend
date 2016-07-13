@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     end
 
     post '/validate_token', to: 'tokens#validate'
+    get :notifications, to: 'users#notifications'
+    get :point_notifications, to: 'users#point_notifications'
 
     resources :questions, except: [:new, :edit] do
       collection do

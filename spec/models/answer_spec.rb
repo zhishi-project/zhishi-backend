@@ -171,4 +171,5 @@ RSpec.describe Answer, type: :model do
 
   it_behaves_like "a votable", :answer_with_votes
   it_behaves_like :activity_tracker, :answer
+  it_behaves_like :shared_notification_queue, :answer
 end

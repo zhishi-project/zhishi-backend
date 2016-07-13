@@ -12,6 +12,46 @@ RSpec.describe Vote, type: :model do
   let(:invalid_subject_id) { -1 }
   let(:invalid_value) { 2 }
 
+  describe "#queue_name" do
+    it "should be votes_queue" do
+      expect(vote.queue_name).to be :votes_queue
+    end
+  end
+
+  context "when it is a downvote" do
+    let(:question){ create(:question) }
+    subject{ create(:downvote, voteable: question) }
+
+    describe "#notification_key" do
+      it "should have a downvote key" do
+        expect(subject.notification_key).to eql('question.downvote')
+      end
+    end
+
+    describe "#vote_type" do
+      it "should have a downvote key" do
+        expect(subject.vote_type).to eql('downvote')
+      end
+    end
+  end
+
+  context "when it is a downvote" do
+    let(:question){ create(:question) }
+    subject{ create(:upvote, voteable: question) }
+
+    describe "#notification_key" do
+      it "should have a downvote key" do
+        expect(subject.notification_key).to eql('question.upvote')
+      end
+    end
+
+    describe "#vote_type" do
+      it "should have a downvote key" do
+        expect(subject.vote_type).to eql('upvote')
+      end
+    end
+  end
+
   describe ".act_on_vote" do
     it "receives vote operation from user" do
       allow(Vote).to receive(:process_vote).and_return (nil)

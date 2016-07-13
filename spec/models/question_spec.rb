@@ -100,7 +100,7 @@ RSpec.describe Question, type: :model do
     end
   end
 
-
   it_behaves_like "a votable", :question_with_votes
   it_behaves_like :activity_tracker, :question
+  it_behaves_like :shared_notification_queue, :question
 end
