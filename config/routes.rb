@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       end
     end
 
+    post "login" => "application#login"
+
     mount Sidekiq::Web => '/sidekiq'
 
     match "*path", to: 'application#resource_not_found', via: :all
