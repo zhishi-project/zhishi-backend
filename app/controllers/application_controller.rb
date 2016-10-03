@@ -22,6 +22,13 @@ class ApplicationController < ActionController::API
     @token = TokenManager.generate_token(@current_user.id)
   end
 
+  def logout
+    cookie = request.headers['HTTP_ANDELA_COOKIE']
+    return invalid_request("Cookie must be provided") unless cookie
+    CookieHandler.logout_cookie(cookie)
+    render json: {message: 'logged out'}, status: 200
+  end
+
 private
   def authenticate_user
     (authenticate_token && authenticate_cookie) || unauthorized_token

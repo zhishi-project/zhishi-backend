@@ -7,6 +7,12 @@ class CookieHandler
     confirm_response(response.body)
   end
 
+  def self.logout_cookie(cookie)
+    response = connect.get(ENV['LOGOUT_PATH']) do |request|
+      request.headers['Cookie'] = "#{ENV['COOKIE_KEY']}=#{cookie}"
+    end
+  end
+
   private
   def self.connect
     Faraday.new(ENV['AUTH_URL']) do |conn|
