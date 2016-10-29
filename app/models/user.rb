@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   def self.from_andela_auth(user_info)
     user = find_or_initialize_by(email: user_info['email'])
 
-    user.tap{|u| u.update_attributes({name: user_info['name'], image: user_info['image']})}
+    user.tap{|u| u.update_attributes({name: user_info['name'], image: user_info['picture']})}
   end
 
   def refresh_token

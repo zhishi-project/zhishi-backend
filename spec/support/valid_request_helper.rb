@@ -7,6 +7,7 @@ module ValidRequest
   included do
     before(:each, valid_request: true) do
       request.headers['Authorization'] = "Token token=#{valid_user.refresh_token}"
+      request.headers['HTTP_ANDELA_COOKIE'] = "a.valid.cookie"
     end
   end
 end

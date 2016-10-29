@@ -25,23 +25,6 @@ RSpec.describe CookieHandler do
     end
   end
 
-  describe ".set_user_and_token" do
-    context "when user obj is valid" do
-      it "returns the user obj and a token" do
-        allow(TokenManager).to receive(:generate_token).with(1).and_return("user_1_token")
-        user_obj = { "name" => "John Doe", "email" => "email@andela.com"}
-        expect(subject.set_user_and_token(user_obj).first.name).to eql user_obj["name"]
-        expect(subject.set_user_and_token(user_obj).last).to eql 'user_1_token'
-      end
-    end
-
-    context "when the user obj is not valid" do
-      it "returns nil" do
-        expect(subject.set_user_and_token({})).to be_nil
-      end
-    end
-  end
-
   describe ".validate_with_cookie" do
     context "when cookie is valid" do
       it "returns the user and token" do
@@ -49,10 +32,10 @@ RSpec.describe CookieHandler do
 
         allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(🙈)
         allow(TokenManager).to receive(:generate_token).with(1).and_return("user_1_token")
-        result = subject.validate_with_cookie("some valid cookie")
+        user = subject.validate_with_cookie("some valid cookie")
 
-        expect(result.first.name).to eql "John Doe"
-        expect(result.last).to eql "user_1_token"
+        expect(user).to be_a Hash
+        expect(user['name']).to eql "John Doe"
       end
     end
 
@@ -60,7 +43,7 @@ RSpec.describe CookieHandler do
       it "returns false" do
         🙈 = Dummy.create_with_methods({body: ""})
         allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(🙈)
-        expect(subject.validate_with_cookie("")).to be nil
+        expect(subject.validate_with_cookie("")).to be false
       end
     end
   end
