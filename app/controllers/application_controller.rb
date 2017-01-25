@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
 
   attr_reader :current_user
   helper_method :current_user
-  before_action :authenticate_user, except: [:login, :logout]
+  before_action :authenticate_token, except: [:login, :logout]
 
   def resource_not_found
     not_found = "The resource you tried to access was not found"
@@ -15,11 +15,15 @@ class ApplicationController < ActionController::API
   end
 
   def login
+    jwt_token = request.headers['token']
+    TokenHelper.verify_token(jwt_token)
+=begin
     user = authenticate_cookie
     @current_user = User.from_andela_auth(user) if user && !user['isGuest']
     return unauthorized_token unless @current_user
 
     @token = TokenManager.generate_token(@current_user.id)
+=end
   end
 
   def logout
@@ -29,20 +33,25 @@ class ApplicationController < ActionController::API
     render json: {message: 'logged out'}, status: 200
   end
 
+=begin
 private
   def authenticate_user
     (authenticate_token && authenticate_cookie) || unauthorized_token
     # authenticate_cookie || unauthorized_token
   end
 
+=end
+
+=begin
   def authenticate_token
     authenticate_with_http_token do |auth_token, _|
       user_id = TokenManager.authenticate(auth_token)['user']
       @token = TokenManager.generate_token(user_id) if user_id
     end
   end
+=end
 
-  def authenticate_cookie
+  def authenticate_token
     cookie = request.headers['HTTP_ANDELA_COOKIE']
     return unless cookie
     user = CookieHandler.validate_with_cookie(cookie)
