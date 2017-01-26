@@ -15,13 +15,15 @@ gem "jwt"
 gem 'rack-cors'
 # for perfomance and monitoring timeout ensures that when a request is taking too long, it is automatically terminated
 # new relic provides a dashboard to view the perfomance of our application
-gem "rack-timeout"
 gem 'newrelic_rpm'
 gem "bugsnag"
 
 # elasticsearch for full text searches
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+
+gem 'faraday'
+gem 'faraday_middleware'
 
 # sidekiq for asynchronous jobs. relevant to enable app to keep functioning even when there are long running jobs
 gem 'sidekiq'
@@ -59,6 +61,7 @@ group :test do
 end
 
 group :production, :staging do
+  gem "rack-timeout"
   gem "pg"
   gem "rails_12factor"
 end
