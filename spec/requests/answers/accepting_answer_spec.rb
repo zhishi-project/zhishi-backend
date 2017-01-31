@@ -6,8 +6,6 @@ RSpec.describe "Accepting an answer", type: :request do
   let(:answer) { create(:answer, question: question, user: user2) }
   let(:path) { accept_question_answer_path(question, answer) }
 
-  it_behaves_like "authenticated endpoint", :accept_question_answer_path, 'post', true
-
   describe "validates that question belongs to user" do
     let(:question) { create(:question_with_answers, user: user2) }
     it "returns unauthorized_access if question doesn't belong to user" do
