@@ -58,6 +58,7 @@ group :test do
   gem "json-schema"
   gem "mock_redis"
   gem 'rspec-sidekiq'
+  gem 'webmock'
 end
 
 group :production, :staging do
