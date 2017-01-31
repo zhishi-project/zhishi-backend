@@ -1,5 +1,5 @@
 class Connection::FaradayConnection
-  BASE_ANDELA_URL =  "http://api-staging.andela.com" # use env variable to set the url
+  BASE_ANDELA_URL =  ENV['BASE_ANDELA_URL'] # use env variable to set the url
 
   def self.connection(token)
     options = {
