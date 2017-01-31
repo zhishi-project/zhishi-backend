@@ -20,19 +20,26 @@ class ApplicationController < ActionController::API
 
 private
    def authenticate_user
-    strategy, token = request.headers['Authorization'].split
-    auth = AndelaAuthV2.authenticate(token)
 
-    if strategy == 'Bearer' && auth.authenticated?
-      auth_user = auth.current_user
-      @current_user = User.find_or_create_by(email: auth_user['email'])
-      # we always want to ensure these attrs are in sync with the auth system
-      @current_user.update_attributes(
-        name: auth_user['name'],
-        image: auth_user['picture'],
-        active: (auth_user['status'] == 'active')
-      )
-      @current_user
+     if request.headers['Authorization']
+       strategy, token = request.headers['Authorization'].split
+       auth = AndelaAuthV2.authenticate(token)
+
+       if strategy == 'Bearer' && auth.authenticated?
+         auth_user = auth.current_user
+         @current_user = User.find_or_create_by(email: auth_user['email'])
+         # we always want to ensure these attrs are in sync with the auth system
+         @current_user.update_attributes(
+             name: auth_user['name'],
+             image: auth_user['picture'],
+             active: (auth_user['status'] == 'active')
+         )
+         @current_user
+       else
+         unauthorized_token
+
+       end
+
     else
       unauthorized_token
     end
