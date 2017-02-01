@@ -16,31 +16,24 @@ class ApplicationController < ActionController::API
 
 private
    def authenticate_user
-
-     if request.headers['Authorization']
-       strategy, token = request.headers['Authorization'].split
-       auth = AndelaAuthV2.authenticate(token)
-
-       if strategy == 'Bearer' && auth.authenticated?
-         auth_user = auth.current_user
-         @current_user = User.find_or_create_by(email: auth_user['email'])
-         # we always want to ensure these attrs are in sync with the auth system
-         @current_user.update_attributes(
-             name: auth_user['name'],
-             image: auth_user['picture'],
-             active: (auth_user['status'] == 'active')
-         )
-         @current_user
-       else
-         unauthorized_token
-
-       end
-
-    else
-      unauthorized_token
-    end
-
+     auth = Authenticator.new(request)
+     if auth.authenticated?
+       create_or_update_user(auth.user)
+     else
+       unauthorized_token
+     end
    end
+
+  def create_or_update_user(user)
+    @current_user = User.find_or_create_by(email: user['email'])
+    # we always want to ensure these attrs are in sync with the auth system
+    @current_user.update_attributes(
+        name: user['name'],
+        image: user['picture'],
+        active: (user['status'] == 'active')
+    )
+    @current_user
+  end
 
   def unauthorized_token
     self.headers['WWW-Authenticate'] = 'Token realm="Application"'
