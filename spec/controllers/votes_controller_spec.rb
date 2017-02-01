@@ -10,10 +10,6 @@ RSpec.describe VotesController, type: :controller do
     end
 
   context "when user tries to vote with invalid token", invalid_request: true do
-    # before do
-    #   request.headers['Authorization'] = "Token token=badtoken"
-    # end
-
     it "rejects invalid token for upvote" do
       post :upvote, {resource_name: 'questions', resource_id: 1}
       expect(response.body).to include "invalid token"

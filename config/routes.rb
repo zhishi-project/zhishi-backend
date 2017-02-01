@@ -50,7 +50,6 @@ Rails.application.routes.draw do
       end
     end
 
-    post "login" => "application#login"
     get "logout" => "application#logout"
 
     mount Sidekiq::Web => '/sidekiq'
