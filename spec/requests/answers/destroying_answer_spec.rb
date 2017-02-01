@@ -4,8 +4,6 @@ RSpec.describe "Destroying an answer", type: :request do
   let(:answer) { create(:answer, user: valid_user) }
   let(:path) { question_answer_path(answer.question, answer) }
 
-  it_behaves_like "authenticated endpoint", :question_answer_path, 'delete', true
-
   describe "DELETE /questions/:question_id/answers/:id" do
     describe "invalid answer id" do
       it "returns 404 if answer is not found" do

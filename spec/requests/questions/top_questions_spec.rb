@@ -5,8 +5,6 @@ RSpec.describe "Fetching Top Question", type: :request do
   describe "GET /top_questions" do
     let(:path) { top_questions_path }
 
-    it_behaves_like "question authenticated endpoint", :top_questions_path, :get
-
     context "with valid authorization header" do
       before(:each) do
         create_list(:question, 15) do |question|

@@ -1,7 +1,6 @@
 require_relative "answer_request_helper"
 
 RSpec.describe "Fetching an answer", type: :request do
-  it_behaves_like "authenticated endpoint", :question_answers_path, 'get'
 
   describe "GET /questions/:question_id/answers" do
     let(:question) { create(:question_with_answers, answers_count: 5) }

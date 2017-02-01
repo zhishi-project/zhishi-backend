@@ -5,8 +5,6 @@ RSpec.describe "Question Create Endpoint", type: :request do
   describe "POST /questions" do
     let(:path) { questions_path }
 
-    it_behaves_like "question authenticated endpoint", :questions_path, :post
-
     context "with valid athorization header" do
       before(:each) { post path, question_params, authorization_header }
 

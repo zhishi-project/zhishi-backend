@@ -8,8 +8,6 @@ RSpec.describe "Fetching Question Index", type: :request do
       # NOTE the index is used here to fetch the route to be tested
       let(:path) { [questions_path, all_questions_path ][index] }
 
-      it_behaves_like "question authenticated endpoint", :questions_path, :get
-
       context "with valid authorization header" do
         context "when there are fewer than 25 questions" do
           let(:question_count) { 10 }
