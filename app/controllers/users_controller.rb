@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:update, :questions, :tags]
   before_action :set_user_with_activities, only: [:activities]
   before_action :set_user_with_associations_and_statistics, only: [:show]
-  skip_before_action :authenticate_user, only: [:authenticate]
 
   def index
     users = User.paginate(page: params[:page])
