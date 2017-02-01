@@ -41,7 +41,7 @@ module AndelaAuthMock
     extend ActiveSupport::Concern
 
     RSpec.configure do |config|
-      config.include self#, type: :controller
+      config.include self
     end
 
     included do
