@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         get :questions
         get :tags
         get :activities
+        get :me
       end
     end
 

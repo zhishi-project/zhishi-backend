@@ -11,6 +11,11 @@ class UsersController < ApplicationController
   def show
   end
 
+  def me
+    @current_user
+    @token = @current_user.refresh_token
+  end
+
   def questions
     questions = @user.questions.paginate(page: params[:page])
     @questions = PaginationPresenter.new(questions)
