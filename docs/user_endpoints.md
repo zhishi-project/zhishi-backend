@@ -10,6 +10,7 @@ GET /users/:id	| Returns information of a particular user	| False
 GET users/:id/questions| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the questions with the user_id and all the information concerning it  or error message if any.
 GET users/:id/tags| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the tags with the user_id or error message if any.
 GET users/:id/activities| offset, limit ( both could be optional ), user_id, auth_token in header | Returns the all the activities of a user with the user_id or error message if any.
+GET users/member/me| Fetch user info| True
 
 
 ### POST /users
@@ -215,5 +216,30 @@ Status: 200
       }
     }
   ]
+}
+```
+
+## GET /users/members/me
+Request
+```ruby
+  GET /users/members/me
+```
+
+Response
+```ruby
+Status: 200
+{
+  "id": 1,
+  "name": "Firstname Lastname",
+  "points": 10,
+  "image": "<img_url>",
+  "url": "<json_url>",
+  "tags": [],
+  "email": "<email>",
+  "active": true,
+  "created_at": "<date>",
+  "updated_at": "<date>",
+  "member_since": "<days>",
+  "token": "<token>"
 }
 ```
