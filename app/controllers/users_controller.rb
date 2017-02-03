@@ -11,6 +11,9 @@ class UsersController < ApplicationController
   def show
   end
 
+  def me
+  end
+
   def questions
     questions = @user.questions.paginate(page: params[:page])
     @questions = PaginationPresenter.new(questions)
