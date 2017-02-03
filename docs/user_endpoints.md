@@ -219,10 +219,10 @@ Status: 200
 }
 ```
 
-## GET /users/members/me
+## GET /users/me
 Request
 ```ruby
-  GET /users/members/me
+  GET /users/me
 ```
 
 Response
@@ -232,14 +232,14 @@ Status: 200
   "id": 1,
   "name": "Firstname Lastname",
   "points": 10,
-  "image": "<http://i.imgur.com/GZIxExK.png>",
-  "url": "<http://domain.com/users/1.json>",
+  "image": "http://i.imgur.com/GZIxExK.png",
+  "url": "http://domain.com/users/1.json",
   "tags": ["operations", "Andela"],
-  "email": "<someone@email.com>",
+  "email": "someone@email.com",
   "active": true,
   "created_at": "2017-01-27T13:27:56.997Z",
   "updated_at": "2017-01-27T13:27:57.397Z",
   "member_since": "7 days ago",
-  "token": "<ij2uhhuhj2u.unuodkij.md3o24>"
+  "token": "ij2uhhuhj2u.unuodkij.md3o24"
 }
 ```
