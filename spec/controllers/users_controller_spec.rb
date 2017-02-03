@@ -30,6 +30,20 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe "#me" do
+    let(:user) { valid_user }
+    context "when it is a valid request", valid_request: true do
+      it "gets single user information" do
+        get :me, id: user.id, format: :json
+        user = User.first
+        expect(parsed_json['id']).to eq(user.id)
+        expect(parsed_json['name']).to eq(user.name)
+        expect(parsed_json['points']).to eq(user.points)
+        expect(parsed_json['image']).to eq(user.image)
+      end
+    end
+  end
+
   describe "#show" do
     let(:user) { valid_user }
 
