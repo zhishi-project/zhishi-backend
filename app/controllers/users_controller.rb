@@ -12,8 +12,6 @@ class UsersController < ApplicationController
   end
 
   def me
-    @current_user
-    @token = @current_user.refresh_token
   end
 
   def questions
