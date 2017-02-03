@@ -5,8 +5,9 @@ class ApplicationController < ActionController::API
   helper_method :current_user
   before_action :authenticate_user
 
-  def invalid_request(message = error_msg, status = 400)
-    render json: {errors: message}, status: status
+  def resource_not_found
+    not_found = "The resource you tried to access was not found"
+    render json: {errors: not_found}, status: 404
   end
 
 private
@@ -35,9 +36,8 @@ private
     render json: {errors: "Request was made with invalid token"}, status: 401
   end
 
-  def resource_not_found
-    not_found = "The resource you tried to access was not found"
-    render json: {errors: not_found}, status: 404
+  def invalid_request(message = error_msg, status = 400)
+    render json: {errors: message}, status: status
   end
 
   def error_msg
