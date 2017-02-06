@@ -19,23 +19,23 @@ If only there were such applications that helps you aggregate all your answers i
   ```
 
   Install the following your machine incase you do not have them:
-    *RVM
-    ```
-    curl -L https://get.rvm.io | bash -s stable
-    ```
-    *Ruby
-    ```brew install ruby
-    ```
-    *Rails
-    ```gem intall rails
-    ```
-    *Java
-    ```brew update
+    1. RVM
+      *```
+      curl -L https://get.rvm.io | bash -s stable
+     ```
+    2. Ruby
+      *```brew install ruby
+      ```
+    3. Rails
+      *```gem intall rails
+      ```
+    4. Java
+      *```brew update
       brew cask install java
-    ```
-    *Redis
-    ```brew install redis
-    ```  
+      ```
+    5. Redis
+      *```brew install redis
+      ```  
 
 
   Install the libraries
