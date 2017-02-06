@@ -11,8 +11,6 @@ RSpec.describe "Search Questions", type: :request do
 
     let(:path) { search_questions_path }
 
-    it_behaves_like "question authenticated endpoint", :search_questions_path, :get
-
     context "with valid authorization header" do
       before(:each) do
         create_list(:question, 15)

@@ -1,3 +1,4 @@
+
 [![Coverage Status](https://coveralls.io/repos/github/andela-iamadi/zhishi-backend/badge.svg?branch=master)](https://coveralls.io/github/andela-iamadi/zhishi-backend?branch=master) [![Circle CI](https://circleci.com/gh/zhishi-engine/zhishi-backend.svg?style=svg)](https://circleci.com/gh/zhishi-engine/zhishi-backend) [![Issue Count](https://codeclimate.com/github/zhishi-engine/zhishi-backend/badges/issue_count.svg)](https://codeclimate.com/github/zhishi-engine/zhishi-backend) [![Code Climate](https://codeclimate.com/github/zhishi-engine/zhishi-backend/badges/gpa.svg)](https://codeclimate.com/github/zhishi-engine/zhishi-backend)
 
 # Zhishi
@@ -14,18 +15,50 @@ If only there were such applications that helps you aggregate all your answers i
 
   Clone the project:
 
-  ```shell
+  ```
     git clone git@github.com:andela-iamadi/zhishi-backend.git
   ```
 
+  Install the following to your machine incase you do not have them:
+
+-  RVM
+   ```
+   curl -L https://get.rvm.io | bash -s stable
+   ```
+
+- Ruby
+  ```
+  brew install ruby
+  ```
+
+- Rails
+  ```
+  gem intall rails
+  ```
+
+- Java
+  ```
+  brew update
+  brew cask install java
+  ```
+
+- Redis
+  ```
+  brew install redis
+  ```  
+
+  Install bundler
+  ```
+  gem install bundler
+  ```
   Install the libraries
-  ```shell
+  ```
     bundle [install]
   ```
 
 
   Install figaro for application secret tokens
-  ```shell
+  ```
     figaro install
   ```
 
@@ -36,6 +69,18 @@ If only there were such applications that helps you aggregate all your answers i
     GOOGLE_CLIENT_ID: your google client id
     GOOGLE_CLIENT_SECRET: your google secret key
   ```
+
+  start the redis server
+  ```
+  redis-server
+  ```
+  
+  start the rails server
+  ```
+  rails server
+  ```
+
+
 
 ## To contribute:
 
@@ -52,7 +97,7 @@ If only there were such applications that helps you aggregate all your answers i
 
 
   Install figaro for application secret tokens
-  ```shell
+  ```shel
     figaro install
   ```
 
