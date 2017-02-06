@@ -18,6 +18,26 @@ If only there were such applications that helps you aggregate all your answers i
     git clone git@github.com:andela-iamadi/zhishi-backend.git
   ```
 
+  Install the following your machine incase you do not have them:
+    *RVM
+    ```
+    curl -L https://get.rvm.io | bash -s stable
+    ```
+    *Ruby
+    ```brew install ruby
+    ```
+    *Rails
+    ```gem intall rails
+    ```
+    *Java
+    ```brew update
+      brew cask install java
+    ```
+    *Redis
+    ```brew install redis
+    ```  
+
+
   Install the libraries
   ```shell
     bundle [install]
@@ -36,6 +56,16 @@ If only there were such applications that helps you aggregate all your answers i
     GOOGLE_CLIENT_ID: your google client id
     GOOGLE_CLIENT_SECRET: your google secret key
   ```
+
+  start the redis server
+  ```redis-server
+  ```
+  
+  start the rails server
+  ```rails server
+  ```
+
+
 
 ## To contribute:
 
