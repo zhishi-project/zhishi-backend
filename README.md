@@ -139,8 +139,8 @@ If only there were such applications that helps you aggregate all your answers i
   ```
 
 - Java
-
-  ```brew update
+  ```
+  brew update
   brew cask install java
   ```
 
@@ -151,7 +151,7 @@ If only there were such applications that helps you aggregate all your answers i
 
 
   Install the libraries
-  ```shell
+  ```
     bundle [install]
   ```
 
@@ -196,7 +196,7 @@ If only there were such applications that helps you aggregate all your answers i
 
 
   Install figaro for application secret tokens
-  ```shell
+  ```shel
     figaro install
   ```
 
