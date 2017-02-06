@@ -19,7 +19,7 @@ If only there were such applications that helps you aggregate all your answers i
     git clone git@github.com:andela-iamadi/zhishi-backend.git
   ```
 
-  Install the following your machine incase you do not have them:
+  Install the following to your machine incase you do not have them:
 
 -  RVM
    ```
