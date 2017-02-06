@@ -20,21 +20,21 @@ If only there were such applications that helps you aggregate all your answers i
 
   Install the following your machine incase you do not have them:
     1. RVM
-      *```
+      ```
       curl -L https://get.rvm.io | bash -s stable
      ```
     2. Ruby
-      *```brew install ruby
+      ```brew install ruby
       ```
     3. Rails
-      *```gem intall rails
+      ```gem intall rails
       ```
     4. Java
-      *```brew update
+      ```brew update
       brew cask install java
       ```
     5. Redis
-      *```brew install redis
+      ```brew install redis
       ```  
 
 
