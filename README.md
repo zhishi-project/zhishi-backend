@@ -47,7 +47,10 @@ If only there were such applications that helps you aggregate all your answers i
   brew install redis
   ```  
 
-
+  Install bundler
+  ```
+  gem install bundler
+  ```
   Install the libraries
   ```
     bundle [install]
