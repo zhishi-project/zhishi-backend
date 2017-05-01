@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   def refresh_token
     TokenManager.generate_token(self.id)
   end
+  alias :token :refresh_token
 
   def can_vote?
     points >= 15

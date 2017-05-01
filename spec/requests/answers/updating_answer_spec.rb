@@ -4,8 +4,6 @@ RSpec.describe "Updating an answer", type: :request do
   let(:answer) { create(:answer, user: valid_user) }
   let(:path) { question_answer_path(answer.question, answer) }
 
-  it_behaves_like "authenticated endpoint", :question_answer_path, 'patch', true
-
   describe "PATCH /questions/:question_id/answers/:id" do
     context "validates content" do
       let(:new_answer){ attributes_for(:answer).merge(format: :json) }

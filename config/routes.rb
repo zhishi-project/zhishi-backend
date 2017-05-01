@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     end
 
     get "top_questions" => "questions#top_questions"
-
+    get 'users/me', to: 'users#me', as: :me
     resources :users, only: [:show, :index] do
       member do
         get :questions
@@ -50,7 +50,6 @@ Rails.application.routes.draw do
       end
     end
 
-    post "login" => "application#login"
     get "logout" => "application#logout"
 
     mount Sidekiq::Web => '/sidekiq'

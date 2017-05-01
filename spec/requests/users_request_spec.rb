@@ -26,6 +26,17 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  describe "GET /users/me" do
+    it 'retrieves current user information' do
+      get me_path, {format: :json}, authorization_header
+
+      expect(parsed_json['id']).to eq(user.id)
+      expect(parsed_json['name']).to eq(user.name)
+      expect(parsed_json['email']).to eq(user.email)
+      expect(parsed_json['member_since']).to eq(user.member_since)
+    end
+  end
+
   describe "GET /users/:id/questions" do
     let(:total_records) { 8 }
 

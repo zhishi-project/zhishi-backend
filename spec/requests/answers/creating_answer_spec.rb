@@ -5,8 +5,6 @@ RSpec.describe "Submitting answer to question", type: :request do
   let(:user) { create(:active_user) }
   let(:path) { question_answers_path(question) }
 
-  it_behaves_like "authenticated endpoint", :question_answers_path, 'post'
-
   describe "POST /questions/:question_id/answers"do
     describe "validates content" do
       it "doesn't save if content is empty" do

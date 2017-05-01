@@ -6,8 +6,6 @@ RSpec.describe "Question Show Endpoint", type: :request do
     let(:question) { create(:question) }
     let(:path) { question_path(question) }
 
-    it_behaves_like "question authenticated endpoint", :question_path, :get, true
-
     context "with valid authorization header" do
       before(:each) { get path, { format: :json }, authorization_header }
 
